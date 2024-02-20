@@ -2,9 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
   <div class="row justify-content-center">
     <div class="col-6 text-center">
-      <h1>Crea un account!</h1>
+      <h1 class="mt-5">Crea un account!</h1>
       <form method="POST" novalidate>
         {% csrf_token %}
         {{ form|crispy }}
