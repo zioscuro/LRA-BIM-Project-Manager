@@ -14,14 +14,14 @@
   <body>
     <nav class="navbar bg-body-tertiary mb-5">
       <div class="container">
-        <a href="#" class="navbar-brand">BIM Project Manager</a>
+        <a href="{% url 'homepage' %}" class="navbar-brand">BIM Project Manager</a>
         {% if request.user.is_authenticated %}        
         <div class="dropdown">
           <button class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{request.user.username}}
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Profilo</a></li>
+            <li><a class="dropdown-item" href="{% url 'user_profile' username=request.user.username%}">Profilo</a></li>
             <li><a class="dropdown-item" href="{% url 'password_change' %}">Cambio password</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>

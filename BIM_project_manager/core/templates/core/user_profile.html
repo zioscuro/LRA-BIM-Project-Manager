@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{{ block.super }} - Profilo utente{% endblock head_title %}
+
+{% block content %}
+
+
+<div class="conatiner text-center">
+  {% if request.user == user %}
+  <h1>Ciao, {{ user }}!</h1>
+  {% else %}  
+  <h1>Profilo di: {{ user }}</h1>
+  {% endif %}
+</div>
+
+{% endblock content %}
