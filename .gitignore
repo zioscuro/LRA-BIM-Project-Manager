@@ -1,4 +1,5 @@
 django_env
+media_serve
 
 __pycache__/
 *.py[cod]
