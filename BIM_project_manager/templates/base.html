@@ -21,7 +21,7 @@
             {{request.user.username}}
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="{% url 'user_profile' username=request.user.username%}">Profilo</a></li>
+            <li><a class="dropdown-item" href="{% url 'user_profile' username=request.user.username %}">Profilo</a></li>
             <li><a class="dropdown-item" href="{% url 'password_change' %}">Cambio password</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>

@@ -4,13 +4,14 @@
 
 {% block content %}
 
-
 <div class="conatiner text-center">
   {% if request.user == user %}
   <h1>Ciao, {{ user }}!</h1>
   {% else %}  
   <h1>Profilo di: {{ user }}</h1>
   {% endif %}
+  <hr>
+  <a href="{% url 'user_list' %}">Vai alla lista utenti</a>
 </div>
 
 {% endblock content %}
