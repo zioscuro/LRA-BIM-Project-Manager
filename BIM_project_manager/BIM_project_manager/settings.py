@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
 
     'accounts',
+    'core',
+    'projects',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -62,7 +64,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates',
-                 BASE_DIR / 'accounts/templates',],
+                 BASE_DIR / 'accounts/templates',
+                 BASE_DIR / 'core/templates',
+                 BASE_DIR / 'projects/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
