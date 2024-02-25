@@ -33,8 +33,8 @@ class BimModel(models.Model):
     return self.name
   
   class Meta:
-    verbose_name = 'Modello'
-    verbose_name_plural = 'Modelli'
+    verbose_name = 'Modello BIM'
+    verbose_name_plural = 'Modelli BIM'
 
 class InfoSheet(models.Model):
   """
@@ -85,8 +85,8 @@ class ClashTest(models.Model):
     return f'{self.report.name} - {self.date}'
   
   class Meta:
-    verbose_name = 'Clash Test'
-    verbose_name_plural = 'Clash Tests'
+    verbose_name = 'Test interferenze'
+    verbose_name_plural = 'Tests interferenze'
 
 class ValidationTest(models.Model):
   """
@@ -102,6 +102,6 @@ class ValidationTest(models.Model):
     return f'{self.report.name} - {self.date}'
   
   class Meta:
-    verbose_name = 'Validation Test'
-    verbose_name_plural = 'Validation Tests'
+    verbose_name = 'Test verifica'
+    verbose_name_plural = 'Tests verifica'
 
