@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Project, BimModel, InfoSheet, Report, ClashTest, ValidationTest
+from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 
 # Register your models here.
 
-admin.site .register(Project)
+admin.site .register(BimProject)
 admin.site .register(BimModel)
 admin.site .register(InfoSheet)
 admin.site .register(Report)

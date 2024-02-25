@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 
-class Project(models.Model):
+class BimProject(models.Model):
   """ 
-  a project in the domain model 
-  each project contains several BIM models
+  a BIM project in the domain model 
+  each BIM project contains several BIM models
   """
   name = models.CharField(max_length=80)
   description = models.CharField(max_length=150, blank=True, null=True)
@@ -27,14 +27,14 @@ class BimModel(models.Model):
   name = models.CharField(max_length=80)
   discipline = models.CharField(max_length=50, blank=True, null=True)
   designer =  models.CharField(max_length=50, blank=True, null=True)
-  project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='bim_models')
+  project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models')
 
   def __str__(self):
     return self.name
   
   class Meta:
-    verbose_name = 'Modello BIM'
-    verbose_name_plural = 'Modelli BIM'
+    verbose_name = 'Modello'
+    verbose_name_plural = 'Modelli'
 
 class InfoSheet(models.Model):
   """
