@@ -4,8 +4,29 @@
 
 {% block content %}
 
-<div class="conatiner text-center">
-  <h1>Homepage</h1>
+<h1 class="mb-5 text-center">Homepage</h1>
+<div class="row  mx-auto">
+  <div class="col-md-3">
+    <h4>Gestione progetti</h4>
+    <p>Progetti attivi: {{ BimProjects_list.count }}</p>
+    {% if request.user.is_staff %}    
+    <a href="{% url 'create_project' %}" class="btn btn-primary btn-lg mb-5">Crea Progetto</a>    
+    {% endif %}
+  </div>
+  <div class="col-md-9 d-flex flex-wrap gap-3">    
+    {% for project in BimProjects_list %}
+    <div class="card" style="width: 18rem;">
+      {% if project.logo_img %}
+      <img src="{{ project.logo_img.url }}" class="card-img-top" alt="logo {{project.name}}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{project.name}}</h5>
+        <p class="card-text">{{project.description}}</p>
+        <a href="#" class="btn btn-primary">Dettagli</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}
