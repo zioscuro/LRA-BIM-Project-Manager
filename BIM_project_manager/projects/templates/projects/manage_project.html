@@ -32,25 +32,20 @@
         </tr>
       </thead>
       <tbody>
+        {% for model in bim_models %}
         <tr>
-          <th scope="row">1</th>
-          <td>nome 1</td>
-          <td>ARC</td>
-          <td>aaaa</td>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{ model.name }}</td>
+          <td>{{ model.discipline }}</td>
+          <td>{{ model.designer }}</td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>nome 2</td>
-          <td>STR</td>
-          <td>bbb</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
       <button class="btn btn-outline-secondary btn-lg" type="button">Esporta registro</button>
       <button class="btn btn-outline-primary btn-lg" type="button">+ Aggiungi modello</button>
     </div>
-
   </div>
 </div>
 

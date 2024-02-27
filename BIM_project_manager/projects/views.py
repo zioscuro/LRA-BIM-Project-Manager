@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
 from .forms import AddBimModelForm
-from .models import BimProject
+from .models import BimProject, BimModel
 from .mixins import StaffMixin
 
 # Create your views here.
@@ -18,7 +18,8 @@ class CreateBimProject(StaffMixin, CreateView):
 @login_required
 def manage_project_view(request, pk):
   project = get_object_or_404(BimProject, pk=pk)
-  context = {'project': project}
+  bim_models = BimModel.objects.filter(project=project)
+  context = {'project': project, 'bim_models': bim_models}
   return render(request, 'projects/manage_project.html', context)
 
 @login_required
