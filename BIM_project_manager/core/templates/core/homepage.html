@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h1 class="mb-5 text-center">Homepage</h1>
+<h1 class="mb-5 text-center">Benvenuto, {{ request.user.username }}</h1>
 <div class="row  mx-auto">
   <div class="col-md-3">
     <h4>Gestione progetti</h4>
@@ -13,7 +13,7 @@
     <a href="{% url 'create_project' %}" class="btn btn-primary btn-lg mb-5">Crea Progetto</a>    
     {% endif %}
   </div>
-  <div class="col-md-9 d-flex flex-wrap gap-3">    
+  <div class="col-md-9 d-flex flex-wrap gap-3">
     {% for project in BimProjects_list %}
     <div class="card" style="width: 18rem;">
       {% if project.logo_img %}
@@ -22,7 +22,7 @@
       <div class="card-body">
         <h5 class="card-title">{{project.name}}</h5>
         <p class="card-text">{{project.description}}</p>
-        <a href="#" class="btn btn-primary">Dettagli</a>
+        <a href="{{ project.get_absolute_url }}" class="btn btn-primary">Dettagli</a>
       </div>
     </div>
     {% endfor %}
