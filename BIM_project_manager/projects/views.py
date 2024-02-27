@@ -18,7 +18,7 @@ class CreateBimProject(StaffMixin, CreateView):
 @login_required
 def manage_project_view(request, pk):
   project = get_object_or_404(BimProject, pk=pk)
-  bim_models = BimModel.objects.filter(project=project)
+  bim_models = BimModel.objects.filter(project=project).order_by('name')
   context = {'project': project, 'bim_models': bim_models}
   return render(request, 'projects/manage_project.html', context)
 
