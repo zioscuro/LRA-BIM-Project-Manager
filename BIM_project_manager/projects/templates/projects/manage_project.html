@@ -15,7 +15,7 @@
     <hr>
     {% if request.user.is_staff %}
     <div class="d-grid gap-2">
-      <a href="{% url 'create_project' %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+      <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
       <a href="#" class="btn btn-danger btn-lg">Cancella Progetto</a>
     </div>   
     {% endif %}
@@ -35,7 +35,7 @@
         {% for model in bim_models %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td>{{ model.name }}</td>
+          <td><a href="{% url 'manage_bim_model' pk=model.pk%}">{{ model.name }}</a></td>
           <td>{{ model.discipline }}</td>
           <td>{{ model.designer }}</td>
         </tr>

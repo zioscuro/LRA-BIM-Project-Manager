@@ -31,8 +31,14 @@ def add_bim_model_view(request, pk):
       bim_model = form.save(commit=False)
       bim_model.project = project
       bim_model.save()
-      return HttpResponseRedirect('/admin')
+      return HttpResponseRedirect(project.get_absolute_url())
   else:
     form = AddBimModelForm()
   context = {'form': form, 'project': project}
   return render(request, 'projects/add_bim_model.html', context)
+
+@login_required
+def manage_bim_model_view(request, pk):
+  bim_model = get_object_or_404(BimModel, pk=pk)
+  context = {'bim_model': bim_model}
+  return render(request, 'projects/manage_model.html', context)

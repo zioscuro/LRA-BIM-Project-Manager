@@ -36,6 +36,9 @@ class BimModel(models.Model):
   def __str__(self):
     return self.name
   
+  def get_absolute_url(self):
+    return reverse('manage_bim_model', kwargs={'pk': self.pk})
+  
   class Meta:
     verbose_name = 'Modello'
     verbose_name_plural = 'Modelli'
