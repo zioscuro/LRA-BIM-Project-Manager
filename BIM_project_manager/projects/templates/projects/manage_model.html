@@ -10,8 +10,6 @@
     <h4>Dati modello</h4>    
     <h6>nome</h6>
     <p>{{bim_model.name}}</p>    
-    <h6>descrizione</h6>
-    <p>{{bim_model.description}}</p>
     <h6>progettista</h6>
     <p>{{bim_model.designer}}</p>
     <h6>progetto</h6>
@@ -43,7 +41,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="#" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'add_info_sheet' pk=bim_model.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
     <table class="table">
@@ -64,7 +62,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="#" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'add_info_sheet' pk=bim_model.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
   </div>

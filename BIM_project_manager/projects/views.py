@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
-from .forms import AddBimModelForm
+from .forms import AddBimModelForm, AddInfoSheetForm
 from .models import BimProject, BimModel
 from .mixins import StaffMixin
 
@@ -42,3 +42,18 @@ def manage_bim_model_view(request, pk):
   bim_model = get_object_or_404(BimModel, pk=pk)
   context = {'bim_model': bim_model}
   return render(request, 'projects/manage_model.html', context)
+
+@login_required
+def add_info_sheet_view(request, pk):
+  bim_model = get_object_or_404(BimModel, pk=pk)
+  if request.method == 'POST':
+    form = AddInfoSheetForm(request.POST)
+    if form.is_valid():
+      info_sheet = form.save(commit=False)
+      info_sheet.bim_model = bim_model
+      info_sheet.save()
+      return HttpResponseRedirect(bim_model.get_absolute_url())
+  else:
+    form = AddInfoSheetForm()
+  context = {'form': form, 'bim_model': bim_model}
+  return render(request, 'projects/add_info_sheet.html', context)
