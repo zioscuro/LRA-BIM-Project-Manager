@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
 from .forms import AddBimModelForm, AddInfoSheetForm
-from .models import BimProject, BimModel
+from .models import BimProject, BimModel, InfoSheet
 from .mixins import StaffMixin
 
 # Create your views here.
@@ -40,20 +40,23 @@ def add_bim_model_view(request, pk):
 @login_required
 def manage_bim_model_view(request, pk):
   bim_model = get_object_or_404(BimModel, pk=pk)
-  context = {'bim_model': bim_model}
+  info_sheets_coordination = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='coordination')
+  info_sheets_validation = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='validation')
+  context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
   return render(request, 'projects/manage_model.html', context)
 
 @login_required
-def add_info_sheet_view(request, pk):
+def add_info_sheet_view(request, pk, sheet_type):
   bim_model = get_object_or_404(BimModel, pk=pk)
   if request.method == 'POST':
     form = AddInfoSheetForm(request.POST)
     if form.is_valid():
       info_sheet = form.save(commit=False)
+      info_sheet.sheet_type = sheet_type
       info_sheet.bim_model = bim_model
       info_sheet.save()
       return HttpResponseRedirect(bim_model.get_absolute_url())
   else:
     form = AddInfoSheetForm()
-  context = {'form': form, 'bim_model': bim_model}
+  context = {'form': form, 'bim_model': bim_model, 'sheet_type': sheet_type}
   return render(request, 'projects/add_info_sheet.html', context)

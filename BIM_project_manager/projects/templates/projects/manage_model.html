@@ -29,19 +29,20 @@
           <th scope="col">#</th>
           <th scope="col">Nome</th>
           <th scope="col">Descrizione</th>
-
         </tr>
       </thead>
       <tbody>
+        {% for sheet in info_sheets_coordination %}
         <tr>
-          <th scope="row">01</th>
-          <td>xxxx</td>
-          <td>xxxx</td>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><a href="#">{{ sheet.name }}</a></td>
+          <td>{{ sheet.description }}</td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="{% url 'add_info_sheet' pk=bim_model.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'add_info_sheet' pk=bim_model.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
     <table class="table">
@@ -50,19 +51,20 @@
           <th scope="col">#</th>
           <th scope="col">Nome</th>
           <th scope="col">Descrizione</th>
-
         </tr>
       </thead>
       <tbody>
+        {% for sheet in info_sheets_validation %}
         <tr>
-          <th scope="row">01</th>
-          <td>xxxx</td>
-          <td>xxxx</td>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><a href="#">{{ sheet.name }}</a></td>
+          <td>{{ sheet.description }}</td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="{% url 'add_info_sheet' pk=bim_model.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'add_info_sheet' pk=bim_model.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
   </div>

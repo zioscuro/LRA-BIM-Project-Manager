@@ -48,6 +48,7 @@ class InfoSheet(models.Model):
   an Info Sheet related to a BIM Model
   each Info Sheet contains several Reports
   """
+  sheet_type = models.CharField(max_length=20)
   name = models.CharField(max_length=80)
   description = models.CharField(max_length=150, blank=True, null=True)
   bim_model = models.ForeignKey(BimModel, on_delete=models.CASCADE, related_name='info_sheets')

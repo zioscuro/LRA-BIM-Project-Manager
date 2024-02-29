@@ -9,7 +9,13 @@
     <div class="col-5">
       <div class="text-center">
         <h1>Nuova scheda informativa</h1>
-        <p class="fs-5">Aggiungi scheda in {{ bim_model.name }}</p>
+        <p class="fs-5">Aggiungi scheda
+          {% if sheet_type == 'coordination' %}
+          di coordinamento
+          {% elif sheet_type == 'validation' %}
+          di verifica
+          {% endif %}          
+          per il modello {{ bim_model.name }}</p>
       </div>
       <form method="POST" novalidate>
         {% csrf_token %}
