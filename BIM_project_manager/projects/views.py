@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
 from .forms import AddBimModelForm, AddInfoSheetForm
-from .models import BimProject, BimModel, InfoSheet
+from .models import BimProject, BimModel, InfoSheet, Report
 from .mixins import StaffMixin
 
 # Create your views here.
@@ -60,3 +60,10 @@ def add_info_sheet_view(request, pk, sheet_type):
     form = AddInfoSheetForm()
   context = {'form': form, 'bim_model': bim_model, 'sheet_type': sheet_type}
   return render(request, 'projects/add_info_sheet.html', context)
+
+@login_required
+def manage_info_sheet_view(request, pk):
+  info_sheet = get_object_or_404(InfoSheet, pk=pk)
+  reports = Report.objects.filter(info_sheet=info_sheet)
+  context = {'info_sheet': info_sheet, 'reports': reports}
+  return render(request, 'projects/manage_info_sheet.html', context)

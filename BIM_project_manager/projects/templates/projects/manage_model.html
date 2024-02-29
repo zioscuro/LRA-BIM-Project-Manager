@@ -35,7 +35,7 @@
         {% for sheet in info_sheets_coordination %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><a href="#">{{ sheet.name }}</a></td>
+          <td><a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a></td>
           <td>{{ sheet.description }}</td>
         </tr>
         {% endfor %}
@@ -57,7 +57,7 @@
         {% for sheet in info_sheets_validation %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><a href="#">{{ sheet.name }}</a></td>
+          <td><a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a></td>
           <td>{{ sheet.description }}</td>
         </tr>
         {% endfor %}

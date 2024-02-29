@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{{ block.super }} - {{info_sheet.name}}{% endblock head_title %}
+
+{% block content %}
+
+<h1 class="mb-5 text-center">Scheda {{info_sheet.name}}</h1>
+<div class="row  mx-auto">
+  <div class="col-md-3">
+    <h4>Dati progetto</h4>    
+    <h6>nome</h6>
+    <p>{{info_sheet.name}}</p>    
+    <h6>descrizione</h6>
+    <p>{{info_sheet.description}}</p>
+    <hr>
+    {% if request.user.is_staff %}
+    <div class="d-grid gap-2">
+      <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+    </div>   
+    {% endif %}
+  </div>
+  <div class="col-md-9">
+    {% if info_sheet.sheet_type == 'coordination' %}
+    <h4>Report delle interferenze</h4>
+    {% elif sheet_type == 'validation' %}
+    <h4>Report di verifica</h4>
+    {% endif %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Disciplina</th>
+          <th scope="col">Progettista</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+    <div class="d-flex gap-2 justify-content-end">
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Aggiungi Report</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
