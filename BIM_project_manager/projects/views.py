@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
-from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm
+from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
 
@@ -93,3 +93,33 @@ def manage_report_view(request, pk):
     tests = ValidationTest.objects.filter(report=report)  
   context = {'report': report, 'tests': tests}
   return render(request, 'projects/manage_report.html', context)
+
+@login_required
+def add_clash_test_view(request, pk):
+  report = get_object_or_404(Report, pk=pk)
+  if request.method == 'POST':
+    form = AddClashTestForm(request.POST)
+    if form.is_valid():
+      test = form.save(commit=False)
+      test.report = report
+      test.save()
+      return HttpResponseRedirect(report.get_absolute_url())
+  else:
+    form = AddClashTestForm()
+  context = {'form': form, 'report': report}
+  return render(request, 'projects/add_clash_test.html', context)
+
+@login_required
+def add_validation_test_view(request, pk):
+  report = get_object_or_404(Report, pk=pk)
+  if request.method == 'POST':
+    form = AddValidationTestForm(request.POST)
+    if form.is_valid():
+      test = form.save(commit=False)
+      test.report = report
+      test.save()
+      return HttpResponseRedirect(report.get_absolute_url())
+  else:
+    form = AddValidationTestForm()
+  context = {'form': form, 'report': report}
+  return render(request, 'projects/add_validation_test.html', context)

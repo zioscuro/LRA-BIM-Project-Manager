@@ -75,6 +75,9 @@ class Report(models.Model):
   def __str__(self):
     return self.name
   
+  def get_absolute_url(self):
+    return reverse('manage_report', kwargs={'pk': self.pk})
+  
   class Meta:
     verbose_name = 'Report'
     verbose_name_plural = 'Reports'
@@ -105,7 +108,7 @@ class ValidationTest(models.Model):
   """
   date = models.DateTimeField(auto_now_add=True)
   comments = models.CharField(max_length=150, blank=True, null=True)
-  specification = models.CharField(max_length=100, blank=True, null=True)
+  specification = models.CharField(max_length=100)
   issues = models.PositiveIntegerField()
   report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='validation_tests')
 

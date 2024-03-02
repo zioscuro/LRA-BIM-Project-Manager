@@ -38,8 +38,13 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
+      {% if report.info_sheet.sheet_type == 'coordination' %}
       <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
-      <a href="#" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
+      <a href="{% url 'add_clash_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
+      {% elif report.info_sheet.sheet_type == 'validation' %}
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
+      <a href="{% url 'add_validation_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
+      {% endif %}
     </div>
   </div>
 </div>
