@@ -1,5 +1,5 @@
 from django import forms
-from .models import BimModel, InfoSheet
+from .models import BimModel, InfoSheet, Report
 
 class AddBimModelForm(forms.ModelForm):  
   class Meta:
@@ -9,4 +9,9 @@ class AddBimModelForm(forms.ModelForm):
 class AddInfoSheetForm(forms.ModelForm):
   class Meta:
     model = InfoSheet
+    fields = ['name', 'description']
+
+class AddReportForm(forms.ModelForm):
+  class Meta:
+    model = Report
     fields = ['name', 'description']

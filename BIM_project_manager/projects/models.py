@@ -56,6 +56,9 @@ class InfoSheet(models.Model):
   def __str__(self):
     return self.name
   
+  def get_absolute_url(self):
+    return reverse('manage_info_sheet', kwargs={'pk': self.pk})
+  
   class Meta:
     verbose_name = 'Scheda informativa'
     verbose_name_plural = 'Schede informative'

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
-from .forms import AddBimModelForm, AddInfoSheetForm
+from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm
 from .models import BimProject, BimModel, InfoSheet, Report
 from .mixins import StaffMixin
 
@@ -67,3 +67,18 @@ def manage_info_sheet_view(request, pk):
   reports = Report.objects.filter(info_sheet=info_sheet)
   context = {'info_sheet': info_sheet, 'reports': reports}
   return render(request, 'projects/manage_info_sheet.html', context)
+
+@login_required
+def add_report_view(request, pk):
+  info_sheet = get_object_or_404(InfoSheet, pk=pk)
+  if request.method == 'POST':
+    form = AddReportForm(request.POST)
+    if form.is_valid():
+      report = form.save(commit=False)
+      report.info_sheet = info_sheet
+      report.save()
+      return HttpResponseRedirect(info_sheet.get_absolute_url())
+  else:
+    form = AddInfoSheetForm()
+  context = {'form': form, 'info_sheet': info_sheet}
+  return render(request, 'projects/add_report.html', context)
