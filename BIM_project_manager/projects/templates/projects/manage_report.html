@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{{ block.super }} - {{report.name}}{% endblock head_title %}
+
+{% block content %}
+
+<h1 class="mb-5 text-center">{{report.name}}</h1>
+<div class="row  mx-auto">
+  <div class="col-md-3">
+    <h4>Dati report</h4>    
+    <h6>nome</h6>
+    <p>{{report.name}}</p>    
+    <h6>descrizione</h6>
+    <p>{{report.description}}</p>
+    <hr>
+    {% if request.user.is_staff %}
+    <div class="d-grid gap-2">
+      <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+    </div>   
+    {% endif %}
+  </div>
+  <div class="col-md-9">
+    {% if report.info_sheet.sheet_type == 'coordination' %}
+    <h4>Test interferenze</h4>
+    {% elif sheet_type == 'validation' %}
+    <h4>Test di verifica</h4>
+    {% endif %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Descrizione</th>
+        </tr>
+      </thead>
+      <tbody>
+     
+      </tbody>
+    </table>
+    <div class="d-flex gap-2 justify-content-end">
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

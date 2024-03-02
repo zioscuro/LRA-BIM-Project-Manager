@@ -7,7 +7,7 @@
 <h1 class="mb-5 text-center">Scheda {{info_sheet.name}}</h1>
 <div class="row  mx-auto">
   <div class="col-md-3">
-    <h4>Dati progetto</h4>    
+    <h4>Dati scheda</h4>    
     <h6>nome</h6>
     <p>{{info_sheet.name}}</p>    
     <h6>descrizione</h6>
@@ -37,7 +37,7 @@
         {% for report in reports %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><a href="#">{{ report.name }}</a></td>
+          <td><a href="{% url 'manage_report' pk=report.pk %}">{{ report.name }}</a></td>
           <td>{{ report.description }}</td>
         </tr>
         {% endfor %}        

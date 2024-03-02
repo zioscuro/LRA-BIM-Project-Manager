@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
 
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm
-from .models import BimProject, BimModel, InfoSheet, Report
+from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
 
 # Create your views here.
@@ -82,3 +82,14 @@ def add_report_view(request, pk):
     form = AddInfoSheetForm()
   context = {'form': form, 'info_sheet': info_sheet}
   return render(request, 'projects/add_report.html', context)
+
+@login_required
+def manage_report_view(request, pk):
+  report = get_object_or_404(Report, pk=pk)
+  tests = None
+  if report.info_sheet.sheet_type == 'coordination':
+    tests = ClashTest.objects.filter(report=report)
+  elif report.info_sheet.sheet_type == 'validation':
+    tests = ValidationTest.objects.filter(report=report)  
+  context = {'report': report, 'tests': tests}
+  return render(request, 'projects/manage_report.html', context)
