@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 from django.http import HttpResponseRedirect
 
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
@@ -13,6 +13,10 @@ class CreateBimProject(StaffMixin, CreateView):
   model = BimProject
   fields = '__all__'
   template_name = 'projects/create_project.html'
+  success_url = '/'
+
+class DeleteBimProject(StaffMixin, DeleteView):
+  model = BimProject
   success_url = '/'
 
 @login_required
