@@ -165,6 +165,14 @@ def add_clash_test_view(request, pk):
   context = {'form': form, 'report': report}
   return render(request, 'projects/add_clash_test.html', context)
 
+class UpdateClashTest(StaffMixin, UpdateView):
+  model = ClashTest
+  fields = '__all__'
+  template_name_suffix = "_update_form"
+
+  def get_success_url(self):
+    return reverse('manage_report', kwargs={'pk': self.object.report.pk})
+
 class DeleteClashTest(StaffMixin, DeleteView):
   model = ClashTest
 
@@ -185,6 +193,14 @@ def add_validation_test_view(request, pk):
     form = AddValidationTestForm()
   context = {'form': form, 'report': report}
   return render(request, 'projects/add_validation_test.html', context)
+
+class UpdateValidationTest(StaffMixin, UpdateView):
+  model = ValidationTest
+  fields = '__all__'
+  template_name_suffix = "_update_form"
+
+  def get_success_url(self):
+    return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
 class DeleteValidationTest(StaffMixin, DeleteView):
   model = ValidationTest
