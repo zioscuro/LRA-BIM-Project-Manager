@@ -2,6 +2,10 @@
 
 {% block head_title %}{{ block.super }} - {{bim_model.name}}{% endblock head_title %}
 
+{% block navbar %}
+<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bim_model.project.pk %}">← Torna a gestione progetto</a>
+{% endblock navbar %}
+
 {% block content %}
 
 <h1 class="mb-5 text-center">{{bim_model.name}}</h1>

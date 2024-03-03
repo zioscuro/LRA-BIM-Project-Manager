@@ -2,6 +2,10 @@
 
 {% block head_title %}{{ block.super }} - {{project.name}}{% endblock head_title %}
 
+{% block navbar %}
+<a class="btn btn-outline-primary" href="/">← Torna alla lista progetti</a>
+{% endblock navbar %}
+
 {% block content %}
 
 <h1 class="mb-5 text-center">{{project.name}}</h1>

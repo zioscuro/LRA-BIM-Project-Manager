@@ -2,6 +2,10 @@
 
 {% block head_title %}{{ block.super }} - {{info_sheet.name}}{% endblock head_title %}
 
+{% block navbar %}
+<a class="btn btn-outline-primary" href="{% url 'manage_bim_model' pk=info_sheet.bim_model.pk %}">← Torna a gestione modello</a>
+{% endblock navbar %}
+
 {% block content %}
 
 <h1 class="mb-5 text-center">Scheda {{info_sheet.name}}</h1>
@@ -12,6 +16,8 @@
     <p>{{info_sheet.name}}</p>    
     <h6>descrizione</h6>
     <p>{{info_sheet.description}}</p>
+    <h6>modello BIM</h6>
+    <p>{{info_sheet.bim_model}}</p>
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
