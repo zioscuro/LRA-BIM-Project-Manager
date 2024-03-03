@@ -58,6 +58,14 @@ def manage_bim_model_view(request, pk):
   context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
   return render(request, 'projects/manage_model.html', context)
 
+class UpdateBimModel(StaffMixin, UpdateView):
+  model = BimModel
+  fields = '__all__'
+  template_name_suffix = "_update_form"
+
+  def get_success_url(self):
+    return reverse('manage_project', kwargs={'pk': self.object.project.pk})
+
 class DeleteBimModel(StaffMixin, DeleteView):
   model = BimModel
 
