@@ -12,10 +12,11 @@
     <p>{{info_sheet.name}}</p>    
     <h6>descrizione</h6>
     <p>{{info_sheet.description}}</p>
-    <hr>
     {% if request.user.is_staff %}
+    <hr>
     <div class="d-grid gap-2">
       <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+      <a href="#" class="btn btn-danger btn-lg">Cancella scheda</a>
     </div>   
     {% endif %}
   </div>

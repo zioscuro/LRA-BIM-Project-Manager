@@ -12,13 +12,18 @@
     <p>{{project.name}}</p>    
     <h6>descrizione</h6>
     <p>{{project.description}}</p>
-    <hr>
     {% if request.user.is_staff %}
+    <hr>
     <div class="d-grid gap-2">
       <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
       <a href="#" class="btn btn-danger btn-lg">Cancella Progetto</a>
     </div>   
     {% endif %}
+    <hr>
+    <div class="d-grid gap-2">
+      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta registro modelli</a>
+      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta tutte le schede informative</a>
+    </div>   
   </div>
   <div class="col-md-9">    
     <h4>Modelli di progetto</h4>
@@ -43,7 +48,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta registro</a>
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Importa registro modelli</a>
       <a href="{% url 'add_bim_model' pk=project.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi modello</a>
     </div>
   </div>

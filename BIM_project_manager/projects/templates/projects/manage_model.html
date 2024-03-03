@@ -14,12 +14,17 @@
     <p>{{bim_model.designer}}</p>
     <h6>progetto</h6>
     <p>{{bim_model.project.name}}</p>
+    {% if request.user.is_staff %}
     <hr>
-
     <div class="d-grid gap-2">
-      <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>    
+      <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+      <a href="#" class="btn btn-danger btn-lg">Cancella modello</a>
+    </div>   
+    {% endif %}
+    <hr>
+    <div class="d-grid gap-2">
+      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
     </div>
-
   </div>
   <div class="col-md-9">    
     <h4>Schede informative - Coordinamento</h4>
@@ -42,6 +47,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Default</a>
       <a href="{% url 'add_info_sheet' pk=bim_model.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
@@ -64,6 +70,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
+      <a href="#" class="btn btn-outline-primary btn-lg">+ Default</a>
       <a href="{% url 'add_info_sheet' pk=bim_model.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
