@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{{ block.super }} - Cancella Test Interferenze{% endblock head_title %}
+
+{% block content %}
+
+  <div class="row justify-content-center">
+    <div class="col-5">
+      <div class="text-center">
+        <h1>Conferma cancellazione</h1>
+        <p class="fs-5">Sei sicuro di voler cancellare il test?</p>
+      </div>
+      <form method="POST" novalidate>
+        {% csrf_token %}
+        <div class="d-grid mt-4 gap-2">
+          <input type="submit" class="btn btn-danger" value="Conferma">
+          <a href="#" class="btn btn-outline-secondary">Annulla</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}

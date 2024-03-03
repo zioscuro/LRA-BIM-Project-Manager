@@ -125,6 +125,10 @@ def add_clash_test_view(request, pk):
   context = {'form': form, 'report': report}
   return render(request, 'projects/add_clash_test.html', context)
 
+class DeleteClashTest(StaffMixin, DeleteView):
+  model = ClashTest
+  success_url = '/'
+
 @login_required
 def add_validation_test_view(request, pk):
   report = get_object_or_404(Report, pk=pk)
@@ -139,3 +143,7 @@ def add_validation_test_view(request, pk):
     form = AddValidationTestForm()
   context = {'form': form, 'report': report}
   return render(request, 'projects/add_validation_test.html', context)
+
+class DeleteValidationTest(StaffMixin, DeleteView):
+  model = ValidationTest
+  success_url = '/'
