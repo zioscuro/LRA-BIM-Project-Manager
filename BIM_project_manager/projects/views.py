@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -15,6 +15,14 @@ class CreateBimProject(StaffMixin, CreateView):
   fields = '__all__'
   template_name = 'projects/create_project.html'
   success_url = '/'
+
+class UpdateBimProject(StaffMixin, UpdateView):
+  model = BimProject
+  fields = '__all__'
+  template_name_suffix = "_update_form"
+
+  def get_success_url(self):
+    return reverse('manage_project', kwargs={'pk': self.object.pk})
 
 class DeleteBimProject(StaffMixin, DeleteView):
   model = BimProject
