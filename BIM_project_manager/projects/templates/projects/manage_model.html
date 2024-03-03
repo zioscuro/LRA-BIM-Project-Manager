@@ -22,8 +22,8 @@
     <hr>
     <div class="d-grid gap-2">
       <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
-      <a href="#" class="btn btn-danger btn-lg">Cancella modello</a>
-    </div>   
+      <a href="{% url 'delete_model' pk=bim_model.pk %}" class="btn btn-danger btn-lg">Cancella modello</a>
+    </div>
     {% endif %}
     <hr>
     <div class="d-grid gap-2">

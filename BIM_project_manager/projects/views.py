@@ -49,6 +49,10 @@ def manage_bim_model_view(request, pk):
   context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
   return render(request, 'projects/manage_model.html', context)
 
+class DeleteBimModel(StaffMixin, DeleteView):
+  model = BimModel
+  success_url = '/'
+
 @login_required
 def add_info_sheet_view(request, pk, sheet_type):
   bim_model = get_object_or_404(BimModel, pk=pk)
@@ -71,6 +75,10 @@ def manage_info_sheet_view(request, pk):
   reports = Report.objects.filter(info_sheet=info_sheet)
   context = {'info_sheet': info_sheet, 'reports': reports}
   return render(request, 'projects/manage_info_sheet.html', context)
+
+class DeleteInfoSheet(StaffMixin, DeleteView):
+  model = InfoSheet
+  success_url = '/'
 
 @login_required
 def add_report_view(request, pk):
