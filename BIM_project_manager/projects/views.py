@@ -64,7 +64,7 @@ class UpdateBimModel(StaffMixin, UpdateView):
   template_name_suffix = "_update_form"
 
   def get_success_url(self):
-    return reverse('manage_project', kwargs={'pk': self.object.project.pk})
+    return reverse('manage_bim_model', kwargs={'pk': self.object.pk})
 
 class DeleteBimModel(StaffMixin, DeleteView):
   model = BimModel
@@ -95,6 +95,14 @@ def manage_info_sheet_view(request, pk):
   reports = Report.objects.filter(info_sheet=info_sheet)
   context = {'info_sheet': info_sheet, 'reports': reports}
   return render(request, 'projects/manage_info_sheet.html', context)
+
+class UpdateInfoSheet(StaffMixin, UpdateView):
+  model = InfoSheet
+  fields = '__all__'
+  template_name_suffix = "_update_form"
+
+  def get_success_url(self):
+    return reverse('manage_info_sheet', kwargs={'pk': self.object.pk})
 
 class DeleteInfoSheet(StaffMixin, DeleteView):
   model = InfoSheet
