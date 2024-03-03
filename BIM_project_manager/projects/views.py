@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
@@ -51,7 +52,10 @@ def manage_bim_model_view(request, pk):
 
 class DeleteBimModel(StaffMixin, DeleteView):
   model = BimModel
-  success_url = '/'
+
+  def get_success_url(self):
+    return reverse('manage_project', kwargs={'pk': self.object.project.pk})
+  
 
 @login_required
 def add_info_sheet_view(request, pk, sheet_type):
@@ -78,7 +82,9 @@ def manage_info_sheet_view(request, pk):
 
 class DeleteInfoSheet(StaffMixin, DeleteView):
   model = InfoSheet
-  success_url = '/'
+
+  def get_success_url(self):
+    return reverse('manage_bim_model', kwargs={'pk': self.object.bim_model.pk})
 
 @login_required
 def add_report_view(request, pk):
@@ -108,7 +114,9 @@ def manage_report_view(request, pk):
 
 class DeleteReport(StaffMixin, DeleteView):
   model = Report
-  success_url = '/'
+
+  def get_success_url(self):
+    return reverse('manage_info_sheet', kwargs={'pk': self.object.info_sheet.pk})
 
 @login_required
 def add_clash_test_view(request, pk):
@@ -127,7 +135,9 @@ def add_clash_test_view(request, pk):
 
 class DeleteClashTest(StaffMixin, DeleteView):
   model = ClashTest
-  success_url = '/'
+
+  def get_success_url(self):
+    return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
 @login_required
 def add_validation_test_view(request, pk):
@@ -146,4 +156,6 @@ def add_validation_test_view(request, pk):
 
 class DeleteValidationTest(StaffMixin, DeleteView):
   model = ValidationTest
-  success_url = '/'
+
+  def get_success_url(self):
+    return reverse('manage_report', kwargs={'pk': self.object.report.pk})
