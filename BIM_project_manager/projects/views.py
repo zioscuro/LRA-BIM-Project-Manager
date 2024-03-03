@@ -88,9 +88,9 @@ def manage_report_view(request, pk):
   report = get_object_or_404(Report, pk=pk)
   tests = None
   if report.info_sheet.sheet_type == 'coordination':
-    tests = ClashTest.objects.filter(report=report)
+    tests = ClashTest.objects.filter(report=report).order_by('date')
   elif report.info_sheet.sheet_type == 'validation':
-    tests = ValidationTest.objects.filter(report=report)  
+    tests = ValidationTest.objects.filter(report=report).order_by('date')
   context = {'report': report, 'tests': tests}
   return render(request, 'projects/manage_report.html', context)
 

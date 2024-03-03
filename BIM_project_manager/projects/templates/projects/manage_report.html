@@ -21,31 +21,64 @@
   </div>
   <div class="col-md-9">
     {% if report.info_sheet.sheet_type == 'coordination' %}
-    <h4>Test interferenze</h4>
-    {% elif report.info_sheet.sheet_type == 'validation' %}
-    <h4>Test di verifica</h4>
-    {% endif %}
+    <h4>Test interferenze</h4>    
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Descrizione</th>
+          <th scope="col">Data</th>
+          <th scope="col">Commenti</th>
+          <th scope="col">Nuove</th>
+          <th scope="col">Attive</th>
+          <th scope="col">Revisionate</th>
+          <th scope="col">Approvate</th>
+          <th scope="col">Risolte</th>
         </tr>
       </thead>
       <tbody>
-     
+        {% for test in tests %}
+        <tr>
+          <td>{{test.date|date:"Y/m/d"}}</td>
+          <td>{{test.comments}}</td>
+          <td>{{test.clash_new}}</td>
+          <td>{{test.clash_active}}</td>
+          <td>{{test.clash_reviewed}}</td>
+          <td>{{test.clash_approved}}</td>
+          <td>{{test.clash_resolved}}</td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      {% if report.info_sheet.sheet_type == 'coordination' %}
       <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
-      <a href="{% url 'add_clash_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
-      {% elif report.info_sheet.sheet_type == 'validation' %}
+      <a href="{% url 'add_clash_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>    
+    </div>
+    {% elif report.info_sheet.sheet_type == 'validation' %}
+    <h4>Test di verifica</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Data</th>
+          <th scope="col">Commenti</th>
+          <th scope="col">Specifica</th>
+          <th scope="col">Difformità</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for test in tests %}
+        <tr>
+          <td>{{test.date|date:"Y/m/d"}}</td>
+          <td>{{test.comments}}</td>
+          <td>{{test.specification}}</td>
+          <td>{{test.issues}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="d-flex gap-2 justify-content-end">
       <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
       <a href="{% url 'add_validation_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
-      {% endif %}
     </div>
+    {% endif %}
   </div>
 </div>
 
