@@ -21,7 +21,7 @@
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
-      <a href="#" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+      <a href="{% url 'update_report' pk=report.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
       <a href="{% url 'delete_report' pk=report.pk %}" class="btn btn-danger btn-lg">Cancella report</a>
     </div>   
     {% endif %}

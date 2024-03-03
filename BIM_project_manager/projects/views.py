@@ -136,6 +136,14 @@ def manage_report_view(request, pk):
   context = {'report': report, 'tests': tests}
   return render(request, 'projects/manage_report.html', context)
 
+class UpdateReport(StaffMixin, UpdateView):
+  model = Report
+  fields = '__all__'
+  template_name_suffix = "_update_form"
+
+  def get_success_url(self):
+    return reverse('manage_report', kwargs={'pk': self.object.pk})
+
 class DeleteReport(StaffMixin, DeleteView):
   model = Report
 
