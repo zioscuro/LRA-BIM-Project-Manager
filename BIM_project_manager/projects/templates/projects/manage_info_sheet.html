@@ -3,7 +3,7 @@
 {% block head_title %}{{ block.super }} - {{info_sheet.name}}{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_bim_model' pk=info_sheet.bim_model.pk %}">← Torna a gestione modello</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_bim_model' pk=info_sheet.bim_model.pk %}">← Torna al modello BIM</a>
 {% endblock navbar %}
 
 {% block content %}

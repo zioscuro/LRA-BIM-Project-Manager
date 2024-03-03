@@ -3,7 +3,7 @@
 {% block head_title %}{{ block.super }} - {{bim_model.name}}{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bim_model.project.pk %}">← Torna a gestione progetto</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bim_model.project.pk %}">← Torna al progetto</a>
 {% endblock navbar %}
 
 {% block content %}

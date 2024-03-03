@@ -3,7 +3,7 @@
 {% block head_title %}{{ block.super }} - {{report.name}}{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_info_sheet' pk=report.info_sheet.pk %}">← Torna a gestione modello</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_info_sheet' pk=report.info_sheet.pk %}">← Torna alla Scheda Informativa</a>
 {% endblock navbar %}
 
 {% block content %}
