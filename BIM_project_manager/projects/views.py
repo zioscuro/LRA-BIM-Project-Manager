@@ -106,6 +106,10 @@ def manage_report_view(request, pk):
   context = {'report': report, 'tests': tests}
   return render(request, 'projects/manage_report.html', context)
 
+class DeleteReport(StaffMixin, DeleteView):
+  model = Report
+  success_url = '/'
+
 @login_required
 def add_clash_test_view(request, pk):
   report = get_object_or_404(Report, pk=pk)

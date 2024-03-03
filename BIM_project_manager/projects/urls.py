@@ -13,6 +13,7 @@ urlpatterns = [
   path('manage_info_sheet/<int:pk>/delete_info_sheet', views.DeleteInfoSheet.as_view(), name='delete_info_sheet'),
   path('manage_info_sheet/<int:pk>/add_report', views.add_report_view, name='add_report'),
   path('manage_report/<int:pk>/', views.manage_report_view, name='manage_report'),
+  path('manage_report/<int:pk>/delete_report', views.DeleteReport.as_view(), name='delete_report'),
   path('manage_report/<int:pk>/add_clash_test', views.add_clash_test_view, name='add_clash_test'),
   path('manage_report/<int:pk>/add_validation_test', views.add_validation_test_view, name='add_validation_test'),
 ]
