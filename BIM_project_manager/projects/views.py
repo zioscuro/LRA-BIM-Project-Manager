@@ -207,3 +207,43 @@ class DeleteValidationTest(StaffMixin, DeleteView):
 
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
+
+@login_required  
+def set_default_coordination(request, pk):
+  bim_model = get_object_or_404(BimModel, pk=pk)
+
+  if bim_model.default_coordination:
+    return HttpResponseRedirect(bim_model.get_absolute_url())
+
+  sheet_LC1 = InfoSheet(
+    sheet_type='coordination',
+    name='LC1',
+    description='default coordinamento',
+    bim_model = bim_model
+  )
+  sheet_LC1.save()
+
+  bim_model.default_coordination = True
+  bim_model.save()
+
+  return HttpResponseRedirect(bim_model.get_absolute_url())
+
+@login_required
+def set_default_validation(request, pk):
+  bim_model = get_object_or_404(BimModel, pk=pk)
+
+  if bim_model.default_validation:
+    return HttpResponseRedirect(bim_model.get_absolute_url())
+
+  sheet_LC1 = InfoSheet(
+    sheet_type='validation',
+    name='LV1',
+    description='default verifica',
+    bim_model = bim_model
+  )
+  sheet_LC1.save()
+
+  bim_model.default_coordination = True
+  bim_model.save()
+
+  return HttpResponseRedirect(bim_model.get_absolute_url())
