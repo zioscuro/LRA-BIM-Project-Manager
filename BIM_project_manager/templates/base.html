@@ -15,8 +15,8 @@
     <nav class="navbar bg-body-tertiary mb-5">
       <div class="container">
         <a href="{% url 'homepage' %}" class="navbar-brand">BIM Project Manager</a>
-        {% if request.user.is_authenticated %}
         <div class="d-flex gap-2">
+          {% if request.user.is_authenticated %}
           {% block navbar %} {% endblock navbar %} 
           <div class="dropdown">
             <button class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,10 +34,10 @@
               </li>
             </ul>
           </div>
-        {% else %}
+          {% else %}
           <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
           <a class="btn btn-primary" href="{% url 'create_account_view' %}">Crea account</a>
-        {% endif %}
+          {% endif %}
         </div> 
       </div>
     </nav>
