@@ -25,10 +25,6 @@
       <a href="{% url 'delete_report' pk=report.pk %}" class="btn btn-danger btn-lg">Cancella report</a>
     </div>   
     {% endif %}
-    <hr>
-    <div class="d-grid gap-2">
-      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta report</a>
-    </div>
   </div>
   <div class="col-md-9">
     {% if report.info_sheet.sheet_type == 'coordination' %}

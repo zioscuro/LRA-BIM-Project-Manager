@@ -25,8 +25,8 @@
     {% endif %}
     <hr>
     <div class="d-grid gap-2">
-      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta registro modelli</a>
-      <a href="#" class="btn btn-outline-secondary btn-lg">Esporta tutte le schede informative</a>
+      <a href="{% url 'export_model_register' pk=project.pk %}" class="btn btn-outline-secondary btn-lg">Esporta registro modelli</a>
+      <a href="{% url 'export_project_info_sheets' pk=project.pk %}" class="btn btn-outline-secondary btn-lg">Esporta tutte le schede informative</a>
     </div>   
   </div>
   <div class="col-md-9">    

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
@@ -247,3 +247,30 @@ def set_default_validation(request, pk):
   bim_model.save()
 
   return HttpResponseRedirect(bim_model.get_absolute_url())
+
+@login_required
+def export_model_register(request, pk):
+  response = HttpResponse(content_type='text/plain')  
+  response['Content-Disposition'] = 'attachment; filename="Model_Register.txt"'
+
+  response.write('Registro modelli')
+
+  return response
+
+@login_required
+def export_project_info_sheets(request, pk):
+  response = HttpResponse(content_type='text/plain')  
+  response['Content-Disposition'] = 'attachment; filename="Project_Info_Sheets.txt"'
+
+  response.write('Tutte le schede informative dei modelli di progetto')
+
+  return response
+
+@login_required
+def export_model_info_sheets(request, pk):
+  response = HttpResponse(content_type='text/plain')  
+  response['Content-Disposition'] = 'attachment; filename="Model_Info_Sheets.txt"'
+
+  response.write('Tutte le schede informative per il modello BIM')
+
+  return response

@@ -7,6 +7,8 @@ urlpatterns = [
   path('manage_project/<int:pk>/update_project', views.UpdateBimProject.as_view(), name='update_project'),
   path('manage_project/<int:pk>/delete_project', views.DeleteBimProject.as_view(), name='delete_project'),
   path('manage_project/<int:pk>/add_model/', views.add_bim_model_view, name='add_bim_model'),
+  path('manage_project/<int:pk>/export_model_register/', views.export_model_register, name='export_model_register'),
+  path('manage_project/<int:pk>/export_project_info_sheets/', views.export_project_info_sheets, name='export_project_info_sheets'),
 
   path('manage_model/<int:pk>/', views.manage_bim_model_view, name='manage_bim_model'),
   path('manage_model/<int:pk>/update_model', views.UpdateBimModel.as_view(), name='update_model'),
@@ -14,6 +16,7 @@ urlpatterns = [
   path('manage_model/<int:pk>/add_info_sheet/<str:sheet_type>', views.add_info_sheet_view, name='add_info_sheet'),
   path('manage_model/<int:pk>/default_coordination', views.set_default_coordination, name='default_coordination'),
   path('manage_model/<int:pk>/default_validation', views.set_default_validation, name='default_validation'),
+  path('manage_model/<int:pk>/export_model_info_sheets', views.export_model_info_sheets, name='export_model_info_sheets'),
 
   path('manage_info_sheet/<int:pk>/', views.manage_info_sheet_view, name='manage_info_sheet'),
   path('manage_info_sheet/<int:pk>/update_info_sheet', views.UpdateInfoSheet.as_view(), name='update_info_sheet'),
