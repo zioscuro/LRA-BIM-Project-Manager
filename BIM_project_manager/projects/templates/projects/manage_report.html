@@ -18,6 +18,10 @@
     <p>{{report.description}}</p>
     <h6>scheda informativa</h6>
     <p>{{report.info_sheet.name}}</p>
+    <h6>modello</h6>
+    <p>{{report.info_sheet.bim_model.name}}</p>
+    <h6>progetto</h6>
+    <p>{{report.info_sheet.bim_model.project.name}}</p>
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
