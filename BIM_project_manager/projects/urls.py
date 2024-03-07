@@ -22,12 +22,13 @@ urlpatterns = [
   path('manage_info_sheet/<int:pk>/update_info_sheet', views.UpdateInfoSheet.as_view(), name='update_info_sheet'),
   path('manage_info_sheet/<int:pk>/delete_info_sheet', views.DeleteInfoSheet.as_view(), name='delete_info_sheet'),
   path('manage_info_sheet/<int:pk>/add_report', views.add_report_view, name='add_report'),
+  
   path('manage_report/<int:pk>/', views.manage_report_view, name='manage_report'),
-
   path('manage_report/<int:pk>/update_report', views.UpdateReport.as_view(), name='update_report'),
   path('manage_report/<int:pk>/delete_report', views.DeleteReport.as_view(), name='delete_report'),
   path('manage_report/<int:pk>/add_clash_test', views.add_clash_test_view, name='add_clash_test'),
   path('manage_report/<int:pk>/add_validation_test', views.add_validation_test_view, name='add_validation_test'),
+  
   path('update_clash_test/<int:pk>', views.UpdateClashTest.as_view(), name='update_clash_test'),
   path('update_validation_test/<int:pk>', views.UpdateValidationTest.as_view(), name='update_validation_test'),
   path('delete_clash_test/<int:pk>', views.DeleteClashTest.as_view(), name='delete_clash_test'),
