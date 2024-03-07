@@ -7,6 +7,7 @@ from django.urls import reverse
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
+from .utils import create_model_register, create_project_info_sheets, create_model_info_sheets
 
 # Create your views here.
 
@@ -250,27 +251,15 @@ def set_default_validation(request, pk):
 
 @login_required
 def export_model_register(request, pk):
-  response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = 'attachment; filename="Model_Register.txt"'
-
-  response.write('Registro modelli')
-
-  return response
+  project = get_object_or_404(BimProject, pk=pk)
+  return create_model_register(project)
 
 @login_required
 def export_project_info_sheets(request, pk):
-  response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = 'attachment; filename="Project_Info_Sheets.txt"'
-
-  response.write('Tutte le schede informative dei modelli di progetto')
-
-  return response
+  project = get_object_or_404(BimProject, pk=pk)
+  return create_project_info_sheets(project)
 
 @login_required
 def export_model_info_sheets(request, pk):
-  response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = 'attachment; filename="Model_Info_Sheets.txt"'
-
-  response.write('Tutte le schede informative per il modello BIM')
-
-  return response
+  bim_model = get_object_or_404(BimModel, pk=pk)
+  return create_model_info_sheets(bim_model)
