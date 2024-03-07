@@ -14,9 +14,20 @@ def create_model_register(project):
   return response
 
 def create_project_info_sheets(project):
+  bim_models = project.bim_models.all()
+
   response = HttpResponse(content_type='text/plain')  
   response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{project.name}.txt"'
-  response.write(f'Tutte le schede informative dei modelli per il progetto: {project.name}')
+  response.write(f'Schede informative - Progetto: {project.name}')
+
+  for count, model in enumerate(bim_models):
+    response.write(f'Modello n.{count+1} - {model.name} - {model.discipline} - {model.designer}\n')
+
+    info_sheets = model.info_sheets.all()
+
+    for count, sheet in enumerate(info_sheets):
+      response.write(f'\tScheda n.{count+1} - {sheet.name} - {sheet.description} - {sheet.sheet_type}\n')   
+
   return response
 
 def create_model_info_sheets(model):
