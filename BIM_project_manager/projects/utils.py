@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from .models import InfoSheet
+from .models import InfoSheet, Report
 
 def create_model_register(project):
   bim_models = project.bim_models.all()
@@ -66,20 +66,49 @@ def create_model_info_sheets(model):
 
 def set_default_coordination(model):
   sheet_LC1 = InfoSheet(
-    sheet_type='coordination',
-    name='LC1',
-    description='default coordinamento',
+    sheet_type = 'coordination',
+    name = 'LC1',
+    description = 'default coordinamento',
     bim_model = model
   )
   sheet_LC1.save()
+
+  duplicates_report = Report(
+    name = 'duplicati',
+    description = 'default report elementi duplicati',
+    info_sheet = sheet_LC1,
+  )
+  duplicates_report.save()
+
+  intersections_report = Report(
+    name = 'intersezioni',
+    description = 'default report elementi intersecanti',
+    info_sheet = sheet_LC1,
+  )
+  intersections_report.save()
   
 
 def set_default_validation(model):
   sheet_LV1 = InfoSheet(
-    sheet_type='validation',
-    name='LV1',
-    description='default verifica',
+    sheet_type ='validation',
+    name = 'LV1',
+    description = 'default verifica',
     bim_model = model
   )
   sheet_LV1.save()
-  pass
+
+  file_name_report = Report(
+    name = 'nomenclatura file modello',
+    description = 'default report nomenclatura file',
+    info_sheet = sheet_LV1,
+  )
+  file_name_report.save()
+
+  objects_name_report = Report(
+    name = 'nomenclatura oggetti',
+    description = 'default report nomenclatura oggetti nel modello',
+    info_sheet = sheet_LV1,
+  )
+  objects_name_report.save()
+
+

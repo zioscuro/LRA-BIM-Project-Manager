@@ -232,14 +232,6 @@ def default_validation(request, pk):
   
   set_default_validation(bim_model)
 
-  # sheet_LC1 = InfoSheet(
-  #   sheet_type='validation',
-  #   name='LV1',
-  #   description='default verifica',
-  #   bim_model = bim_model
-  # )
-  # sheet_LC1.save()
-
   bim_model.default_validation = True
   bim_model.save()
 
