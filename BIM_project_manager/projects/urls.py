@@ -14,8 +14,8 @@ urlpatterns = [
   path('manage_model/<int:pk>/update_model', views.UpdateBimModel.as_view(), name='update_model'),
   path('manage_model/<int:pk>/delete_model', views.DeleteBimModel.as_view(), name='delete_model'),
   path('manage_model/<int:pk>/add_info_sheet/<str:sheet_type>', views.add_info_sheet_view, name='add_info_sheet'),
-  path('manage_model/<int:pk>/default_coordination', views.set_default_coordination, name='default_coordination'),
-  path('manage_model/<int:pk>/default_validation', views.set_default_validation, name='default_validation'),
+  path('manage_model/<int:pk>/default_coordination', views.default_coordination, name='default_coordination'),
+  path('manage_model/<int:pk>/default_validation', views.default_validation, name='default_validation'),
   path('manage_model/<int:pk>/export_model_info_sheets', views.export_model_info_sheets, name='export_model_info_sheets'),
 
   path('manage_info_sheet/<int:pk>/', views.manage_info_sheet_view, name='manage_info_sheet'),

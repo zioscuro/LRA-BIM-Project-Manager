@@ -7,7 +7,7 @@ from django.urls import reverse
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
-from .utils import create_model_register, create_project_info_sheets, create_model_info_sheets
+from .utils import create_model_register, create_project_info_sheets, create_model_info_sheets, set_default_coordination, set_default_validation
 
 # Create your views here.
 
@@ -210,19 +210,13 @@ class DeleteValidationTest(StaffMixin, DeleteView):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
 @login_required  
-def set_default_coordination(request, pk):
+def default_coordination(request, pk):
   bim_model = get_object_or_404(BimModel, pk=pk)
 
   if bim_model.default_coordination:
     return HttpResponseRedirect(bim_model.get_absolute_url())
 
-  sheet_LC1 = InfoSheet(
-    sheet_type='coordination',
-    name='LC1',
-    description='default coordinamento',
-    bim_model = bim_model
-  )
-  sheet_LC1.save()
+  set_default_coordination(bim_model)
 
   bim_model.default_coordination = True
   bim_model.save()
@@ -230,21 +224,23 @@ def set_default_coordination(request, pk):
   return HttpResponseRedirect(bim_model.get_absolute_url())
 
 @login_required
-def set_default_validation(request, pk):
+def default_validation(request, pk):
   bim_model = get_object_or_404(BimModel, pk=pk)
 
   if bim_model.default_validation:
     return HttpResponseRedirect(bim_model.get_absolute_url())
+  
+  set_default_validation(bim_model)
 
-  sheet_LC1 = InfoSheet(
-    sheet_type='validation',
-    name='LV1',
-    description='default verifica',
-    bim_model = bim_model
-  )
-  sheet_LC1.save()
+  # sheet_LC1 = InfoSheet(
+  #   sheet_type='validation',
+  #   name='LV1',
+  #   description='default verifica',
+  #   bim_model = bim_model
+  # )
+  # sheet_LC1.save()
 
-  bim_model.default_coordination = True
+  bim_model.default_validation = True
   bim_model.save()
 
   return HttpResponseRedirect(bim_model.get_absolute_url())

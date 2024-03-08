@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from .models import InfoSheet
 
 def create_model_register(project):
   bim_models = project.bim_models.all()
@@ -63,3 +64,22 @@ def create_model_info_sheets(model):
 
   return response
 
+def set_default_coordination(model):
+  sheet_LC1 = InfoSheet(
+    sheet_type='coordination',
+    name='LC1',
+    description='default coordinamento',
+    bim_model = model
+  )
+  sheet_LC1.save()
+  
+
+def set_default_validation(model):
+  sheet_LV1 = InfoSheet(
+    sheet_type='validation',
+    name='LV1',
+    description='default verifica',
+    bim_model = model
+  )
+  sheet_LV1.save()
+  pass
