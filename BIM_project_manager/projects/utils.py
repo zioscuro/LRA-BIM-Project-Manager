@@ -86,7 +86,6 @@ def set_default_coordination(model):
     info_sheet = sheet_LC1,
   )
   intersections_report.save()
-  
 
 def set_default_validation(model):
   sheet_LV1 = InfoSheet(
@@ -110,5 +109,3 @@ def set_default_validation(model):
     info_sheet = sheet_LV1,
   )
   objects_name_report.save()
-
-
