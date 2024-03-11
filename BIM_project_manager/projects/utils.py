@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from .models import InfoSheet, Report
 
 def create_model_register(project):
+  '''
+  create a text file export with the model register with all the BIM model of a specific project
+  '''
   bim_models = project.bim_models.all()
 
   response = HttpResponse(content_type='text/plain')  
@@ -15,6 +18,9 @@ def create_model_register(project):
   return response
 
 def create_project_info_sheets(project):
+  '''
+  create a text file export with all the info sheets of the project divided by BIM model
+  '''
   bim_models = project.bim_models.all()
 
   response = HttpResponse(content_type='text/plain')  
@@ -32,6 +38,9 @@ def create_project_info_sheets(project):
   return response
 
 def create_model_info_sheets(model):
+  '''
+  create a text file export with all the info sheets of a specific BIM model
+  '''
   info_sheets = model.info_sheets.all()
 
   response = HttpResponse(content_type='text/plain')  
@@ -65,6 +74,9 @@ def create_model_info_sheets(model):
   return response
 
 def set_default_coordination(model):
+  '''
+  create in a specific BIM model a default set of coordination info sheets ad related reports
+  '''
   sheet_LC1 = InfoSheet(
     sheet_type = 'coordination',
     name = 'LC1',
@@ -88,6 +100,9 @@ def set_default_coordination(model):
   intersections_report.save()
 
 def set_default_validation(model):
+  '''
+  create in a specific BIM model a default set of validation info sheets ad related reports
+  '''
   sheet_LV1 = InfoSheet(
     sheet_type ='validation',
     name = 'LV1',
