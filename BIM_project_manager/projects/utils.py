@@ -1,15 +1,15 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
 
-def create_model_register(project):
+def create_model_register_file(bimProject):
   '''
   create a text file export with the model register with all the BIM model of a specific project
   '''
-  bim_models = project.bim_models.all()
+  bim_models = bimProject.bim_models.all()
 
   response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = f'attachment; filename="Model_Register_{project.name}.txt"'  
-  response.write(f'Registro modelli - Progetto: {project.name}\n')
+  response['Content-Disposition'] = f'attachment; filename="Model_Register_{bimProject.name}.txt"'  
+  response.write(f'Registro modelli - Progetto: {bimProject.name}\n')
   response.write(f'n. - Nome - Disciplina - Progettista\n')
 
   for count, model in enumerate(bim_models):
@@ -17,15 +17,15 @@ def create_model_register(project):
 
   return response
 
-def create_project_info_sheets(project):
+def create_project_info_sheets_file(bimProject):
   '''
   create a text file export with all the info sheets of the project divided by BIM model
   '''
-  bim_models = project.bim_models.all()
+  bim_models = bimProject.bim_models.all()
 
   response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{project.name}.txt"'
-  response.write(f'Schede informative - Progetto: {project.name}')
+  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bimProject.name}.txt"'
+  response.write(f'Schede informative - Progetto: {bimProject.name}')
 
   for count, model in enumerate(bim_models):
     response.write(f'Modello n.{count+1} - {model.name} - {model.discipline} - {model.designer}\n')
@@ -37,17 +37,17 @@ def create_project_info_sheets(project):
 
   return response
 
-def create_model_info_sheets(model):
+def create_model_info_sheets_file(bimModel):
   '''
   create a text file export with all the info sheets of a specific BIM model
   '''
-  info_sheets = model.info_sheets.all()
+  info_sheets = bimModel.info_sheets.all()
 
   response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = f'attachment; filename="{model.name}_Info_Sheets.txt"'
-  response.write(f'Schede informative - Modello BIM: {model.name}\n')
+  response['Content-Disposition'] = f'attachment; filename="{bimModel.name}_Info_Sheets.txt"'
+  response.write(f'Schede informative - Modello BIM: {bimModel.name}\n')
   response.write('Dati modello BIM\n')
-  response.write(f'Disiplina: {model.discipline} - Autore: {model.designer} - Software: {model.authoringSoftware} - Scheda LOD: {model.lodReference}\n')
+  response.write(f'Disiplina: {bimModel.discipline} - Autore: {bimModel.designer} - Software: {bimModel.authoringSoftware} - Scheda LOD: {bimModel.lodReference}\n')
 
   for count, sheet in enumerate(info_sheets):
     response.write(f'Scheda n.{count+1} - {sheet.name} - {sheet.description} - {sheet.sheet_type}\n')

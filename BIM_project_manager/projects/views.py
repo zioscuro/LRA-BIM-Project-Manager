@@ -7,7 +7,7 @@ from django.urls import reverse
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
-from .utils import create_model_register, create_project_info_sheets, create_model_info_sheets, set_default_coordination, set_default_validation
+from .utils import create_model_register_file, create_project_info_sheets_file, create_model_info_sheets_file, set_default_coordination, set_default_validation
 
 # Create your views here.
 
@@ -240,14 +240,14 @@ def default_validation(request, pk):
 @login_required
 def export_model_register(request, pk):
   project = get_object_or_404(BimProject, pk=pk)
-  return create_model_register(project)
+  return create_model_register_file(project)
 
 @login_required
 def export_project_info_sheets(request, pk):
   project = get_object_or_404(BimProject, pk=pk)
-  return create_project_info_sheets(project)
+  return create_project_info_sheets_file(project)
 
 @login_required
 def export_model_info_sheets(request, pk):
   bim_model = get_object_or_404(BimModel, pk=pk)
-  return create_model_info_sheets(bim_model)
+  return create_model_info_sheets_file(bim_model)
