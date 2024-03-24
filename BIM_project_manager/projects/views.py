@@ -61,7 +61,7 @@ def manage_bim_model_view(request, pk):
 
 class UpdateBimModel(StaffMixin, UpdateView):
   model = BimModel
-  fields = '__all__'
+  fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
   template_name_suffix = "_update_form"
 
   def get_success_url(self):

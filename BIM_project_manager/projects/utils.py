@@ -45,7 +45,9 @@ def create_model_info_sheets(model):
 
   response = HttpResponse(content_type='text/plain')  
   response['Content-Disposition'] = f'attachment; filename="{model.name}_Info_Sheets.txt"'
-  response.write(f'Schede informative - Modello: {model.name}')
+  response.write(f'Schede informative - Modello BIM: {model.name}')
+  response.write('Dati modello BIM')
+  response.write(f'Disiplina: {model.discipline} - Autore: {model.author} - Software: {model.authoringSoftware} - Scheda LOD: {model.lodReference}')
 
   for count, sheet in enumerate(info_sheets):
     response.write(f'Scheda n.{count+1} - {sheet.name} - {sheet.description} - {sheet.sheet_type}\n')

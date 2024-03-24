@@ -33,6 +33,8 @@ class BimModel(models.Model):
   designer =  models.CharField(max_length=50, blank=True, null=True)
   default_coordination = models.BooleanField(default=False)
   default_validation = models.BooleanField(default=False)
+  authoringSoftware = models.CharField(max_length=50, blank=True, null=True)
+  lodReference = models.CharField(max_length=100, blank=True, null=True)
   project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models')
 
   def __str__(self):

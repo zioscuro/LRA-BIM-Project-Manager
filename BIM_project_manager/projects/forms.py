@@ -4,7 +4,7 @@ from .models import BimModel, InfoSheet, Report, ClashTest, ValidationTest
 class AddBimModelForm(forms.ModelForm):  
   class Meta:
     model = BimModel
-    fields = ['name', 'discipline', 'designer']
+    fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
 
 class AddInfoSheetForm(forms.ModelForm):
   class Meta:
