@@ -8,12 +8,12 @@ class BimProject(models.Model):
   a BIM project in the domain model 
   each BIM project contains several BIM models
   """
-  name = models.CharField(max_length=80)
-  description = models.CharField(max_length=150, blank=True, null=True)
-  logo_img = models.ImageField(blank=True, null=True)
-  customer = models.CharField(max_length=150, blank=True, null=True)
-  address = models.CharField(max_length=150, blank=True, null=True)
-  phase = models.CharField(max_length=50, blank=True, null=True)
+  name = models.CharField(max_length=80, verbose_name="nome")
+  description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione")
+  logo_img = models.ImageField(blank=True, null=True, verbose_name="immagine copertina")
+  customer = models.CharField(max_length=150, blank=True, null=True, verbose_name="committente")
+  address = models.CharField(max_length=150, blank=True, null=True, verbose_name="indirizzo")
+  phase = models.CharField(max_length=50, blank=True, null=True, verbose_name="fase progettuale")
 
   def __str__(self):
     return self.name
