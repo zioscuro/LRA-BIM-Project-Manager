@@ -13,13 +13,13 @@ from .utils import create_model_register_file, create_project_info_sheets_file, 
 
 class CreateBimProject(StaffMixin, CreateView):
   model = BimProject
-  fields = '__all__'
+  fields = ['name', 'description', 'customer', 'address', 'phase']
   template_name = 'projects/create_project.html'
   success_url = '/'
 
 class UpdateBimProject(StaffMixin, UpdateView):
   model = BimProject
-  fields = '__all__'
+  fields = ['name', 'description', 'customer', 'address', 'phase']
   template_name_suffix = "_update_form"
 
   def get_success_url(self):

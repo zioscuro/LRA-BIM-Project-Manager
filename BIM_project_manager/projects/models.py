@@ -11,6 +11,9 @@ class BimProject(models.Model):
   name = models.CharField(max_length=80)
   description = models.CharField(max_length=150, blank=True, null=True)
   logo_img = models.ImageField(blank=True, null=True)
+  customer = models.CharField(max_length=150, blank=True, null=True)
+  address = models.CharField(max_length=150, blank=True, null=True)
+  phase = models.CharField(max_length=50, blank=True, null=True)
 
   def __str__(self):
     return self.name
