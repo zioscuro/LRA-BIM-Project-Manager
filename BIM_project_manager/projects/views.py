@@ -99,7 +99,7 @@ def manage_info_sheet_view(request, pk):
 
 class UpdateInfoSheet(StaffMixin, UpdateView):
   model = InfoSheet
-  fields = '__all__'
+  fields = ['name', 'description', 'sheet_type']
   template_name_suffix = "_update_form"
 
   def get_success_url(self):
