@@ -75,8 +75,8 @@ class Report(models.Model):
   a Report related to a Info Sheet
   each Report contains several Tests
   """
-  name = models.CharField(max_length=80)
-  description = models.CharField(max_length=150, blank=True, null=True)
+  name = models.CharField(max_length=80, verbose_name="nome report")
+  description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione report")
   info_sheet = models.ForeignKey(InfoSheet, on_delete=models.CASCADE, related_name='reports')
 
   def __str__(self):

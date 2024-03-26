@@ -122,7 +122,7 @@ def add_report_view(request, pk):
       report.save()
       return HttpResponseRedirect(info_sheet.get_absolute_url())
   else:
-    form = AddInfoSheetForm()
+    form = AddReportForm()
   context = {'form': form, 'info_sheet': info_sheet}
   return render(request, 'projects/add_report.html', context)
 
