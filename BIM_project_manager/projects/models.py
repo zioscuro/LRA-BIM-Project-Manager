@@ -31,13 +31,13 @@ class BimModel(models.Model):
   a BIM model related to a Project
   each BIM model contains several Info Sheets
   """
-  name = models.CharField(max_length=80)
-  discipline = models.CharField(max_length=50, blank=True, null=True)
-  designer =  models.CharField(max_length=50, blank=True, null=True)
+  name = models.CharField(max_length=80, verbose_name="nome")
+  discipline = models.CharField(max_length=50, blank=True, null=True, verbose_name="disciplina")
+  designer =  models.CharField(max_length=50, blank=True, null=True, verbose_name="progettista")
   default_coordination = models.BooleanField(default=False)
   default_validation = models.BooleanField(default=False)
-  authoringSoftware = models.CharField(max_length=50, blank=True, null=True)
-  lodReference = models.CharField(max_length=100, blank=True, null=True)
+  authoringSoftware = models.CharField(max_length=50, blank=True, null=True, verbose_name="software di authoring")
+  lodReference = models.CharField(max_length=100, blank=True, null=True, verbose_name="scheda LOD")
   project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models')
 
   def __str__(self):
