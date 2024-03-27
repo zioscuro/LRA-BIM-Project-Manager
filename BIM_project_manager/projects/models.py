@@ -25,7 +25,6 @@ class BimProject(models.Model):
     verbose_name = 'Progetto'
     verbose_name_plural = 'Progetti'
 
-
 class BimModel(models.Model):
   """
   a BIM model related to a Project
@@ -113,10 +112,10 @@ class ValidationTest(models.Model):
   """
   a Validation Test related to a Report
   """
-  date = models.DateTimeField(auto_now_add=True)
-  comments = models.CharField(max_length=150, blank=True, null=True)
-  specification = models.CharField(max_length=100)
-  issues = models.PositiveIntegerField()
+  date = models.DateTimeField(auto_now_add=True, verbose_name="data")
+  comments = models.CharField(max_length=150, blank=True, null=True, verbose_name="commenti")
+  specification = models.CharField(max_length=100, verbose_name="specifica di verifica")
+  issues = models.PositiveIntegerField(verbose_name="difformità riscontrate")
   report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='validation_tests')
 
   def __str__(self):

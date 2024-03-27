@@ -196,7 +196,7 @@ def add_validation_test_view(request, pk):
 
 class UpdateValidationTest(StaffMixin, UpdateView):
   model = ValidationTest
-  fields = '__all__'
+  fields = ['comments', 'specification', 'issues']
   template_name_suffix = "_update_form"
 
   def get_success_url(self):
