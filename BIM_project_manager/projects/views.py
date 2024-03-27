@@ -139,7 +139,7 @@ def manage_report_view(request, pk):
 
 class UpdateReport(StaffMixin, UpdateView):
   model = Report
-  fields = '__all__'
+  fields = ['name', 'description']
   template_name_suffix = "_update_form"
 
   def get_success_url(self):
@@ -168,7 +168,7 @@ def add_clash_test_view(request, pk):
 
 class UpdateClashTest(StaffMixin, UpdateView):
   model = ClashTest
-  fields = '__all__'
+  fields = ['comments', 'clash_new', 'clash_active', 'clash_reviewed', 'clash_approved', 'clash_resolved']
   template_name_suffix = "_update_form"
 
   def get_success_url(self):
