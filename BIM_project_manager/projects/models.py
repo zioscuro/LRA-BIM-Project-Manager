@@ -93,13 +93,13 @@ class ClashTest(models.Model):
   """
   a Clash Test related to a Report
   """
-  date = models.DateTimeField(auto_now_add=True)
-  comments = models.CharField(max_length=150, blank=True, null=True)
-  clash_new = models.PositiveIntegerField()
-  clash_active = models.PositiveIntegerField()
-  clash_reviewed = models.PositiveIntegerField()
-  clash_approved = models.PositiveIntegerField()
-  clash_resolved = models.PositiveIntegerField()
+  date = models.DateTimeField(auto_now_add=True, verbose_name="data")
+  comments = models.CharField(max_length=150, blank=True, null=True, verbose_name="commenti")
+  clash_new = models.PositiveIntegerField(verbose_name="interferenze nuove")
+  clash_active = models.PositiveIntegerField(verbose_name="interferenze attive")
+  clash_reviewed = models.PositiveIntegerField(verbose_name="interferenze riviste")
+  clash_approved = models.PositiveIntegerField(verbose_name="interferenze approvate")
+  clash_resolved = models.PositiveIntegerField(verbose_name="interferenze risolte")
   report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='clash_tests')
 
   def __str__(self):
