@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
@@ -73,7 +73,6 @@ class DeleteBimModel(StaffMixin, DeleteView):
   def get_success_url(self):
     return reverse('manage_project', kwargs={'pk': self.object.project.pk})
   
-
 @login_required
 def add_info_sheet_view(request, pk, sheet_type):
   bim_model = get_object_or_404(BimModel, pk=pk)
