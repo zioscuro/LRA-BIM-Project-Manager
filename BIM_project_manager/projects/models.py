@@ -13,7 +13,26 @@ class BimProject(models.Model):
   logo_img = models.ImageField(blank=True, null=True, verbose_name="immagine copertina")
   customer = models.CharField(max_length=150, blank=True, null=True, verbose_name="committente")
   address = models.CharField(max_length=150, blank=True, null=True, verbose_name="indirizzo")
-  phase = models.CharField(max_length=50, blank=True, null=True, verbose_name="fase progettuale")
+
+  RILIEVO = "RI"
+  PFTE = 'PF'
+  DEFINITIVO = 'PD'
+  ESECUTIVO = 'PE'
+  DIREZIONE_LAVORI = 'DL'
+  COSTRUTTIVO = 'CS'
+  AS_BUILT = 'AB'
+  
+  PHASE_CHOICES = {
+    RILIEVO: 'Rilievo',
+    PFTE: 'Fattibilità',
+    DEFINITIVO: 'Definitivo',
+    ESECUTIVO: 'Esecutivo',
+    DIREZIONE_LAVORI: 'Direzione lavori',
+    COSTRUTTIVO: 'Costruttivo',
+    AS_BUILT: 'As Built'
+  }
+  
+  phase = models.CharField(max_length=2, choices=PHASE_CHOICES, blank=True, null=True, verbose_name="fase progettuale")
 
   def __str__(self):
     return self.name
