@@ -13,23 +13,15 @@ class BimProject(models.Model):
   logo_img = models.ImageField(blank=True, null=True, verbose_name="immagine copertina")
   customer = models.CharField(max_length=150, blank=True, null=True, verbose_name="committente")
   address = models.CharField(max_length=150, blank=True, null=True, verbose_name="indirizzo")
-
-  RILIEVO = "RI"
-  PFTE = 'PF'
-  DEFINITIVO = 'PD'
-  ESECUTIVO = 'PE'
-  DIREZIONE_LAVORI = 'DL'
-  COSTRUTTIVO = 'CS'
-  AS_BUILT = 'AB'
-  
+ 
   PHASE_CHOICES = {
-    RILIEVO: 'Rilievo',
-    PFTE: 'Fattibilità',
-    DEFINITIVO: 'Definitivo',
-    ESECUTIVO: 'Esecutivo',
-    DIREZIONE_LAVORI: 'Direzione lavori',
-    COSTRUTTIVO: 'Costruttivo',
-    AS_BUILT: 'As Built'
+    'RI': 'Rilievo',
+    'PF': 'Fattibilità',
+    'PD': 'Definitivo',
+    'PE': 'Esecutivo',
+    'DL': 'Direzione lavori',
+    'CS': 'Costruttivo',
+    'AB': 'As Built'
   }
   
   phase = models.CharField(max_length=2, choices=PHASE_CHOICES, blank=True, null=True, verbose_name="fase progettuale")
@@ -73,7 +65,13 @@ class InfoSheet(models.Model):
   an Info Sheet related to a BIM Model
   each Info Sheet contains several Reports
   """
-  sheet_type = models.CharField(max_length=20, verbose_name="tipo scheda")
+  
+  SHEET_TYPE_CHOICES = {
+    'Coordination': 'Coordinamento',
+    'Validation': 'Verifica',
+  }
+
+  sheet_type = models.CharField(max_length=20, choices=SHEET_TYPE_CHOICES, verbose_name="tipo scheda")
   name = models.CharField(max_length=80, verbose_name="nome")
   description = models.CharField(max_length=150, blank=True, null=True, verbose_name="disciplina")
   bim_model = models.ForeignKey(BimModel, on_delete=models.CASCADE, related_name='info_sheets')
