@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
 from openpyxl import Workbook
-from io import BytesIO
 
 def create_model_register_file(bimProject):
   '''
@@ -27,21 +26,24 @@ def create_model_register_file(bimProject):
 
 def create_project_info_sheets_file(bimProject):
   '''
-  create a text file export with all the info sheets of the project divided by BIM model
+  create an excel file export with all the info sheets of the project divided by BIM model
   '''
   bim_models = bimProject.bim_models.all()
 
-  response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bimProject.name}.txt"'
-  response.write(f'Schede informative - Progetto: {bimProject.name}')
+  response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
+  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bimProject.name}.xlsx"'
 
-  for count, model in enumerate(bim_models):
-    response.write(f'Modello n.{count+1} - {model.name} - {model.discipline} - {model.designer}\n')
+  wb = Workbook(write_only=True)  
+  for count, model in enumerate(bim_models):    
+    ws = wb.create_sheet(model.name)
+    ws.append([f'Schede Informative Modello: {model.name}'])
+    ws.append(['n.','Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
 
     info_sheets = model.info_sheets.all()
-
     for count, sheet in enumerate(info_sheets):
-      response.write(f'\tScheda n.{count+1} - {sheet.name} - {sheet.description} - {sheet.sheet_type}\n')   
+      ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])   
+
+  wb.save(response)
 
   return response
 
