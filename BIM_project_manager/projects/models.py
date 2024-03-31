@@ -42,7 +42,16 @@ class BimModel(models.Model):
   each BIM model contains several Info Sheets
   """
   name = models.CharField(max_length=80, verbose_name="nome")
-  discipline = models.CharField(max_length=50, blank=True, null=True, verbose_name="disciplina")
+
+  DISCIPLINE_CHOICES = {
+    'ARC': 'Architettonico',
+    'STR': 'Strutture',
+    'MEC': 'Impianti meccanici',
+    'ELE': 'Impianti elettrici',
+    'COO': 'Coordinamento',
+  }
+
+  discipline = models.CharField(choices=DISCIPLINE_CHOICES, max_length=50, blank=True, null=True, verbose_name="disciplina")
   designer =  models.CharField(max_length=50, blank=True, null=True, verbose_name="progettista")
   default_coordination = models.BooleanField(default=False)
   default_validation = models.BooleanField(default=False)
