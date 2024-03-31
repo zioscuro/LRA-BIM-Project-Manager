@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
 from openpyxl import Workbook
-from io import BytesIO
 
 def create_model_register_file(bimProject):
   '''
