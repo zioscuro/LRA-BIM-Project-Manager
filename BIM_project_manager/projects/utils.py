@@ -1,19 +1,27 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
+from openpyxl import Workbook
+from io import BytesIO
 
 def create_model_register_file(bimProject):
   '''
-  create a text file export with the model register with all the BIM model of a specific project
+  create an excel file export with the model register with all the BIM model of a specific project
   '''
   bim_models = bimProject.bim_models.all()
 
-  response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = f'attachment; filename="Model_Register_{bimProject.name}.txt"'  
-  response.write(f'Registro modelli - Progetto: {bimProject.name}\n')
-  response.write(f'n. - Nome - Disciplina - Progettista\n')
+  wb = Workbook(write_only=True)
+  ws = wb.create_sheet()
+
+  response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  response['Content-Disposition'] = f'attachment; filename="Model_Register_{bimProject.name}.xlsx"'
+
+  ws.append([f'Registro modelli - Progetto: {bimProject.name}'])
+  ws.append(['n.', 'Nome modello', 'Disciplina', 'Progettista'])
 
   for count, model in enumerate(bim_models):
-    response.write(f'{count+1} - {model.name} - {model.discipline} - {model.designer}\n')
+   ws.append([count+1, model.name, model.discipline, model.designer])
+
+  wb.save(response)
 
   return response
 
