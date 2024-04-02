@@ -49,40 +49,51 @@ def create_project_info_sheets_file(bimProject):
 
 def create_model_info_sheets_file(bimModel):
   '''
-  create a text file export with all the info sheets of a specific BIM model
+  create an excel file export with all the info sheets of a specific BIM model
   '''
   info_sheets = bimModel.info_sheets.all()
 
-  response = HttpResponse(content_type='text/plain')  
-  response['Content-Disposition'] = f'attachment; filename="{bimModel.name}_Info_Sheets.txt"'
-  response.write(f'Schede informative - Modello BIM: {bimModel.name}\n')
-  response.write('Dati modello BIM\n')
-  response.write(f'Disiplina: {bimModel.discipline} - Autore: {bimModel.designer} - Software: {bimModel.authoringSoftware} - Scheda LOD: {bimModel.lodReference}\n')
+  response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
+  response['Content-Disposition'] = f'attachment; filename="{bimModel.name}_Info_Sheets.xlsx"'
+  
+  wb = Workbook(write_only=True)  
 
   for count, sheet in enumerate(info_sheets):
-    response.write(f'Scheda n.{count+1} - {sheet.name} - {sheet.description} - {sheet.sheet_type}\n')
+    ws = wb.create_sheet(sheet.name)
+
+    ws.append(['DATI MODELLO BIM'])
+    ws.append(['nome modello', bimModel.name])
+    ws.append(['disciplina', bimModel.discipline])
+    ws.append(['Autore', bimModel.designer])
+    ws.append(['Software', bimModel.authoringSoftware])
+    ws.append(['Scheda LOD', bimModel.lodReference])
+    ws.append([])
+    ws.append(['DATI SCHEDA INFORMATIVA'])
+    ws.append(['nome scheda', sheet.name])
+    ws.append(['descrizione scheda', sheet.description])
+    ws.append(['tipo scheda', sheet.sheet_type])
+    ws.append([])
     
-    reports = sheet.reports.all()
-    
+    reports = sheet.reports.all()    
     for count, report in enumerate(reports):
-      response.write(f'\tReport n.{count+1} - {report.name} - {report.description} - {sheet.sheet_type}\n')
+      ws.append([f'Report n.{count+1} - {report.name} - {report.description}'])
 
       if sheet.sheet_type == 'coordination':
         tests = report.clash_tests.all()
-        response.write('\t\tTest Interferenze\n')
-        response.write('\t\tData - Commenti - Nuove - Attive - Revisionate - Approvate - Risolte\n')
+        ws.append(['Data', 'Commenti', 'Nuove', 'Attive', 'Revisionate', 'Approvate', 'Risolte'])
 
         for test in tests:
-          response.write(f'\t\t{test.date.strftime("%m/%d/%Y")} - {test.comments} - {test.clash_new} - {test.clash_active} - {test.clash_reviewed} - {test.clash_approved} - {test.clash_resolved}\n')
+          ws.append([test.date.strftime("%m/%d/%Y"), test.comments, test.clash_new, test.clash_active, test.clash_reviewed, test.clash_approved, test.clash_resolved])
 
       if sheet.sheet_type == 'validation':
         tests = report.validation_tests.all()
-        response.write('\t\tTest Verifica\n')
-        response.write('\t\tData - Commenti - Specifica - Difformità\n')
+        ws.append(['Data', 'Commenti', 'Specifica', 'Difformità'])
 
         for test in tests:
-          response.write(f'\t\t{test.date.strftime("%m/%d/%Y")} - {test.comments} - {test.specification} - {test.issues}\n')
+          ws.append([test.date.strftime("%m/%d/%Y"), test.comments, test.specification, test.issues])
 
+  wb.save(response)
+  
   return response
 
 def set_default_coordination(model):
