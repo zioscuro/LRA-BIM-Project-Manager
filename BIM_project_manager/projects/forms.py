@@ -1,15 +1,15 @@
 from django import forms
 from .models import BimModel, InfoSheet, Report, ClashTest, ValidationTest
 
-class AddBimModelForm(forms.ModelForm):  
-  class Meta:
-    model = BimModel
-    fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
+# class AddBimModelForm(forms.ModelForm):  
+#   class Meta:
+#     model = BimModel
+#     fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
 
-class AddInfoSheetForm(forms.ModelForm):
-  class Meta:
-    model = InfoSheet
-    fields = ['name', 'description']
+# class AddInfoSheetForm(forms.ModelForm):
+#   class Meta:
+#     model = InfoSheet
+#     fields = ['name', 'description']
 
 class AddReportForm(forms.ModelForm):
   class Meta:

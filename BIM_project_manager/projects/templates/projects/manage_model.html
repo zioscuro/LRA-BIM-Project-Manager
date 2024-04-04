@@ -70,7 +70,7 @@
         class="btn btn-outline-primary btn-lg disabled"
         {% endif %}
       >+ Default</a>
-      <a href="{% url 'add_info_sheet' pk=bim_model.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'create_info_sheet' pk=bim_model.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
     <table class="table">
@@ -105,7 +105,7 @@
         class="btn btn-outline-primary btn-lg disabled"
         {% endif %}
       >+ Default</a>
-      <a href="{% url 'add_info_sheet' pk=bim_model.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'create_info_sheet' pk=bim_model.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
   </div>

@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import AddBimModelForm, AddInfoSheetForm, AddReportForm, AddClashTestForm, AddValidationTestForm
+from .forms import AddReportForm, AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
 from .utils import create_model_register_file, create_project_info_sheets_file, create_model_info_sheets_file, set_default_coordination, set_default_validation
@@ -49,29 +49,6 @@ class CreateBimModel(StaffMixin, CreateView):
   def get_success_url(self):
     return reverse('manage_project', kwargs={ 'pk': self.object.project.pk })
 
-# @login_required
-# def add_bim_model_view(request, pk):
-#   project = get_object_or_404(BimProject, pk=pk)
-#   if request.method == 'POST':
-#     form = AddBimModelForm(request.POST)
-#     if form.is_valid():
-#       bim_model = form.save(commit=False)
-#       bim_model.project = project
-#       bim_model.save()
-#       return HttpResponseRedirect(project.get_absolute_url())
-#   else:
-#     form = AddBimModelForm()
-#   context = {'form': form, 'project': project}
-#   return render(request, 'projects/add_bim_model.html', context)
-
-@login_required
-def manage_bim_model_view(request, pk):
-  bim_model = get_object_or_404(BimModel, pk=pk)
-  info_sheets_coordination = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='coordination')
-  info_sheets_validation = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='validation')
-  context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
-  return render(request, 'projects/manage_model.html', context)
-
 class UpdateBimModel(StaffMixin, UpdateView):
   model = BimModel
   fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
@@ -85,29 +62,44 @@ class DeleteBimModel(StaffMixin, DeleteView):
 
   def get_success_url(self):
     return reverse('manage_project', kwargs={'pk': self.object.project.pk})
-  
-@login_required
-def add_info_sheet_view(request, pk, sheet_type):
-  bim_model = get_object_or_404(BimModel, pk=pk)
-  if request.method == 'POST':
-    form = AddInfoSheetForm(request.POST)
-    if form.is_valid():
-      info_sheet = form.save(commit=False)
-      info_sheet.sheet_type = sheet_type
-      info_sheet.bim_model = bim_model
-      info_sheet.save()
-      return HttpResponseRedirect(bim_model.get_absolute_url())
-  else:
-    form = AddInfoSheetForm()
-  context = {'form': form, 'bim_model': bim_model, 'sheet_type': sheet_type}
-  return render(request, 'projects/add_info_sheet.html', context)
 
 @login_required
-def manage_info_sheet_view(request, pk):
-  info_sheet = get_object_or_404(InfoSheet, pk=pk)
-  reports = Report.objects.filter(info_sheet=info_sheet)
-  context = {'info_sheet': info_sheet, 'reports': reports}
-  return render(request, 'projects/manage_info_sheet.html', context)
+def manage_bim_model_view(request, pk):
+  bim_model = get_object_or_404(BimModel, pk=pk)
+  info_sheets_coordination = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='coordination')
+  info_sheets_validation = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='validation')
+  context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
+  return render(request, 'projects/manage_model.html', context)
+
+# @login_required
+# def add_info_sheet_view(request, pk, sheet_type):
+#   bim_model = get_object_or_404(BimModel, pk=pk)
+#   if request.method == 'POST':
+#     form = AddInfoSheetForm(request.POST)
+#     if form.is_valid():
+#       info_sheet = form.save(commit=False)
+#       info_sheet.sheet_type = sheet_type
+#       info_sheet.bim_model = bim_model
+#       info_sheet.save()
+#       return HttpResponseRedirect(bim_model.get_absolute_url())
+#   else:
+#     form = AddInfoSheetForm()
+#   context = {'form': form, 'bim_model': bim_model, 'sheet_type': sheet_type}
+#   return render(request, 'projects/add_info_sheet.html', context)
+
+class CreateInfoSheet(StaffMixin, CreateView):
+  model = InfoSheet
+  fields = ['name', 'description']
+  template_name = 'projects/add_info_sheet.html'
+
+  def form_valid(self, form):
+    bim_model = get_object_or_404(BimModel, pk=self.kwargs['pk'])
+    form.instance.bim_model = bim_model
+    form.instance.sheet_type = self.kwargs['sheet_type']
+    return super(CreateInfoSheet, self).form_valid(form)
+  
+  def get_success_url(self):
+    return reverse('manage_bim_model', kwargs={ 'pk': self.object.bim_model.pk })
 
 class UpdateInfoSheet(StaffMixin, UpdateView):
   model = InfoSheet
@@ -122,6 +114,13 @@ class DeleteInfoSheet(StaffMixin, DeleteView):
 
   def get_success_url(self):
     return reverse('manage_bim_model', kwargs={'pk': self.object.bim_model.pk})
+
+@login_required
+def manage_info_sheet_view(request, pk):
+  info_sheet = get_object_or_404(InfoSheet, pk=pk)
+  reports = Report.objects.filter(info_sheet=info_sheet)
+  context = {'info_sheet': info_sheet, 'reports': reports}
+  return render(request, 'projects/manage_info_sheet.html', context)
 
 @login_required
 def add_report_view(request, pk):
