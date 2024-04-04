@@ -14,7 +14,7 @@ from .utils import create_model_register_file, create_project_info_sheets_file, 
 class CreateBimProject(StaffMixin, CreateView):
   model = BimProject
   fields = ['name', 'description', 'customer', 'address', 'phase']
-  template_name = 'projects/create_project.html'
+  template_name = 'projects/create_bim_project.html'
   success_url = '/'
 
 class UpdateBimProject(StaffMixin, UpdateView):
@@ -39,7 +39,7 @@ def manage_project_view(request, pk):
 class CreateBimModel(StaffMixin, CreateView):
   model = BimModel
   fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
-  template_name = 'projects/add_bim_model.html'
+  template_name = 'projects/create_bim_model.html'
 
   def form_valid(self, form):
     bim_project = get_object_or_404(BimProject, pk=self.kwargs['pk'])
@@ -71,26 +71,10 @@ def manage_bim_model_view(request, pk):
   context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
   return render(request, 'projects/manage_model.html', context)
 
-# @login_required
-# def add_info_sheet_view(request, pk, sheet_type):
-#   bim_model = get_object_or_404(BimModel, pk=pk)
-#   if request.method == 'POST':
-#     form = AddInfoSheetForm(request.POST)
-#     if form.is_valid():
-#       info_sheet = form.save(commit=False)
-#       info_sheet.sheet_type = sheet_type
-#       info_sheet.bim_model = bim_model
-#       info_sheet.save()
-#       return HttpResponseRedirect(bim_model.get_absolute_url())
-#   else:
-#     form = AddInfoSheetForm()
-#   context = {'form': form, 'bim_model': bim_model, 'sheet_type': sheet_type}
-#   return render(request, 'projects/add_info_sheet.html', context)
-
 class CreateInfoSheet(StaffMixin, CreateView):
   model = InfoSheet
   fields = ['name', 'description']
-  template_name = 'projects/add_info_sheet.html'
+  template_name = 'projects/create_info_sheet.html'
 
   def form_valid(self, form):
     bim_model = get_object_or_404(BimModel, pk=self.kwargs['pk'])
