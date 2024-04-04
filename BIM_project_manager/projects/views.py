@@ -36,20 +36,33 @@ def manage_project_view(request, pk):
   context = {'project': project, 'bim_models': bim_models}
   return render(request, 'projects/manage_project.html', context)
 
-@login_required
-def add_bim_model_view(request, pk):
-  project = get_object_or_404(BimProject, pk=pk)
-  if request.method == 'POST':
-    form = AddBimModelForm(request.POST)
-    if form.is_valid():
-      bim_model = form.save(commit=False)
-      bim_model.project = project
-      bim_model.save()
-      return HttpResponseRedirect(project.get_absolute_url())
-  else:
-    form = AddBimModelForm()
-  context = {'form': form, 'project': project}
-  return render(request, 'projects/add_bim_model.html', context)
+class CreateBimModel(StaffMixin, CreateView):
+  model = BimModel
+  fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
+  template_name = 'projects/add_bim_model.html'
+
+  def form_valid(self, form):
+    bim_project = get_object_or_404(BimProject, pk=self.kwargs['pk'])
+    form.instance.project = bim_project
+    return super(CreateBimModel, self).form_valid(form)
+  
+  def get_success_url(self):
+    return reverse('manage_project', kwargs={ 'pk': self.object.project.pk })
+
+# @login_required
+# def add_bim_model_view(request, pk):
+#   project = get_object_or_404(BimProject, pk=pk)
+#   if request.method == 'POST':
+#     form = AddBimModelForm(request.POST)
+#     if form.is_valid():
+#       bim_model = form.save(commit=False)
+#       bim_model.project = project
+#       bim_model.save()
+#       return HttpResponseRedirect(project.get_absolute_url())
+#   else:
+#     form = AddBimModelForm()
+#   context = {'form': form, 'project': project}
+#   return render(request, 'projects/add_bim_model.html', context)
 
 @login_required
 def manage_bim_model_view(request, pk):
