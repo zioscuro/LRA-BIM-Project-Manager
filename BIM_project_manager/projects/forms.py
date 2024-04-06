@@ -11,10 +11,10 @@ from .models import BimModel, InfoSheet, Report, ClashTest, ValidationTest
 #     model = InfoSheet
 #     fields = ['name', 'description']
 
-class AddReportForm(forms.ModelForm):
-  class Meta:
-    model = Report
-    fields = ['name', 'description']
+# class AddReportForm(forms.ModelForm):
+#   class Meta:
+#     model = Report
+#     fields = ['name', 'description']
 
 class AddClashTestForm(forms.ModelForm):
   class Meta:

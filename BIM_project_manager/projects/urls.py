@@ -21,7 +21,7 @@ urlpatterns = [
   path('manage_info_sheet/<int:pk>/', views.manage_info_sheet_view, name='manage_info_sheet'),
   path('manage_info_sheet/<int:pk>/update_info_sheet', views.UpdateInfoSheet.as_view(), name='update_info_sheet'),
   path('manage_info_sheet/<int:pk>/delete_info_sheet', views.DeleteInfoSheet.as_view(), name='delete_info_sheet'),
-  path('manage_info_sheet/<int:pk>/add_report', views.add_report_view, name='add_report'),
+  path('manage_info_sheet/<int:pk>/create_report', views.CreateReport.as_view(), name='create_report'),
   
   path('manage_report/<int:pk>/', views.manage_report_view, name='manage_report'),
   path('manage_report/<int:pk>/update_report', views.UpdateReport.as_view(), name='update_report'),

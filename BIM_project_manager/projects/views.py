@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import AddReportForm, AddClashTestForm, AddValidationTestForm
+from .forms import AddClashTestForm, AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
 from .utils import create_model_register_file, create_project_info_sheets_file, create_model_info_sheets_file, set_default_coordination, set_default_validation
@@ -35,6 +35,7 @@ def manage_project_view(request, pk):
   bim_models = BimModel.objects.filter(project=project).order_by('name')
   context = {'project': project, 'bim_models': bim_models}
   return render(request, 'projects/manage_project.html', context)
+
 
 class CreateBimModel(StaffMixin, CreateView):
   model = BimModel
@@ -71,6 +72,7 @@ def manage_bim_model_view(request, pk):
   context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
   return render(request, 'projects/manage_model.html', context)
 
+
 class CreateInfoSheet(StaffMixin, CreateView):
   model = InfoSheet
   fields = ['name', 'description']
@@ -106,31 +108,35 @@ def manage_info_sheet_view(request, pk):
   context = {'info_sheet': info_sheet, 'reports': reports}
   return render(request, 'projects/manage_info_sheet.html', context)
 
-@login_required
-def add_report_view(request, pk):
-  info_sheet = get_object_or_404(InfoSheet, pk=pk)
-  if request.method == 'POST':
-    form = AddReportForm(request.POST)
-    if form.is_valid():
-      report = form.save(commit=False)
-      report.info_sheet = info_sheet
-      report.save()
-      return HttpResponseRedirect(info_sheet.get_absolute_url())
-  else:
-    form = AddReportForm()
-  context = {'form': form, 'info_sheet': info_sheet}
-  return render(request, 'projects/add_report.html', context)
+# @login_required
+# def add_report_view(request, pk):
+#   info_sheet = get_object_or_404(InfoSheet, pk=pk)
+#   if request.method == 'POST':
+#     form = AddReportForm(request.POST)
+#     if form.is_valid():
+#       report = form.save(commit=False)
+#       report.info_sheet = info_sheet
+#       report.save()
+#       return HttpResponseRedirect(info_sheet.get_absolute_url())
+#   else:
+#     form = AddReportForm()
+#   context = {'form': form, 'info_sheet': info_sheet}
+#   return render(request, 'projects/add_report.html', context)
 
-@login_required
-def manage_report_view(request, pk):
-  report = get_object_or_404(Report, pk=pk)
-  tests = None
-  if report.info_sheet.sheet_type == 'coordination':
-    tests = ClashTest.objects.filter(report=report).order_by('date')
-  elif report.info_sheet.sheet_type == 'validation':
-    tests = ValidationTest.objects.filter(report=report).order_by('date')
-  context = {'report': report, 'tests': tests}
-  return render(request, 'projects/manage_report.html', context)
+
+
+class CreateReport(StaffMixin, CreateView):
+  model = Report
+  fields = ['name', 'description']
+  template_name = 'projects/create_report.html'
+
+  def form_valid(self, form):
+    info_sheet = get_object_or_404(InfoSheet, pk=self.kwargs['pk'])
+    form.instance.info_sheet = info_sheet
+    return super(CreateReport, self).form_valid(form)
+  
+  def get_success_url(self):
+    return reverse('manage_info_sheet', kwargs={ 'pk': self.object.info_sheet.pk })
 
 class UpdateReport(StaffMixin, UpdateView):
   model = Report
@@ -145,6 +151,18 @@ class DeleteReport(StaffMixin, DeleteView):
 
   def get_success_url(self):
     return reverse('manage_info_sheet', kwargs={'pk': self.object.info_sheet.pk})
+
+@login_required
+def manage_report_view(request, pk):
+  report = get_object_or_404(Report, pk=pk)
+  tests = None
+  if report.info_sheet.sheet_type == 'coordination':
+    tests = ClashTest.objects.filter(report=report).order_by('date')
+  elif report.info_sheet.sheet_type == 'validation':
+    tests = ValidationTest.objects.filter(report=report).order_by('date')
+  context = {'report': report, 'tests': tests}
+  return render(request, 'projects/manage_report.html', context)
+
 
 @login_required
 def add_clash_test_view(request, pk):
