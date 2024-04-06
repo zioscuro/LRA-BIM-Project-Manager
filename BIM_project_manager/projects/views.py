@@ -108,22 +108,6 @@ def manage_info_sheet_view(request, pk):
   context = {'info_sheet': info_sheet, 'reports': reports}
   return render(request, 'projects/manage_info_sheet.html', context)
 
-# @login_required
-# def add_report_view(request, pk):
-#   info_sheet = get_object_or_404(InfoSheet, pk=pk)
-#   if request.method == 'POST':
-#     form = AddReportForm(request.POST)
-#     if form.is_valid():
-#       report = form.save(commit=False)
-#       report.info_sheet = info_sheet
-#       report.save()
-#       return HttpResponseRedirect(info_sheet.get_absolute_url())
-#   else:
-#     form = AddReportForm()
-#   context = {'form': form, 'info_sheet': info_sheet}
-#   return render(request, 'projects/add_report.html', context)
-
-
 
 class CreateReport(StaffMixin, CreateView):
   model = Report
@@ -193,6 +177,7 @@ class DeleteClashTest(StaffMixin, DeleteView):
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
+
 @login_required
 def add_validation_test_view(request, pk):
   report = get_object_or_404(Report, pk=pk)
@@ -221,6 +206,7 @@ class DeleteValidationTest(StaffMixin, DeleteView):
 
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
+
 
 @login_required  
 def default_coordination(request, pk):
