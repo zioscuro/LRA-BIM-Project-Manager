@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import AddValidationTestForm
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
 from .utils import create_model_register_file, create_project_info_sheets_file, create_model_info_sheets_file, set_default_coordination, set_default_validation
@@ -176,20 +175,18 @@ class DeleteClashTest(StaffMixin, DeleteView):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
 
-@login_required
-def add_validation_test_view(request, pk):
-  report = get_object_or_404(Report, pk=pk)
-  if request.method == 'POST':
-    form = AddValidationTestForm(request.POST)
-    if form.is_valid():
-      test = form.save(commit=False)
-      test.report = report
-      test.save()
-      return HttpResponseRedirect(report.get_absolute_url())
-  else:
-    form = AddValidationTestForm()
-  context = {'form': form, 'report': report}
-  return render(request, 'projects/add_validation_test.html', context)
+class CreateValidationTest(StaffMixin, CreateView):
+  model = ValidationTest
+  fields = ['comments', 'specification', 'issues']
+  template_name = 'projects/create_validation_test.html'
+
+  def form_valid(self, form):
+    report = get_object_or_404(Report, pk=self.kwargs['pk'])
+    form.instance.report = report
+    return super(CreateValidationTest, self).form_valid(form)
+  
+  def get_success_url(self):
+    return reverse('manage_report', kwargs={ 'pk': self.object.report.pk })
 
 class UpdateValidationTest(StaffMixin, UpdateView):
   model = ValidationTest
