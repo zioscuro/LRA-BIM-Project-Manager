@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
   path('new_project/', views.CreateBimProject.as_view(), name='create_project'),
-  path('manage_project/<int:pk>/', views.manage_project_view, name='manage_project'),
+  path('manage_project/<int:pk>/', views.ManageBimProject.as_view(), name='manage_project'),
   path('manage_project/<int:pk>/update_project', views.UpdateBimProject.as_view(), name='update_project'),
   path('manage_project/<int:pk>/delete_project', views.DeleteBimProject.as_view(), name='delete_project'),
   path('manage_project/<int:pk>/create_bim_model/', views.CreateBimModel.as_view(), name='create_bim_model'),
@@ -33,5 +33,4 @@ urlpatterns = [
   path('manage_test/delete_clash_test/<int:pk>', views.DeleteClashTest.as_view(), name='delete_clash_test'),
   path('manage_test/update_validation_test/<int:pk>', views.UpdateValidationTest.as_view(), name='update_validation_test'),
   path('manage_test/delete_validation_test/<int:pk>', views.DeleteValidationTest.as_view(), name='delete_validation_test'),
-
 ]

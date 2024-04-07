@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.detail import DetailView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -28,12 +29,9 @@ class DeleteBimProject(StaffMixin, DeleteView):
   model = BimProject
   success_url = '/'
 
-@login_required
-def manage_project_view(request, pk):
-  project = get_object_or_404(BimProject, pk=pk)
-  bim_models = BimModel.objects.filter(project=project).order_by('name')
-  context = {'project': project, 'bim_models': bim_models}
-  return render(request, 'projects/manage_project.html', context)
+class ManageBimProject(StaffMixin, DetailView):
+  model = BimProject
+  template_name = 'projects/manage_bim_project.html'
 
 
 class CreateBimModel(StaffMixin, CreateView):
