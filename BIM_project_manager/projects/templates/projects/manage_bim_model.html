@@ -1,39 +1,39 @@
 {% extends 'base.html' %}
 
-{% block head_title %}{{ block.super }} - {{bim_model.name}}{% endblock head_title %}
+{% block head_title %}{{ block.super }} - {{bimmodel.name}}{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bim_model.project.pk %}">← Torna al progetto</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bimmodel.project.pk %}">← Torna al progetto</a>
 {% endblock navbar %}
 
 {% block content %}
 
-<h1 class="mb-5 text-center">{{bim_model.name}}</h1>
+<h1 class="mb-5 text-center">{{bimmodel.name}}</h1>
 <div class="row  mx-auto">
   <div class="col-md-3">
     <h4>Dati modello</h4>    
     <h6>nome</h6>
-    <p>{{bim_model.name}}</p>
+    <p>{{bimmodel.name}}</p>
     <h6>disciplina</h6>
-    <p>{{bim_model.discipline}}</p>
+    <p>{{bimmodel.discipline}}</p>
     <h6>progettista</h6>
-    <p>{{bim_model.designer}}</p>
+    <p>{{bimmodel.designer}}</p>
     <h6>software di authoring</h6>
-    <p>{{bim_model.authoringSoftware}}</p>
+    <p>{{bimmodel.authoringSoftware}}</p>
     <h6>scheda LOD</h6>
-    <p>{{bim_model.lodReference}}</p>
+    <p>{{bimmodel.lodReference}}</p>
     <h6>progetto</h6>
-    <p>{{bim_model.project.name}}</p>
+    <p>{{bimmodel.project.name}}</p>
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
-      <a href="{% url 'update_model' pk=bim_model.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
-      <a href="{% url 'delete_model' pk=bim_model.pk %}" class="btn btn-danger btn-lg">Cancella modello</a>
+      <a href="{% url 'update_model' pk=bimmodel.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+      <a href="{% url 'delete_model' pk=bimmodel.pk %}" class="btn btn-danger btn-lg">Cancella modello</a>
     </div>
     {% endif %}
     <hr>
     <div class="d-grid gap-2">
-      <a href="{% url 'export_model_info_sheets' pk=bim_model.pk %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
+      <a href="{% url 'export_model_info_sheets' pk=bimmodel.pk %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
     </div>
   </div>
   <div class="col-md-9">    
@@ -62,15 +62,15 @@
     </table>
     <div class="d-flex gap-2 justify-content-end">
       <a
-        {% if not bim_model.default_coordination %}
-        href="{% url 'default_coordination' pk=bim_model.pk %}"
+        {% if not bimmodel.default_coordination %}
+        href="{% url 'default_coordination' pk=bimmodel.pk %}"
         class="btn btn-outline-primary btn-lg"
         {% else %}
         href="#"
         class="btn btn-outline-primary btn-lg disabled"
         {% endif %}
       >+ Default</a>
-      <a href="{% url 'create_info_sheet' pk=bim_model.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
     <table class="table">
@@ -98,14 +98,14 @@
     <div class="d-flex gap-2 justify-content-end">
       <a
         {% if not bim_model.default_validation %} 
-        href="{% url 'default_validation' pk=bim_model.pk %}" 
+        href="{% url 'default_validation' pk=bimmodel.pk %}" 
         class="btn btn-outline-primary btn-lg"
         {% else %}
         href="#"
         class="btn btn-outline-primary btn-lg disabled"
         {% endif %}
       >+ Default</a>
-      <a href="{% url 'create_info_sheet' pk=bim_model.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
   </div>

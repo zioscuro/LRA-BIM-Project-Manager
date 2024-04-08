@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -61,13 +62,15 @@ class DeleteBimModel(StaffMixin, DeleteView):
   def get_success_url(self):
     return reverse('manage_project', kwargs={'pk': self.object.project.pk})
 
-@login_required
-def manage_bim_model_view(request, pk):
-  bim_model = get_object_or_404(BimModel, pk=pk)
-  info_sheets_coordination = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='coordination')
-  info_sheets_validation = InfoSheet.objects.filter(bim_model=bim_model, sheet_type='validation')
-  context = {'bim_model': bim_model, 'info_sheets_coordination': info_sheets_coordination, 'info_sheets_validation': info_sheets_validation}
-  return render(request, 'projects/manage_model.html', context)
+class ManageBimModel(StaffMixin, DetailView):
+  model = BimModel
+  template_name = 'projects/manage_bim_model.html'
+
+  def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    context = super().get_context_data(**kwargs)
+    context['info_sheets_coordination'] = self.object.info_sheets.filter(sheet_type='coordination')
+    context['info_sheets_validation'] = self.object.info_sheets.filter(sheet_type='validation')
+    return context
 
 
 class CreateInfoSheet(StaffMixin, CreateView):
