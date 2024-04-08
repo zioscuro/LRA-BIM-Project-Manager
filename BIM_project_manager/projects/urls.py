@@ -28,9 +28,8 @@ urlpatterns = [
   path('manage_report/<int:pk>/delete_report', views.DeleteReport.as_view(), name='delete_report'),
   path('manage_report/<int:pk>/create_clash_test', views.CreateClashTest.as_view(), name='create_clash_test'),  
   path('manage_report/<int:pk>/create_validation_test', views.CreateValidationTest.as_view(), name='create_validation_test'),
-
-  path('manage_test/update_clash_test/<int:pk>', views.UpdateClashTest.as_view(), name='update_clash_test'),
-  path('manage_test/delete_clash_test/<int:pk>', views.DeleteClashTest.as_view(), name='delete_clash_test'),
-  path('manage_test/update_validation_test/<int:pk>', views.UpdateValidationTest.as_view(), name='update_validation_test'),
-  path('manage_test/delete_validation_test/<int:pk>', views.DeleteValidationTest.as_view(), name='delete_validation_test'),
+  path('manage_report/<int:id>/update_clash_test/<int:pk>', views.UpdateClashTest.as_view(), name='update_clash_test'),
+  path('manage_report/<int:id>/delete_clash_test/<int:pk>', views.DeleteClashTest.as_view(), name='delete_clash_test'),
+  path('manage_report/<int:id>/update_validation_test/<int:pk>', views.UpdateValidationTest.as_view(), name='update_validation_test'),
+  path('manage_report/<int:id>/delete_validation_test/<int:pk>', views.DeleteValidationTest.as_view(), name='delete_validation_test'),
 ]
