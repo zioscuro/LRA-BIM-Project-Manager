@@ -18,7 +18,7 @@ urlpatterns = [
   path('manage_model/<int:pk>/default_validation', views.default_validation, name='default_validation'),
   path('manage_model/<int:pk>/export_model_info_sheets', views.export_model_info_sheets, name='export_model_info_sheets'),
 
-  path('manage_info_sheet/<int:pk>/', views.manage_info_sheet_view, name='manage_info_sheet'),
+  path('manage_info_sheet/<int:pk>/', views.ManageInfoSheet.as_view(), name='manage_info_sheet'),
   path('manage_info_sheet/<int:pk>/update_info_sheet', views.UpdateInfoSheet.as_view(), name='update_info_sheet'),
   path('manage_info_sheet/<int:pk>/delete_info_sheet', views.DeleteInfoSheet.as_view(), name='delete_info_sheet'),
   path('manage_info_sheet/<int:pk>/create_report', views.CreateReport.as_view(), name='create_report'),

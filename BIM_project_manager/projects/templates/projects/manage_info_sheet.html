@@ -1,36 +1,32 @@
 {% extends 'base.html' %}
 
-{% block head_title %}{{ block.super }} - {{info_sheet.name}}{% endblock head_title %}
+{% block head_title %}{{ block.super }} - {{infosheet.name}}{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_bim_model' pk=info_sheet.bim_model.pk %}">← Torna al modello BIM</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_bim_model' pk=infosheet.bim_model.pk %}">← Torna al modello BIM</a>
 {% endblock navbar %}
 
 {% block content %}
 
-<h1 class="mb-5 text-center">Scheda {{info_sheet.name}}</h1>
+<h1 class="mb-5 text-center">Scheda {{infosheet.name}}</h1>
 <div class="row  mx-auto">
   <div class="col-md-3">
     <h4>Dati scheda</h4>  
     <h6>tipo scheda</h6>
-    {% if info_sheet.sheet_type == 'coordination' %}
-    <p>coordinamento</p>
-    {% elif info_sheet.sheet_type == 'validation' %}
-    <p>verifica</p>
-    {% endif %}
+    <p>{{infosheet.sheet_type}}</p>
     <h6>nome</h6>
-    <p>{{info_sheet.name}}</p>    
+    <p>{{infosheet.name}}</p>    
     <h6>descrizione</h6>
-    <p>{{info_sheet.description}}</p>
+    <p>{{infosheet.description}}</p>
     <h6>modello BIM</h6>
-    <p>{{info_sheet.bim_model}}</p>
+    <p>{{infosheet.bim_model}}</p>
     <h6>progetto</h6>
-    <p>{{info_sheet.bim_model.project.name}}</p>
+    <p>{{infosheet.bim_model.project.name}}</p>
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
-      <a href="{% url 'update_info_sheet' pk=info_sheet.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
-      <a href="{% url 'delete_info_sheet' pk=info_sheet.pk %}" class="btn btn-danger btn-lg">Cancella scheda</a>
+      <a href="{% url 'update_info_sheet' pk=infosheet.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+      <a href="{% url 'delete_info_sheet' pk=infosheet.pk %}" class="btn btn-danger btn-lg">Cancella scheda</a>
     </div>   
     {% endif %}
   </div>
@@ -51,7 +47,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for report in reports %}
+        {% for report in infosheet.reports.all %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
           <td><a href="{% url 'manage_report' pk=report.pk %}">{{ report.name }}</a></td>
@@ -63,7 +59,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="{% url 'create_report' pk=info_sheet.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi Report</a>
+      <a href="{% url 'create_report' pk=infosheet.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi Report</a>
     </div>
   </div>
 </div>
