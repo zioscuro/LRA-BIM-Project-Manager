@@ -97,7 +97,7 @@
     </table>
     <div class="d-flex gap-2 justify-content-end">
       <a
-        {% if not bim_model.default_validation %} 
+        {% if not bimmodel.default_validation %} 
         href="{% url 'default_validation' pk=bimmodel.pk %}" 
         class="btn btn-outline-primary btn-lg"
         {% else %}
