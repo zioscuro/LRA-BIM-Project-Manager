@@ -133,6 +133,10 @@ class DeleteReport(StaffMixin, DeleteView):
   def get_success_url(self):
     return reverse('manage_info_sheet', kwargs={'pk': self.object.info_sheet.pk})
 
+class ManageReport(StaffMixin, DetailView):
+  model = Report
+  template_name = 'projects/manage_report.html'
+
 @login_required
 def manage_report_view(request, pk):
   report = get_object_or_404(Report, pk=pk)

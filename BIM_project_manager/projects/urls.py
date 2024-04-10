@@ -23,7 +23,7 @@ urlpatterns = [
   path('manage_info_sheet/<int:pk>/delete_info_sheet', views.DeleteInfoSheet.as_view(), name='delete_info_sheet'),
   path('manage_info_sheet/<int:pk>/create_report', views.CreateReport.as_view(), name='create_report'),
   
-  path('manage_report/<int:pk>/', views.manage_report_view, name='manage_report'),
+  path('manage_report/<int:pk>/', views.ManageReport.as_view(), name='manage_report'),
   path('manage_report/<int:pk>/update_report', views.UpdateReport.as_view(), name='update_report'),
   path('manage_report/<int:pk>/delete_report', views.DeleteReport.as_view(), name='delete_report'),
   path('manage_report/<int:pk>/create_clash_test', views.CreateClashTest.as_view(), name='create_clash_test'),  

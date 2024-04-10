@@ -48,7 +48,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for test in tests %}
+        {% for test in report.clash_tests.all %}
         <tr>
           <td>{{test.date|date:"Y/m/d"}}</td>
           <td>{{test.comments}}</td>
@@ -81,7 +81,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for test in tests %}
+        {% for test in report.validation_tests.all %}
         <tr>
           <td>{{test.date|date:"Y/m/d"}}</td>
           <td>{{test.comments}}</td>
