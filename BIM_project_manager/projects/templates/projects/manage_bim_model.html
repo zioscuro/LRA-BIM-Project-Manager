@@ -63,7 +63,7 @@
     <div class="d-flex gap-2 justify-content-end">
       <a
         {% if not bimmodel.default_coordination %}
-        href="{% url 'default_coordination' pk=bimmodel.pk %}"
+        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='coordination' %}"
         class="btn btn-outline-primary btn-lg"
         {% else %}
         href="#"
@@ -98,7 +98,7 @@
     <div class="d-flex gap-2 justify-content-end">
       <a
         {% if not bimmodel.default_validation %} 
-        href="{% url 'default_validation' pk=bimmodel.pk %}" 
+        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='validation' %}" 
         class="btn btn-outline-primary btn-lg"
         {% else %}
         href="#"

@@ -1,9 +1,10 @@
 from typing import Any
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
@@ -137,17 +138,6 @@ class ManageReport(StaffMixin, DetailView):
   model = Report
   template_name = 'projects/manage_report.html'
 
-@login_required
-def manage_report_view(request, pk):
-  report = get_object_or_404(Report, pk=pk)
-  tests = None
-  if report.info_sheet.sheet_type == 'coordination':
-    tests = ClashTest.objects.filter(report=report).order_by('date')
-  elif report.info_sheet.sheet_type == 'validation':
-    tests = ValidationTest.objects.filter(report=report).order_by('date')
-  context = {'report': report, 'tests': tests}
-  return render(request, 'projects/manage_report.html', context)
-
 
 class CreateClashTest(StaffMixin, CreateView):
   model = ClashTest
@@ -205,33 +195,24 @@ class DeleteValidationTest(StaffMixin, DeleteView):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
 
-@login_required  
-def default_coordination(request, pk):
-  bim_model = get_object_or_404(BimModel, pk=pk)
+class DefaultInfoSheet(StaffMixin, View):  
+  def get(self, request, pk, sheet_type):
+    bim_model = get_object_or_404(BimModel, pk=pk)
 
-  if bim_model.default_coordination:
+    if sheet_type == 'coordination':
+      if bim_model.default_coordination:
+        return HttpResponseRedirect(bim_model.get_absolute_url())
+      set_default_coordination(bim_model)
+      bim_model.default_coordination = True
+
+    if sheet_type == 'validation':
+      if bim_model.default_validation:
+        return HttpResponseRedirect(bim_model.get_absolute_url())
+      set_default_validation(bim_model)
+      bim_model.default_validation = True
+
+    bim_model.save()
     return HttpResponseRedirect(bim_model.get_absolute_url())
-
-  set_default_coordination(bim_model)
-
-  bim_model.default_coordination = True
-  bim_model.save()
-
-  return HttpResponseRedirect(bim_model.get_absolute_url())
-
-@login_required
-def default_validation(request, pk):
-  bim_model = get_object_or_404(BimModel, pk=pk)
-
-  if bim_model.default_validation:
-    return HttpResponseRedirect(bim_model.get_absolute_url())
-  
-  set_default_validation(bim_model)
-
-  bim_model.default_validation = True
-  bim_model.save()
-
-  return HttpResponseRedirect(bim_model.get_absolute_url())
 
 @login_required
 def export_model_register(request, pk):
