@@ -33,7 +33,7 @@
     {% endif %}
     <hr>
     <div class="d-grid gap-2">
-      <a href="{% url 'export_model_info_sheets' pk=bimmodel.pk %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
+      <a href="{% url 'model_exporter' pk=bimmodel.pk export_type='model_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
     </div>
   </div>
   <div class="col-md-9">    

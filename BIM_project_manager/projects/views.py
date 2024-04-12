@@ -226,8 +226,11 @@ class BimProjectExporter(StaffMixin, View):
     
     return HttpResponseBadRequest("Bad request.")
 
+class BimModelExporter(StaffMixin, View):
+  def get(self, request, pk, export_type):
+    bim_model = get_object_or_404(BimModel, pk=pk)
 
-@login_required
-def export_model_info_sheets(request, pk):
-  bim_model = get_object_or_404(BimModel, pk=pk)
-  return create_model_info_sheets_file(bim_model)
+    if export_type == 'model_info_sheets':
+      return create_model_info_sheets_file(bim_model)
+    
+    return HttpResponseBadRequest("Bad request.")

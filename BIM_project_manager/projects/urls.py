@@ -14,7 +14,7 @@ urlpatterns = [
   path('manage_model/<int:pk>/delete_model', views.DeleteBimModel.as_view(), name='delete_model'),
   path('manage_model/<int:pk>/create_info_sheet/<str:sheet_type>', views.CreateInfoSheet.as_view(), name='create_info_sheet'),
   path('manage_model/<int:pk>/default_info_sheet/<str:sheet_type>', views.DefaultInfoSheet.as_view(), name='default_info_sheet'),
-  path('manage_model/<int:pk>/export_model_info_sheets', views.export_model_info_sheets, name='export_model_info_sheets'),
+  path('manage_model/<int:pk>/export/<str:export_type>', views.BimModelExporter.as_view(), name='model_exporter'),
 
   path('manage_info_sheet/<int:pk>/', views.ManageInfoSheet.as_view(), name='manage_info_sheet'),
   path('manage_info_sheet/<int:pk>/update_info_sheet', views.UpdateInfoSheet.as_view(), name='update_info_sheet'),
