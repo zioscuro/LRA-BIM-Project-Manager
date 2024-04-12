@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
@@ -214,15 +214,18 @@ class DefaultInfoSheet(StaffMixin, View):
     bim_model.save()
     return HttpResponseRedirect(bim_model.get_absolute_url())
 
-@login_required
-def export_model_register(request, pk):
-  project = get_object_or_404(BimProject, pk=pk)
-  return create_model_register_file(project)
+class BimProjectExporter(StaffMixin, View):
+  def get(self, request, pk, export_type):
+    project = get_object_or_404(BimProject, pk=pk)
 
-@login_required
-def export_project_info_sheets(request, pk):
-  project = get_object_or_404(BimProject, pk=pk)
-  return create_project_info_sheets_file(project)
+    if export_type == 'model_register':
+      return create_model_register_file(project)
+    
+    if export_type == 'info_sheets':
+      return create_project_info_sheets_file(project)
+    
+    return HttpResponseBadRequest("Bad request.")
+
 
 @login_required
 def export_model_info_sheets(request, pk):

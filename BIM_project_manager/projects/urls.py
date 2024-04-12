@@ -7,8 +7,7 @@ urlpatterns = [
   path('manage_project/<int:pk>/update_project', views.UpdateBimProject.as_view(), name='update_project'),
   path('manage_project/<int:pk>/delete_project', views.DeleteBimProject.as_view(), name='delete_project'),
   path('manage_project/<int:pk>/create_bim_model/', views.CreateBimModel.as_view(), name='create_bim_model'),
-  path('manage_project/<int:pk>/export_model_register/', views.export_model_register, name='export_model_register'),
-  path('manage_project/<int:pk>/export_project_info_sheets/', views.export_project_info_sheets, name='export_project_info_sheets'),
+  path('manage_project/<int:pk>/export/<str:export_type>', views.BimProjectExporter.as_view(), name='project_exporter'),
 
   path('manage_model/<int:pk>/', views.ManageBimModel.as_view(), name='manage_bim_model'),
   path('manage_model/<int:pk>/update_model', views.UpdateBimModel.as_view(), name='update_model'),
