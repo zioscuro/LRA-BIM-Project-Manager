@@ -64,7 +64,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
+      <a href="#" class="btn btn-outline-primary btn-lg disabled">+ Importa test</a>
       <a href="{% url 'create_clash_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>    
     </div>
     {% elif report.info_sheet.sheet_type == 'validation' %}
@@ -94,7 +94,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="#" class="btn btn-outline-primary btn-lg">+ Importa test</a>
+      <a href="#" class="btn btn-outline-primary btn-lg disabled">+ Importa test</a>
       <a href="{% url 'create_validation_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
     </div>
     {% endif %}
