@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
 from openpyxl import Workbook
-from openpyxl.styles import NamedStyle, Font
+from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment
 
 def create_model_register_file(bim_project):
   '''
@@ -21,6 +21,36 @@ def create_model_register_file(bim_project):
 
   for count, model in enumerate(bim_models):
    ws.append([count+1, model.name, model.discipline, model.designer])
+
+  thin = Side(border_style="thin", color="000000")
+
+  ws.merge_cells('A1:D1')
+
+  title_style = NamedStyle(name="title")
+  title_style.font = Font(color="FF0000", bold=True)
+  title_style.alignment = Alignment(horizontal='center')
+
+  header_style = NamedStyle(name="header")
+  header_style.font = Font(bold=True)
+
+  wb.add_named_style(title_style)
+  wb.add_named_style(header_style)
+
+  ws['A1'].style = title_style
+
+  ws['A2'].style = header_style
+  ws['B2'].style = header_style
+  ws['C2'].style = header_style
+  ws['D2'].style = header_style
+
+  ws.column_dimensions['A'].width = 5
+  ws.column_dimensions['B'].width = 20
+  ws.column_dimensions['C'].width = 15
+  ws.column_dimensions['D'].width = 15
+
+  for row in ws:
+    for cell in row:
+      cell.border = Border(top=thin, left=thin, right=thin, bottom=thin)
 
   wb.save(response)
 
