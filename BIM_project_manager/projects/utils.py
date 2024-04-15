@@ -1,20 +1,22 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
 from openpyxl import Workbook
+from openpyxl.styles import NamedStyle, Font
 
-def create_model_register_file(bimProject):
+def create_model_register_file(bim_project):
   '''
   create an excel file export with the model register with all the BIM model of a specific project
   '''
-  bim_models = bimProject.bim_models.all()
+  bim_models = bim_project.bim_models.all()
 
-  wb = Workbook(write_only=True)
-  ws = wb.create_sheet()
+  wb = Workbook()
+  wb.remove(wb.active)  
+  ws = wb.create_sheet(title='Model-Register')
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-  response['Content-Disposition'] = f'attachment; filename="Model_Register_{bimProject.name}.xlsx"'
+  response['Content-Disposition'] = f'attachment; filename="Model_Register_{bim_project.name}.xlsx"'
 
-  ws.append([f'Registro modelli - Progetto: {bimProject.name}'])
+  ws.append([f'Registro modelli - Progetto: {bim_project.name}'])
   ws.append(['n.', 'Nome modello', 'Disciplina', 'Progettista'])
 
   for count, model in enumerate(bim_models):
@@ -24,14 +26,14 @@ def create_model_register_file(bimProject):
 
   return response
 
-def create_project_info_sheets_file(bimProject):
+def create_project_info_sheets_file(bim_project):
   '''
   create an excel file export with all the info sheets of the project divided by BIM model
   '''
-  bim_models = bimProject.bim_models.all()
+  bim_models = bim_project.bim_models.all()
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
-  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bimProject.name}.xlsx"'
+  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bim_project.name}.xlsx"'
 
   wb = Workbook(write_only=True)  
   for count, model in enumerate(bim_models):    
@@ -47,14 +49,14 @@ def create_project_info_sheets_file(bimProject):
 
   return response
 
-def create_model_info_sheets_file(bimModel):
+def create_model_info_sheets_file(bim_model):
   '''
   create an excel file export with all the info sheets of a specific BIM model
   '''
-  info_sheets = bimModel.info_sheets.all()
+  info_sheets = bim_model.info_sheets.all()
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
-  response['Content-Disposition'] = f'attachment; filename="{bimModel.name}_Info_Sheets.xlsx"'
+  response['Content-Disposition'] = f'attachment; filename="{bim_model.name}_Info_Sheets.xlsx"'
   
   wb = Workbook(write_only=True)  
 
@@ -62,11 +64,11 @@ def create_model_info_sheets_file(bimModel):
     ws = wb.create_sheet(sheet.name)
 
     ws.append(['DATI MODELLO BIM'])
-    ws.append(['nome modello', bimModel.name])
-    ws.append(['disciplina', bimModel.discipline])
-    ws.append(['Autore', bimModel.designer])
-    ws.append(['Software', bimModel.authoringSoftware])
-    ws.append(['Scheda LOD', bimModel.lodReference])
+    ws.append(['nome modello', bim_model.name])
+    ws.append(['disciplina', bim_model.discipline])
+    ws.append(['Autore', bim_model.designer])
+    ws.append(['Software', bim_model.authoringSoftware])
+    ws.append(['Scheda LOD', bim_model.lodReference])
     ws.append([])
     ws.append(['DATI SCHEDA INFORMATIVA'])
     ws.append(['nome scheda', sheet.name])
@@ -96,7 +98,7 @@ def create_model_info_sheets_file(bimModel):
   
   return response
 
-def set_default_coordination(model):
+def set_default_coordination(bim_model):
   '''
   create in a specific BIM model a default set of coordination info sheets ad related reports
   '''
@@ -104,7 +106,7 @@ def set_default_coordination(model):
     sheet_type = 'coordination',
     name = 'LC1',
     description = 'default coordinamento',
-    bim_model = model
+    bim_model = bim_model
   )
   sheet_LC1.save()
 
@@ -122,7 +124,7 @@ def set_default_coordination(model):
   )
   intersections_report.save()
 
-def set_default_validation(model):
+def set_default_validation(bim_model):
   '''
   create in a specific BIM model a default set of validation info sheets ad related reports
   '''
@@ -130,7 +132,7 @@ def set_default_validation(model):
     sheet_type ='validation',
     name = 'LV1',
     description = 'default verifica',
-    bim_model = model
+    bim_model = bim_model
   )
   sheet_LV1.save()
 
