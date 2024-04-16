@@ -74,15 +74,40 @@ def create_project_info_sheets_file(bim_project):
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
   response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bim_project.name}.xlsx"'
 
-  wb = Workbook(write_only=True)  
-  for count, model in enumerate(bim_models):    
-    ws = wb.create_sheet(model.name)
-    ws.append([f'Schede Informative Modello: {model.name}'])
-    ws.append(['n.','Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
+  wb = Workbook()
+  wb.remove(wb.active) 
 
-    info_sheets = model.info_sheets.all()
+  thin = Side(border_style="thin", color="000000")
+  
+  title_style = NamedStyle(name="title")
+  title_style.font = Font(bold=True)
+  title_style.alignment = Alignment(horizontal='center')
+  title_style.fill = PatternFill(start_color='C0C0C0', end_color='C0C0C0', fill_type = "solid")
+
+  for count, bim_model in enumerate(bim_models):    
+    ws = wb.create_sheet(title=bim_model.name)
+    ws.append([f'Schede Informative modello: {bim_model.name}'])
+    ws.row_dimensions[1].height = 20
+    ws.append(['n.','Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
+    ws.row_dimensions[2].height = 20
+
+    ws.merge_cells('A1:D1')
+
+    ws['A1'].style = title_style
+
+    ws.column_dimensions['A'].width = 5
+    ws.column_dimensions['B'].width = 20
+    ws.column_dimensions['C'].width = 25
+    ws.column_dimensions['D'].width = 15
+
+    info_sheets = bim_model.info_sheets.all()
+    
     for count, sheet in enumerate(info_sheets):
-      ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])   
+      ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])
+
+    for row in ws:    
+      for cell in row:
+        cell.border = Border(top=thin, left=thin, right=thin, bottom=thin) 
 
   wb.save(response)
 
@@ -125,6 +150,8 @@ def create_model_info_sheets_file(bim_model):
 
         for test in tests:
           ws.append([test.date.strftime("%m/%d/%Y"), test.comments, test.clash_new, test.clash_active, test.clash_reviewed, test.clash_approved, test.clash_resolved])
+        
+        ws.append([])
 
       if sheet.sheet_type == 'validation':
         tests = report.validation_tests.all()
@@ -132,6 +159,8 @@ def create_model_info_sheets_file(bim_model):
 
         for test in tests:
           ws.append([test.date.strftime("%m/%d/%Y"), test.comments, test.specification, test.issues])
+        
+        ws.append([])
 
   wb.save(response)
   
