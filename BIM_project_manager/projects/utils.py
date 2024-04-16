@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from .models import InfoSheet, Report
 from openpyxl import Workbook
-from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment
+from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
 
 def create_model_register_file(bim_project):
   '''
@@ -17,18 +17,23 @@ def create_model_register_file(bim_project):
   response['Content-Disposition'] = f'attachment; filename="Model_Register_{bim_project.name}.xlsx"'
 
   ws.append([f'Registro modelli - Progetto: {bim_project.name}'])
-  ws.append(['n.', 'Nome modello', 'Disciplina', 'Progettista'])
+  ws.row_dimensions[1].height = 20
+  
+  ws.append(['n.', 'Nome modello', 'Disciplina', 'Software', 'Scheda LOD', 'Progettista'])
+  ws.row_dimensions[2].height = 20
 
-  for count, model in enumerate(bim_models):
-   ws.append([count+1, model.name, model.discipline, model.designer])
+  for count, bim_model in enumerate(bim_models):
+   ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
+   ws.row_dimensions[count+3].height = 20
 
   thin = Side(border_style="thin", color="000000")
 
-  ws.merge_cells('A1:D1')
+  ws.merge_cells('A1:F1')
 
   title_style = NamedStyle(name="title")
-  title_style.font = Font(color="FF0000", bold=True)
+  title_style.font = Font(bold=True)
   title_style.alignment = Alignment(horizontal='center')
+  title_style.fill = PatternFill(start_color='C0C0C0', end_color='C0C0C0', fill_type = "solid")
 
   header_style = NamedStyle(name="header")
   header_style.font = Font(bold=True)
@@ -42,13 +47,17 @@ def create_model_register_file(bim_project):
   ws['B2'].style = header_style
   ws['C2'].style = header_style
   ws['D2'].style = header_style
+  ws['E2'].style = header_style
+  ws['F2'].style = header_style
 
   ws.column_dimensions['A'].width = 5
   ws.column_dimensions['B'].width = 20
   ws.column_dimensions['C'].width = 15
   ws.column_dimensions['D'].width = 15
+  ws.column_dimensions['E'].width = 15
+  ws.column_dimensions['F'].width = 15
 
-  for row in ws:
+  for row in ws:    
     for cell in row:
       cell.border = Border(top=thin, left=thin, right=thin, bottom=thin)
 
