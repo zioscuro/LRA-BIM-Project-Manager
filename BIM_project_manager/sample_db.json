@@ -1,0 +1,79 @@
+[
+  {
+    "model":"projects.BimProject",
+    "pk":1,
+    "fields":{
+      "name": "Deposito Paperonis",
+      "description":"progetto di prova",
+      "customer":"Zio Paperone",
+      "address":"Paperopoli",
+      "phase":"PD"
+    }
+  },
+  {
+    "model":"projects.BimProject",
+    "pk":2,
+    "fields":{
+      "name": "Barad-Dur",
+      "description":"progetto di prova",
+      "customer":"Sauron",
+      "address":"Mordor",
+      "phase":"RI"
+    }
+  },
+  {
+    "model":"projects.BimModel",
+    "pk":1,
+    "fields":{
+      "name": "Deposito_ARC",
+      "discipline":"ARC",
+      "designer":"Paperino",
+      "authoringSoftware":"Revit 2024",
+      "project":1
+    }
+  },
+  {
+    "model":"projects.BimModel",
+    "pk":2,
+    "fields":{
+      "name": "Deposito_STR",
+      "discipline":"STR",
+      "designer":"Paperoga",
+      "authoringSoftware":"Revit 2024",
+      "project":1
+    }
+  },
+  {
+    "model":"projects.BimModel",
+    "pk":3,
+    "fields":{
+      "name": "Deposito_MEP",
+      "discipline":"MEC",
+      "designer":"Topolino",
+      "authoringSoftware":"Revit 2024",
+      "project":1
+    }
+  },
+  {
+    "model":"projects.BimModel",
+    "pk":4,
+    "fields":{
+      "name": "Torre_ARC",
+      "discipline":"ARC",
+      "designer":"Sauron",
+      "authoringSoftware":"Revit 2024",
+      "project":2
+    }
+  },
+  {
+    "model":"projects.BimModel",
+    "pk":5,
+    "fields":{
+      "name": "Torre_STR",
+      "discipline":"STR",
+      "designer":"Sauron",
+      "authoringSoftware":"Tekla Structures",
+      "project":2
+    }
+  }
+]
