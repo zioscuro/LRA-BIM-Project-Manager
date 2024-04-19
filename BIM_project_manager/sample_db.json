@@ -3,7 +3,7 @@
     "model":"projects.BimProject",
     "pk":1,
     "fields":{
-      "name": "Deposito Paperonis",
+      "name": "Deposito di Zio Paperone",
       "description":"progetto di prova",
       "customer":"Zio Paperone",
       "address":"Paperopoli",
