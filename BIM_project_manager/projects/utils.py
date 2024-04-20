@@ -111,40 +111,45 @@ def create_project_info_sheets_file(bim_project):
   wb = Workbook()
   wb.remove(wb.active)
 
-  for count, bim_model in enumerate(bim_models):    
-    ws = wb.create_sheet(title=bim_model.name)
-
+  def set_project_info_sheets_column_dimensions(ws):
     ws.column_dimensions['A'].width = 5
     ws.column_dimensions['B'].width = 20
     ws.column_dimensions['C'].width = 25
     ws.column_dimensions['D'].width = 15
-    
+
+  def set_project_info_sheets_title(ws):
     ws['A1'] = f'Schede Informative modello: {bim_model.name}'
     ws['A1'].style = Styles.title
     ws.row_dimensions[1].height = 20
     ws.merge_cells('A1:D1')
 
+  def set_project_info_sheets_headers(ws):
     ws['A2'] = 'n.'
     ws['A2'].style = Styles.header
-
     ws['B2'] = 'Nome Scheda'
     ws['B2'].style = Styles.header
-
     ws['C2'] = 'Descrizione Scheda'
     ws['C2'].style = Styles.header
-
     ws['D2'] = 'Tipo Scheda'
     ws['D2'].style = Styles.header
-
     ws.row_dimensions[2].height = 20
 
-    info_sheets = bim_model.info_sheets.all()
-    
+  def set_project_info_sheets_content(info_sheets):
     for count, sheet in enumerate(info_sheets):
       ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])
 
       for cell in ws[ws.max_row]: 
         cell.style = Styles.standard_cell
+
+  for count, bim_model in enumerate(bim_models):    
+    ws = wb.create_sheet(title=bim_model.name)
+
+    info_sheets = bim_model.info_sheets.all()
+
+    set_project_info_sheets_column_dimensions(ws)
+    set_project_info_sheets_title(ws)
+    set_project_info_sheets_headers(ws)
+    set_project_info_sheets_content(info_sheets)  
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
   response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bim_project.name}.xlsx"'
