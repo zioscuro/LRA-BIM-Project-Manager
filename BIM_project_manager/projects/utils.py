@@ -43,46 +43,58 @@ def create_model_register_file(bim_project):
 
   wb = Workbook()
   wb.remove(wb.active)  
-  ws = wb.create_sheet(title='Model-Register')  
+  ws = wb.create_sheet(title='Model-Register')
 
-  ws.column_dimensions['A'].width = 5
-  ws.column_dimensions['B'].width = 20
-  ws.column_dimensions['C'].width = 15
-  ws.column_dimensions['D'].width = 15
-  ws.column_dimensions['E'].width = 15
-  ws.column_dimensions['F'].width = 15
+  def set_model_register_column_dimensions():
+    ws.column_dimensions['A'].width = 5
+    ws.column_dimensions['B'].width = 20
+    ws.column_dimensions['C'].width = 15
+    ws.column_dimensions['D'].width = 15
+    ws.column_dimensions['E'].width = 15
+    ws.column_dimensions['F'].width = 15
 
-  ws['A1'] = f'Registro modelli - Progetto: {bim_project.name}'
-  ws['A1'].style = Styles.title
-  ws.row_dimensions[1].height = 20
-  ws.merge_cells('A1:F1')
+  set_model_register_column_dimensions()
 
-  ws['A2'] = 'n.'
-  ws['A2'].style = Styles.header
+  def set_model_register_title():
+    ws['A1'] = f'Registro modelli - Progetto: {bim_project.name}'
+    ws['A1'].style = Styles.title
+    ws.row_dimensions[1].height = 20
+    ws.merge_cells('A1:F1')
+  
+  set_model_register_title()
 
-  ws['B2'] = 'Nome modello'
-  ws['B2'].style = Styles.header
+  def set_model_register_headers():
+    ws['A2'] = 'n.'
+    ws['A2'].style = Styles.header
 
-  ws['C2'] = 'Disciplina'
-  ws['C2'].style = Styles.header
+    ws['B2'] = 'Nome modello'
+    ws['B2'].style = Styles.header
 
-  ws['D2'] = 'Software'
-  ws['D2'].style = Styles.header
+    ws['C2'] = 'Disciplina'
+    ws['C2'].style = Styles.header
 
-  ws['E2'] = 'Scheda LOD'
-  ws['E2'].style = Styles.header
+    ws['D2'] = 'Software'
+    ws['D2'].style = Styles.header
 
-  ws['F2'] = 'Progettista'
-  ws['F2'].style = Styles.header
+    ws['E2'] = 'Scheda LOD'
+    ws['E2'].style = Styles.header
 
-  ws.row_dimensions[2].height = 20
+    ws['F2'] = 'Progettista'
+    ws['F2'].style = Styles.header
 
-  for count, bim_model in enumerate(bim_models):
-    ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
-    ws.row_dimensions[ws.max_row].height = 20
+    ws.row_dimensions[2].height = 20
 
-    for cell in ws[ws.max_row]:
-      cell.style = Styles.standard_cell
+  set_model_register_headers()
+
+  def set_model_register_content():
+    for count, bim_model in enumerate(bim_models):
+      ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
+      ws.row_dimensions[ws.max_row].height = 20
+
+      for cell in ws[ws.max_row]:
+        cell.style = Styles.standard_cell
+
+  set_model_register_content()
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
   response['Content-Disposition'] = f'attachment; filename="Model_Register_{bim_project.name}.xlsx"'
