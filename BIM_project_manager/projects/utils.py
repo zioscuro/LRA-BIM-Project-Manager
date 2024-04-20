@@ -141,7 +141,7 @@ def create_project_info_sheets_file(bim_project):
       for cell in ws[ws.max_row]: 
         cell.style = Styles.standard_cell
 
-  for count, bim_model in enumerate(bim_models):    
+  for bim_model in bim_models:    
     ws = wb.create_sheet(title=bim_model.name)
 
     info_sheets = bim_model.info_sheets.all()
@@ -166,9 +166,7 @@ def create_model_info_sheets_file(bim_model):
   wb = Workbook()
   wb.remove(wb.active)
 
-  for sheet in info_sheets:
-    ws = wb.create_sheet(sheet.name)
-
+  def set_create_model_info_sheets_column_dimensions(ws):
     ws.column_dimensions['A'].width = 5
     ws.column_dimensions['B'].width = 25
     ws.column_dimensions['C'].width = 50
@@ -178,6 +176,7 @@ def create_model_info_sheets_file(bim_model):
     ws.column_dimensions['G'].width = 15
     ws.column_dimensions['H'].width = 15
 
+  def set_model_info_sheets_model_headers(ws):
     ws['A1'] = 'DATI MODELLO'
     ws['A1'].style = Styles.model_header
     ws['A1'].alignment = Alignment(textRotation=90, wrap_text=True, horizontal='center', vertical='center')
@@ -208,6 +207,7 @@ def create_model_info_sheets_file(bim_model):
     ws['C5'] = bim_model.lodReference
     ws['C5'].style = Styles.standard_cell   
 
+  def set_model_info_sheets_info_headers(ws):
     ws['A6'] = 'DATI SCHEDA'
     ws['A6'].style = Styles.info_header
     ws['A6'].alignment = Alignment(textRotation=90, wrap_text=True, horizontal='center', vertical='center')
@@ -229,8 +229,13 @@ def create_model_info_sheets_file(bim_model):
     ws['C8'].style = Styles.standard_cell
     
     ws.append([])
-    
-    reports = sheet.reports.all()    
+
+  def set_model_info_sheets_reports_headers(ws):
+    ws['A10'] = 'ATTIVITA\' REPORT'
+    ws['A10'].style = Styles.report_header
+    ws.merge_cells(f'A10:A{ws.max_row}')    
+
+  def set_model_info_sheets_reports_content(reports):
     for report in reports:
       if sheet.sheet_type == 'coordination':
         ws.append(['', 'Nome Report', report.name])
@@ -288,9 +293,101 @@ def create_model_info_sheets_file(bim_model):
         
         ws.append([])
 
-    ws['A10'] = 'ATTIVITA\' REPORT'
-    ws['A10'].style = Styles.report_header
-    ws.merge_cells(f'A10:A{ws.max_row}')    
+  for sheet in info_sheets:
+    ws = wb.create_sheet(sheet.name)
+
+    set_create_model_info_sheets_column_dimensions(ws)
+    set_model_info_sheets_model_headers(ws)
+    set_model_info_sheets_info_headers(ws)
+
+    # ws['A6'] = 'DATI SCHEDA'
+    # ws['A6'].style = Styles.info_header
+    # ws['A6'].alignment = Alignment(textRotation=90, wrap_text=True, horizontal='center', vertical='center')
+    # ws.merge_cells('A6:A8')
+
+    # ws['B6'] = 'Nome Scheda Informativa'
+    # ws['B6'].style = Styles.info_header
+    # ws['C6'] = sheet.name
+    # ws['C6'].style = Styles.standard_cell
+
+    # ws['B7'] = 'Descrizione Scheda'
+    # ws['B7'].style = Styles.info_header
+    # ws['C7'] = sheet.description
+    # ws['C7'].style = Styles.standard_cell
+
+    # ws['B8'] = 'Tipo Scheda'
+    # ws['B8'].style = Styles.info_header
+    # ws['C8'] = sheet.sheet_type
+    # ws['C8'].style = Styles.standard_cell
+    
+    # ws.append([])
+    
+    reports = sheet.reports.all()    
+
+    set_model_info_sheets_reports_content(reports)
+    
+    # for report in reports:
+    #   if sheet.sheet_type == 'coordination':
+    #     ws.append(['', 'Nome Report', report.name])
+    #     for cell in ws[ws.max_row]:
+    #       cell.style = Styles.standard_cell
+    #       cell.font = Font(bold=True)
+    #     ws.merge_cells(f'C{ws.max_row}:H{ws.max_row}')         
+
+    #     ws.append(['', 'Oggetto/Specifica Report', report.description])
+    #     for cell in ws[ws.max_row]:
+    #       cell.style = Styles.standard_cell
+    #     ws.merge_cells(f'C{ws.max_row}:H{ws.max_row}')
+        
+    #     ws.append(['', 'Data', 'Commenti', 'Nuove', 'Attive', 'Revisionate', 'Approvate', 'Risolte'])
+
+    #     for cell in ws[ws.max_row]: 
+    #       cell.style = Styles.standard_cell     
+        
+    #     tests = report.clash_tests.all()
+
+    #     for test in tests:
+    #       ws.append(['',test.date.strftime("%m/%d/%Y"), test.comments, test.clash_new, test.clash_active, test.clash_reviewed, test.clash_approved, test.clash_resolved])
+          
+    #       for cell in ws[ws.max_row]: 
+    #         cell.style = Styles.standard_cell
+        
+    #     ws.append([])
+
+    #   if sheet.sheet_type == 'validation':
+    #     ws.append(['', 'Nome Report', report.name])
+    #     for cell in ws[ws.max_row]:
+    #       cell.style = Styles.standard_cell
+    #       cell.font = Font(bold=True)
+    #     ws.merge_cells(f'C{ws.max_row}:F{ws.max_row}')         
+
+    #     ws.append(['', 'Oggetto/Specifica Report', report.description])
+    #     for cell in ws[ws.max_row]:
+    #       cell.style = Styles.standard_cell
+    #     ws.merge_cells(f'C{ws.max_row}:F{ws.max_row}')
+
+    #     for cell in ws[ws.max_row]: 
+    #       cell.style = Styles.standard_cell
+          
+    #     tests = report.validation_tests.all()
+    #     ws.append(['','Data', 'Commenti', 'Specifica', 'Difformità', 'Allegati'])
+
+    #     for cell in ws[ws.max_row]: 
+    #       cell.style = Styles.standard_cell   
+
+    #     for test in tests:
+    #       ws.append(['', test.date.strftime("%m/%d/%Y"), test.comments, test.specification, test.issues, ''])
+
+    #       for cell in ws[ws.max_row]: 
+    #         cell.style = Styles.standard_cell       
+        
+    #     ws.append([])
+
+    set_model_info_sheets_reports_headers(ws)
+
+    # ws['A10'] = 'ATTIVITA\' REPORT'
+    # ws['A10'].style = Styles.report_header
+    # ws.merge_cells(f'A10:A{ws.max_row}')    
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
   response['Content-Disposition'] = f'attachment; filename="{bim_model.name}_Info_Sheets.xlsx"'
