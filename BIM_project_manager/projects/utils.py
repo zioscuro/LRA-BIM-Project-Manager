@@ -53,47 +53,28 @@ def create_model_register_file(bim_project):
     ws.column_dimensions['E'].width = 15
     ws.column_dimensions['F'].width = 15
 
-  set_model_register_column_dimensions()
-
   def set_model_register_title():
     ws['A1'] = f'Registro modelli - Progetto: {bim_project.name}'
     ws['A1'].style = Styles.title
     ws.row_dimensions[1].height = 20
     ws.merge_cells('A1:F1')
-  
-  set_model_register_title()
 
   def set_model_register_headers():
-    ws['A2'] = 'n.'
-    ws['A2'].style = Styles.header
-
-    ws['B2'] = 'Nome modello'
-    ws['B2'].style = Styles.header
-
-    ws['C2'] = 'Disciplina'
-    ws['C2'].style = Styles.header
-
-    ws['D2'] = 'Software'
-    ws['D2'].style = Styles.header
-
-    ws['E2'] = 'Scheda LOD'
-    ws['E2'].style = Styles.header
-
-    ws['F2'] = 'Progettista'
-    ws['F2'].style = Styles.header
-
+    ws.append(['n.', 'Nome modello', 'Disciplina', 'Software','Scheda LOD', 'Progettista'])
     ws.row_dimensions[2].height = 20
-
-  set_model_register_headers()
+    for cell in ws[2]:
+      cell.style = Styles.header
 
   def set_model_register_content():
     for count, bim_model in enumerate(bim_models):
       ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
       ws.row_dimensions[ws.max_row].height = 20
-
       for cell in ws[ws.max_row]:
         cell.style = Styles.standard_cell
-
+  
+  set_model_register_column_dimensions()
+  set_model_register_title()
+  set_model_register_headers()
   set_model_register_content()
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -124,15 +105,10 @@ def create_project_info_sheets_file(bim_project):
     ws.merge_cells('A1:D1')
 
   def set_project_info_sheets_headers(ws):
-    ws['A2'] = 'n.'
-    ws['A2'].style = Styles.header
-    ws['B2'] = 'Nome Scheda'
-    ws['B2'].style = Styles.header
-    ws['C2'] = 'Descrizione Scheda'
-    ws['C2'].style = Styles.header
-    ws['D2'] = 'Tipo Scheda'
-    ws['D2'].style = Styles.header
+    ws.append(['n.', 'Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
     ws.row_dimensions[2].height = 20
+    for cell in ws[2]:         
+      cell.style = Styles.header
 
   def set_project_info_sheets_content(info_sheets):
     for count, sheet in enumerate(info_sheets):
@@ -142,9 +118,8 @@ def create_project_info_sheets_file(bim_project):
         cell.style = Styles.standard_cell
 
   for bim_model in bim_models:    
-    ws = wb.create_sheet(title=bim_model.name)
-
     info_sheets = bim_model.info_sheets.all()
+    ws = wb.create_sheet(title=bim_model.name)
 
     set_project_info_sheets_column_dimensions(ws)
     set_project_info_sheets_title(ws)
@@ -183,29 +158,26 @@ def create_model_info_sheets_file(bim_model):
     ws.merge_cells('A1:A5')
 
     ws['B1'] = 'Nome Modello'
-    ws['B1'].style = Styles.model_header
     ws['C1'] = bim_model.name
-    ws['C1'].style = Styles.standard_cell
 
     ws['B2'] = 'Disciplina'
-    ws['B2'].style = Styles.model_header
     ws['C2'] = bim_model.discipline
-    ws['C2'].style = Styles.standard_cell
 
     ws['B3'] = 'Progettista'
-    ws['B3'].style = Styles.model_header
     ws['C3'] = bim_model.designer
-    ws['C3'].style = Styles.standard_cell
 
     ws['B4'] = 'Software BIM Authoring'
-    ws['B4'].style = Styles.model_header
     ws['C4'] = bim_model.authoringSoftware
-    ws['C4'].style = Styles.standard_cell
 
     ws['B5'] = 'LOD di riferimento'
-    ws['B5'].style = Styles.model_header
     ws['C5'] = bim_model.lodReference
-    ws['C5'].style = Styles.standard_cell   
+
+    for row in ws.iter_cols(min_col=2, max_col=2, min_row=1, max_row=5):
+      for cell in row:
+        cell.style = Styles.model_header
+    for row in ws.iter_cols(min_col=3, max_col=3, min_row=1, max_row=5):
+      for cell in row:
+        cell.style = Styles.standard_cell
 
   def set_model_info_sheets_info_headers(ws):
     ws['A6'] = 'DATI SCHEDA'
@@ -214,19 +186,20 @@ def create_model_info_sheets_file(bim_model):
     ws.merge_cells('A6:A8')
 
     ws['B6'] = 'Nome Scheda Informativa'
-    ws['B6'].style = Styles.info_header
     ws['C6'] = sheet.name
-    ws['C6'].style = Styles.standard_cell
 
     ws['B7'] = 'Descrizione Scheda'
-    ws['B7'].style = Styles.info_header
     ws['C7'] = sheet.description
-    ws['C7'].style = Styles.standard_cell
 
     ws['B8'] = 'Tipo Scheda'
-    ws['B8'].style = Styles.info_header
     ws['C8'] = sheet.sheet_type
-    ws['C8'].style = Styles.standard_cell
+
+    for row in ws.iter_cols(min_col=2, max_col=2, min_row=6, max_row=8):
+      for cell in row:
+        cell.style = Styles.info_header
+    for row in ws.iter_cols(min_col=3, max_col=3, min_row=6, max_row=8):
+      for cell in row:
+        cell.style = Styles.standard_cell
     
     ws.append([])
 
@@ -293,101 +266,15 @@ def create_model_info_sheets_file(bim_model):
         
         ws.append([])
 
-  for sheet in info_sheets:
+  for sheet in info_sheets:    
+    reports = sheet.reports.all()
     ws = wb.create_sheet(sheet.name)
 
     set_create_model_info_sheets_column_dimensions(ws)
     set_model_info_sheets_model_headers(ws)
     set_model_info_sheets_info_headers(ws)
-
-    # ws['A6'] = 'DATI SCHEDA'
-    # ws['A6'].style = Styles.info_header
-    # ws['A6'].alignment = Alignment(textRotation=90, wrap_text=True, horizontal='center', vertical='center')
-    # ws.merge_cells('A6:A8')
-
-    # ws['B6'] = 'Nome Scheda Informativa'
-    # ws['B6'].style = Styles.info_header
-    # ws['C6'] = sheet.name
-    # ws['C6'].style = Styles.standard_cell
-
-    # ws['B7'] = 'Descrizione Scheda'
-    # ws['B7'].style = Styles.info_header
-    # ws['C7'] = sheet.description
-    # ws['C7'].style = Styles.standard_cell
-
-    # ws['B8'] = 'Tipo Scheda'
-    # ws['B8'].style = Styles.info_header
-    # ws['C8'] = sheet.sheet_type
-    # ws['C8'].style = Styles.standard_cell
-    
-    # ws.append([])
-    
-    reports = sheet.reports.all()    
-
     set_model_info_sheets_reports_content(reports)
-    
-    # for report in reports:
-    #   if sheet.sheet_type == 'coordination':
-    #     ws.append(['', 'Nome Report', report.name])
-    #     for cell in ws[ws.max_row]:
-    #       cell.style = Styles.standard_cell
-    #       cell.font = Font(bold=True)
-    #     ws.merge_cells(f'C{ws.max_row}:H{ws.max_row}')         
-
-    #     ws.append(['', 'Oggetto/Specifica Report', report.description])
-    #     for cell in ws[ws.max_row]:
-    #       cell.style = Styles.standard_cell
-    #     ws.merge_cells(f'C{ws.max_row}:H{ws.max_row}')
-        
-    #     ws.append(['', 'Data', 'Commenti', 'Nuove', 'Attive', 'Revisionate', 'Approvate', 'Risolte'])
-
-    #     for cell in ws[ws.max_row]: 
-    #       cell.style = Styles.standard_cell     
-        
-    #     tests = report.clash_tests.all()
-
-    #     for test in tests:
-    #       ws.append(['',test.date.strftime("%m/%d/%Y"), test.comments, test.clash_new, test.clash_active, test.clash_reviewed, test.clash_approved, test.clash_resolved])
-          
-    #       for cell in ws[ws.max_row]: 
-    #         cell.style = Styles.standard_cell
-        
-    #     ws.append([])
-
-    #   if sheet.sheet_type == 'validation':
-    #     ws.append(['', 'Nome Report', report.name])
-    #     for cell in ws[ws.max_row]:
-    #       cell.style = Styles.standard_cell
-    #       cell.font = Font(bold=True)
-    #     ws.merge_cells(f'C{ws.max_row}:F{ws.max_row}')         
-
-    #     ws.append(['', 'Oggetto/Specifica Report', report.description])
-    #     for cell in ws[ws.max_row]:
-    #       cell.style = Styles.standard_cell
-    #     ws.merge_cells(f'C{ws.max_row}:F{ws.max_row}')
-
-    #     for cell in ws[ws.max_row]: 
-    #       cell.style = Styles.standard_cell
-          
-    #     tests = report.validation_tests.all()
-    #     ws.append(['','Data', 'Commenti', 'Specifica', 'Difformità', 'Allegati'])
-
-    #     for cell in ws[ws.max_row]: 
-    #       cell.style = Styles.standard_cell   
-
-    #     for test in tests:
-    #       ws.append(['', test.date.strftime("%m/%d/%Y"), test.comments, test.specification, test.issues, ''])
-
-    #       for cell in ws[ws.max_row]: 
-    #         cell.style = Styles.standard_cell       
-        
-    #     ws.append([])
-
     set_model_info_sheets_reports_headers(ws)
-
-    # ws['A10'] = 'ATTIVITA\' REPORT'
-    # ws['A10'].style = Styles.report_header
-    # ws.merge_cells(f'A10:A{ws.max_row}')    
 
   response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
   response['Content-Disposition'] = f'attachment; filename="{bim_model.name}_Info_Sheets.xlsx"'
