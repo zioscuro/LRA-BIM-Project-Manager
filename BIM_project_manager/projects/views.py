@@ -1,6 +1,5 @@
 from typing import Any
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
@@ -9,7 +8,7 @@ from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
-from .utils import create_model_register_file, create_project_info_sheets_file, create_model_info_sheets_file, set_default_coordination, set_default_validation
+from .utils import ExcelExporter, create_project_info_sheets_file, create_model_info_sheets_file, set_default_coordination, set_default_validation
 
 # Create your views here.
 
@@ -219,7 +218,9 @@ class BimProjectExporter(StaffMixin, View):
     project = get_object_or_404(BimProject, pk=pk)
 
     if export_type == 'model_register':
-      return create_model_register_file(project)
+      exporter = ExcelExporter('Model-Register', project)
+
+      return exporter.export_model_register_file()
     
     if export_type == 'info_sheets':
       return create_project_info_sheets_file(project)
