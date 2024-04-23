@@ -36,101 +36,92 @@ class Styles():
   report_header.alignment = Alignment(textRotation=90, wrap_text=True, horizontal='center', vertical='center')
 
 class ExcelExporter():
-  def __init__(self, title, bim_object):
+  def __init__(self, bim_object):
     self.wb = Workbook()
     self.wb.remove(self.wb.active)  
-    self.ws = self.wb.create_sheet(title=title)
-
+    
     if isinstance(bim_object, BimProject):
       self.bim_project = bim_object
-      self.bim_models = bim_object.bim_models.all()
+      self.bim_models = bim_object.bim_models.all()   
 
-  def set_model_register_column_dimensions(self):
-    self.ws.column_dimensions['A'].width = 5
-    self.ws.column_dimensions['B'].width = 20
-    self.ws.column_dimensions['C'].width = 15
-    self.ws.column_dimensions['D'].width = 15
-    self.ws.column_dimensions['E'].width = 15
-    self.ws.column_dimensions['F'].width = 15
+  def build_model_register(self):
+    # SETUP SHEET
+    ws = self.wb.create_sheet(title='model_register')
 
-  def set_model_register_title(self):
-    self.ws['A1'] = f'Registro modelli - Progetto: {self.bim_project.name}'
-    self.ws['A1'].style = Styles.title
-    self.ws.row_dimensions[1].height = 20
-    self.ws.merge_cells('A1:F1')
+    # SETUP COLUMN DIMENSIONS
+    ws.column_dimensions['A'].width = 5
+    ws.column_dimensions['B'].width = 20
+    ws.column_dimensions['C'].width = 15
+    ws.column_dimensions['D'].width = 15
+    ws.column_dimensions['E'].width = 15
+    ws.column_dimensions['F'].width = 15
 
-  def set_model_register_headers(self):
-    self.ws.append(['n.', 'Nome modello', 'Disciplina', 'Software','Scheda LOD', 'Progettista'])
-    self.ws.row_dimensions[2].height = 20
-    for cell in self.ws[2]:
+    # SETUP TITLE
+    ws['A1'] = f'Registro modelli - Progetto: {self.bim_project.name}'
+    ws['A1'].style = Styles.title
+    ws.row_dimensions[1].height = 20
+    ws.merge_cells('A1:F1')
+
+    # SETUP HEADERS
+    ws.append(['n.', 'Nome modello', 'Disciplina', 'Software','Scheda LOD', 'Progettista'])
+    ws.row_dimensions[2].height = 20
+    for cell in ws[2]:
       cell.style = Styles.header
 
-  def set_model_register_content(self):
+    # SETUP CONTENT
     for count, bim_model in enumerate(self.bim_models):
-      self.ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
-      self.ws.row_dimensions[self.ws.max_row].height = 20
-      for cell in self.ws[self.ws.max_row]:
+      ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
+      ws.row_dimensions[ws.max_row].height = 20
+      for cell in ws[ws.max_row]:
         cell.style = Styles.standard_cell
-
-  def export_model_register_file(self):
-    self.set_model_register_column_dimensions()
-    self.set_model_register_title()
-    self.set_model_register_headers()
-    self.set_model_register_content()
+    
+  def export_model_register_file(self):    
+    self.build_model_register()
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename="Model_Register_{self.bim_project.name}.xlsx"'
     self.wb.save(response)
     return response
+  
+  def build_project_info_sheets(self):
+    for bim_model in self.bim_models:
+      # SETUP SHEET    
+      info_sheets = bim_model.info_sheets.all()
+      ws = self.wb.create_sheet(title=bim_model.name)
 
-def create_project_info_sheets_file(bim_project):
-  '''
-  create an excel file export with all the info sheets of the project divided by BIM model
-  '''
-  bim_models = bim_project.bim_models.all()
+      # SETUP COLUMN DIMENSIONS
+      ws.column_dimensions['A'].width = 5
+      ws.column_dimensions['B'].width = 20
+      ws.column_dimensions['C'].width = 25
+      ws.column_dimensions['D'].width = 15
 
-  wb = Workbook()
-  wb.remove(wb.active)
+      # SETUP TITLE
+      ws['A1'] = f'Schede Informative modello: {bim_model.name}'
+      ws['A1'].style = Styles.title
+      ws.row_dimensions[1].height = 20
+      ws.merge_cells('A1:D1')
 
-  def set_project_info_sheets_column_dimensions(ws):
-    ws.column_dimensions['A'].width = 5
-    ws.column_dimensions['B'].width = 20
-    ws.column_dimensions['C'].width = 25
-    ws.column_dimensions['D'].width = 15
+      # SETUP HEADERS
+      ws.append(['n.', 'Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
+      ws.row_dimensions[2].height = 20
+      for cell in ws[2]:         
+        cell.style = Styles.header
 
-  def set_project_info_sheets_title(ws):
-    ws['A1'] = f'Schede Informative modello: {bim_model.name}'
-    ws['A1'].style = Styles.title
-    ws.row_dimensions[1].height = 20
-    ws.merge_cells('A1:D1')
+      # SETUP CONTENT
+      for count, sheet in enumerate(info_sheets):
+        ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])
 
-  def set_project_info_sheets_headers(ws):
-    ws.append(['n.', 'Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
-    ws.row_dimensions[2].height = 20
-    for cell in ws[2]:         
-      cell.style = Styles.header
+        for cell in ws[ws.max_row]: 
+          cell.style = Styles.standard_cell
 
-  def set_project_info_sheets_content(info_sheets):
-    for count, sheet in enumerate(info_sheets):
-      ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])
+  def export_project_info_sheets(self):
+    self.build_project_info_sheets()
 
-      for cell in ws[ws.max_row]: 
-        cell.style = Styles.standard_cell
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
+    response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{self.bim_project.name}.xlsx"'
+    self.wb.save(response)
+    return response
 
-  for bim_model in bim_models:    
-    info_sheets = bim_model.info_sheets.all()
-    ws = wb.create_sheet(title=bim_model.name)
-
-    set_project_info_sheets_column_dimensions(ws)
-    set_project_info_sheets_title(ws)
-    set_project_info_sheets_headers(ws)
-    set_project_info_sheets_content(info_sheets)  
-
-  response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  
-  response['Content-Disposition'] = f'attachment; filename="Project_Info_Sheets_{bim_project.name}.xlsx"'
-  wb.save(response)
-
-  return response
 
 def create_model_info_sheets_file(bim_model):
   '''
