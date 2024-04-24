@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .mixins import StaffMixin
-from .utils import ExcelExporter, create_model_info_sheets_file, set_default_coordination, set_default_validation
+from .utils import ExcelExporter, set_default_coordination, set_default_validation
 
 # Create your views here.
 
@@ -219,8 +219,7 @@ class BimProjectExporter(StaffMixin, View):
     exporter = ExcelExporter(project)
 
     if export_type == 'model_register':
-
-      return exporter.export_model_register_file()
+      return exporter.export_model_register()
     
     if export_type == 'info_sheets':
       return exporter.export_project_info_sheets()
@@ -230,8 +229,9 @@ class BimProjectExporter(StaffMixin, View):
 class BimModelExporter(StaffMixin, View):
   def get(self, request, pk, export_type):
     bim_model = get_object_or_404(BimModel, pk=pk)
+    exporter = ExcelExporter(bim_model)
 
     if export_type == 'model_info_sheets':
-      return create_model_info_sheets_file(bim_model)
+      return exporter.export_model_info_sheets()
     
     return HttpResponseBadRequest("Bad request.")
