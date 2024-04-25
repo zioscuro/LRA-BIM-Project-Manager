@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from projects.models import BimProject
+from projects.mixins import StaffMixin
+from django.views import View
 
 # Create your views here.
 
@@ -23,4 +25,6 @@ class UserList(ListView):
   template_name = 'core/users.html'
   context_object_name = 'Users_list'
   
-  
+class OrganizationSettings(StaffMixin, View):
+  def get(self, request):
+    return render(request, 'core/organization_settings.html')

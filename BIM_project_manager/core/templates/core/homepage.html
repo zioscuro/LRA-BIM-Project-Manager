@@ -9,8 +9,11 @@
   <div class="col-md-3">
     <h4>Gestione progetti</h4>
     <p>Progetti attivi: {{ BimProjects_list.count }}</p>
-    {% if request.user.is_staff %}    
-    <a href="{% url 'create_project' %}" class="btn btn-primary btn-lg mb-5">Crea Progetto</a>    
+    {% if request.user.is_staff %}
+    <div class="d-grid mt-4 gap-2">
+      <a href="{% url 'create_project' %}" class="btn btn-primary btn-lg">Crea Progetto</a>
+      <a href="{% url 'organization_settings' %}" class="btn btn-outline-primary btn-lg">Impostazioni</a>
+    </div>   
     {% endif %}
   </div>
   <div class="col-md-9 d-flex flex-wrap gap-3">
