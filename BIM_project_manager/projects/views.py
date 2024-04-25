@@ -213,25 +213,21 @@ class DefaultInfoSheet(StaffMixin, View):
     bim_model.save()
     return HttpResponseRedirect(bim_model.get_absolute_url())
 
-class BimProjectExporter(StaffMixin, View):
+class BimDataExporter(StaffMixin, View):
   def get(self, request, pk, export_type):
-    project = get_object_or_404(BimProject, pk=pk)
-    exporter = ExcelExporter(project)
-
     if export_type == 'model_register':
+      project = get_object_or_404(BimProject, pk=pk)
+      exporter = ExcelExporter(project)
       return exporter.export_model_register()
     
-    if export_type == 'info_sheets':
+    if export_type == 'project_info_sheets':
+      project = get_object_or_404(BimProject, pk=pk)
+      exporter = ExcelExporter(project)
       return exporter.export_project_info_sheets()
     
-    return HttpResponseBadRequest("Bad request.")
-
-class BimModelExporter(StaffMixin, View):
-  def get(self, request, pk, export_type):
-    bim_model = get_object_or_404(BimModel, pk=pk)
-    exporter = ExcelExporter(bim_model)
-
     if export_type == 'model_info_sheets':
-      return exporter.export_model_info_sheets()
-    
+      bim_model = get_object_or_404(BimModel, pk=pk)
+      exporter = ExcelExporter(bim_model)
+      return exporter.export_model_info_sheets()    
+
     return HttpResponseBadRequest("Bad request.")
