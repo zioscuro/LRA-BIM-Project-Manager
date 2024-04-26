@@ -16,6 +16,7 @@ class ProjectPhase(models.Model):
 class Discipline(models.Model):
   name = models.CharField(max_length=80, verbose_name="nome")
   description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione")
+  code = models.CharField(max_length=3, blank=True, null=True, verbose_name="codice disiplina")
 
   def __str__(self):
     return self.name
