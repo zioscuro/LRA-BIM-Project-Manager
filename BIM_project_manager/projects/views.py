@@ -7,7 +7,7 @@ from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from .mixins import StaffMixin
+from core.mixins import StaffMixin
 from .utils import ExcelExporter, set_default_coordination, set_default_validation
 
 # Create your views here.
