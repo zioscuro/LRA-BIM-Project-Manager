@@ -3,9 +3,9 @@ from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, Validati
 
 # Register your models here.
 
-admin.site .register(BimProject)
-admin.site .register(BimModel)
-admin.site .register(InfoSheet)
-admin.site .register(Report)
-admin.site .register(ClashTest)
-admin.site .register(ValidationTest)
+admin.site.register(BimProject)
+admin.site.register(BimModel)
+admin.site.register(InfoSheet)
+admin.site.register(Report)
+admin.site.register(ClashTest)
+admin.site.register(ValidationTest)
