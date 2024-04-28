@@ -30,7 +30,7 @@ class AuthoringSoftware(models.Model):
   version = models.CharField(max_length=150, blank=True, null=True, verbose_name="versione")
 
   def __str__(self):
-    return self.name
+    return f'{self.name} - {self.version}'
   
   class Meta:
     verbose_name = 'Software di Authoring'
@@ -46,6 +46,17 @@ class LodReference(models.Model):
   class Meta:
     verbose_name = 'Scheda LOD'
     verbose_name_plural = 'Schede LOD'
+
+class BimSpecification(models.Model):
+  name = models.CharField(max_length=80, verbose_name="nome")
+  description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione")
+
+  def __str__(self):
+    return self.name
+  
+  class Meta:
+    verbose_name = 'Specifica coordinamento/verifica'
+    verbose_name_plural = 'Specifiche coordinamento/verifica'
 
 class BimExpert(models.Model):
   name = models.CharField(max_length=80, verbose_name="nome")

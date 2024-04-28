@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from projects.models import BimProject
 from core.mixins import StaffMixin
 from django.views import View
+from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
 
 # Create your views here.
 
@@ -27,4 +28,20 @@ class UserList(ListView):
   
 class OrganizationSettings(StaffMixin, View):
   def get(self, request):
-    return render(request, 'core/organization_settings.html')
+    project_phases = ProjectPhase.objects.all()
+    disciplines = Discipline.objects.all()
+    software_list = AuthoringSoftware.objects.all()
+    lod_list = LodReference.objects.all()
+    specifications_list = BimSpecification.objects.all()
+    expert_list = BimExpert.objects.all()
+
+    context = {
+      'project_phases': project_phases,
+      'disciplines': disciplines,
+      'software_list': software_list,
+      'lod_list': lod_list,
+      'specifications_list': specifications_list, 
+      'expert_list': expert_list 
+      }
+
+    return render(request, 'core/organization_settings.html', context)
