@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from core.mixins import StaffMixin
 from django.views import View
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
 
 # Create your views here.
@@ -24,3 +25,62 @@ class OrganizationSettings(StaffMixin, View):
       }
 
     return render(request, 'organization/organization_settings.html', context)
+  
+class CreateProjectPhase(StaffMixin, CreateView):
+  pass
+
+class UpdateProjectPhase(StaffMixin, UpdateView):
+  pass
+
+class DeleteProjectPhase(StaffMixin, DeleteView):
+  pass
+
+
+class CreateDiscipline(StaffMixin, CreateView):
+  pass
+
+class UpdateDiscipline(StaffMixin, UpdateView):
+  pass
+
+class DeleteDiscipline(StaffMixin, DeleteView):
+  pass
+
+
+class CreateAuthoringSoftware(StaffMixin, CreateView):
+  pass
+
+class UpdateAuthoringSoftware(StaffMixin, UpdateView):
+  pass
+
+class DeleteAuthoringSoftware(StaffMixin, DeleteView):
+  pass
+
+
+class CreateLodReference(StaffMixin, CreateView):
+  pass
+
+class UpdateLodReference(StaffMixin, UpdateView):
+  pass
+
+class DeleteLodReference(StaffMixin, DeleteView):
+  pass
+
+
+class CreateBimSpecification(StaffMixin, CreateView):
+  pass
+
+class UpdateBimSpecification(StaffMixin, UpdateView):
+  pass
+
+class DeleteBimSpecification(StaffMixin, DeleteView):
+  pass
+
+
+class CreateBimExpert(StaffMixin, CreateView):
+  pass
+
+class UpdateBimExpert(StaffMixin, UpdateView):
+  pass
+
+class DeleteBimExpert(StaffMixin, DeleteView):
+  pass
