@@ -2,9 +2,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from projects.models import BimProject
-from core.mixins import StaffMixin
-from django.views import View
-from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
 
 # Create your views here.
 
@@ -26,22 +23,22 @@ class UserList(ListView):
   template_name = 'core/users.html'
   context_object_name = 'Users_list'
   
-class OrganizationSettings(StaffMixin, View):
-  def get(self, request):
-    project_phases = ProjectPhase.objects.all()
-    disciplines = Discipline.objects.all()
-    software_list = AuthoringSoftware.objects.all()
-    lod_list = LodReference.objects.all()
-    specifications_list = BimSpecification.objects.all()
-    expert_list = BimExpert.objects.all()
+# class OrganizationSettings(StaffMixin, View):
+#   def get(self, request):
+#     project_phases = ProjectPhase.objects.all()
+#     disciplines = Discipline.objects.all()
+#     software_list = AuthoringSoftware.objects.all()
+#     lod_list = LodReference.objects.all()
+#     specifications_list = BimSpecification.objects.all()
+#     expert_list = BimExpert.objects.all()
 
-    context = {
-      'project_phases': project_phases,
-      'disciplines': disciplines,
-      'software_list': software_list,
-      'lod_list': lod_list,
-      'specifications_list': specifications_list, 
-      'expert_list': expert_list 
-      }
+#     context = {
+#       'project_phases': project_phases,
+#       'disciplines': disciplines,
+#       'software_list': software_list,
+#       'lod_list': lod_list,
+#       'specifications_list': specifications_list, 
+#       'expert_list': expert_list 
+#       }
 
-    return render(request, 'core/organization_settings.html', context)
+#     return render(request, 'core/organization_settings.html', context)
