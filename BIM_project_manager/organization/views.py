@@ -3,6 +3,7 @@ from core.mixins import StaffMixin
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
+from django.urls import reverse
 
 # Create your views here.
 
@@ -25,15 +26,30 @@ class OrganizationSettings(StaffMixin, View):
       }
 
     return render(request, 'organization/organization_settings.html', context)
-  
+
+
 class CreateProjectPhase(StaffMixin, CreateView):
-  pass
+  model = ProjectPhase
+  fields = ['name', 'description']
+  template_name = 'organization/project_phase_create.html'
+  
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class UpdateProjectPhase(StaffMixin, UpdateView):
-  pass
+  model = ProjectPhase
+  fields = ['name', 'description']
+  template_name = 'organization/project_phase_update.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class DeleteProjectPhase(StaffMixin, DeleteView):
-  pass
+  model = ProjectPhase
+  template_name = 'organization/project_phase_delete.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 
 class CreateDiscipline(StaffMixin, CreateView):
