@@ -53,14 +53,14 @@
         <td>{{ discipline.name }}</td>
         <td>{{ discipline.description }}</td>
         <td>{{ discipline.code }}</td>
-        <td><a href="#" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="#" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td><a href="{% url 'update_discipline' pk=discipline.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
+        <td><a href="{% url 'delete_discipline' pk=discipline.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="d-flex gap-2 justify-content-end">
-    <a href="#" class="btn btn-outline-primary btn">+ Aggiungi disciplina</a>
+    <a href="{% url 'create_discipline' %}" class="btn btn-outline-primary btn">+ Aggiungi disciplina</a>
   </div>
   <hr>
   <h4>Software di Authoring</h4>

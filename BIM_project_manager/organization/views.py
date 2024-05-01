@@ -53,13 +53,27 @@ class DeleteProjectPhase(StaffMixin, DeleteView):
 
 
 class CreateDiscipline(StaffMixin, CreateView):
-  pass
+  model = Discipline
+  fields = ['name', 'description', 'code']
+  template_name = 'organization/discipline_create.html'
+  
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class UpdateDiscipline(StaffMixin, UpdateView):
-  pass
+  model = Discipline
+  fields = ['name', 'description', 'code']
+  template_name = 'organization/discipline_update.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class DeleteDiscipline(StaffMixin, DeleteView):
-  pass
+  model = Discipline
+  template_name = 'organization/discipline_delete.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 
 class CreateAuthoringSoftware(StaffMixin, CreateView):
