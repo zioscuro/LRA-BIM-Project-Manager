@@ -1,0 +1,51 @@
+[
+  {
+    "model":"organization.ProjectPhase",
+    "pk":1,
+    "fields":{
+      "name": "PFTE",
+      "description": "Progetto di fattibilità tecnico-economica"
+    }
+  },
+  {
+    "model":"organization.Discipline",
+    "pk":1,
+    "fields":{
+      "name": "Architettura",
+      "description": "Progettazione architettonica",
+      "code": "ARC"
+    }
+  },
+  {
+    "model":"organization.AuthoringSoftware",
+    "pk":1,
+    "fields":{
+      "name": "Autodesk Revit",
+      "version": "2024"
+    }
+  },
+  {
+    "model":"organization.LodReference",
+    "pk":1,
+    "fields":{
+      "name": "LOD_ARC",
+      "description": "LOD progetto architettonico"
+    }
+  },
+  {
+    "model":"organization.BimSpecification",
+    "pk":1,
+    "fields":{
+      "name": "Duplicati",
+      "description": "Controllo degli elementi duplicati"
+    }
+  },
+  {
+    "model":"organization.BimExpert",
+    "pk":1,
+    "fields":{
+      "name": "Lorenzo Ranghiasci",
+      "position": "Architetto"
+    }
+  }
+]
