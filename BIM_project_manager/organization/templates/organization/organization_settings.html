@@ -80,14 +80,14 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ software.name }}</td>
         <td>{{ software.version }}</td>
-        <td><a href="#" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="#" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td><a href="{% url 'update_software' pk=software.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
+        <td><a href="{% url 'delete_software' pk=software.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="d-flex gap-2 justify-content-end">
-    <a href="#" class="btn btn-outline-primary btn">+ Aggiungi software</a>
+    <a href="{% url 'create_software' %}" class="btn btn-outline-primary btn">+ Aggiungi software</a>
   </div>
   <hr>
   <h4>Schede LOD</h4>

@@ -12,5 +12,9 @@ urlpatterns = [
     path('create_discipline/', views.CreateDiscipline.as_view(), name='create_discipline'),
     path('update_discipline/<int:pk>', views.UpdateDiscipline.as_view(), name='update_discipline'),
     path('delete_discipline/<int:pk>', views.DeleteDiscipline.as_view(), name='delete_discipline'),
+
+    path('create_software/', views.CreateAuthoringSoftware.as_view(), name='create_software'),
+    path('update_software/<int:pk>', views.UpdateAuthoringSoftware.as_view(), name='update_software'),
+    path('delete_software/<int:pk>', views.DeleteAuthoringSoftware.as_view(), name='delete_software'),
 ]
 

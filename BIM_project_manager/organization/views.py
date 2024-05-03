@@ -77,13 +77,27 @@ class DeleteDiscipline(StaffMixin, DeleteView):
 
 
 class CreateAuthoringSoftware(StaffMixin, CreateView):
-  pass
+  model = AuthoringSoftware
+  fields = ['name', 'version']
+  template_name = 'organization/authoring_software_create.html'
+  
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class UpdateAuthoringSoftware(StaffMixin, UpdateView):
-  pass
+  model = AuthoringSoftware
+  fields = ['name', 'version']
+  template_name = 'organization/authoring_software_update.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class DeleteAuthoringSoftware(StaffMixin, DeleteView):
-  pass
+  model = AuthoringSoftware
+  template_name = 'organization/authoring_software_delete.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 
 class CreateLodReference(StaffMixin, CreateView):
