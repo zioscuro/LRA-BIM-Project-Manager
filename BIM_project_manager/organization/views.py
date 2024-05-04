@@ -101,13 +101,27 @@ class DeleteAuthoringSoftware(StaffMixin, DeleteView):
 
 
 class CreateLodReference(StaffMixin, CreateView):
-  pass
+  model = LodReference
+  fields = ['name', 'description']
+  template_name = 'organization/lod_reference_create.html'
+  
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class UpdateLodReference(StaffMixin, UpdateView):
-  pass
+  model = LodReference
+  fields = ['name', 'description']
+  template_name = 'organization/lod_reference_update.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class DeleteLodReference(StaffMixin, DeleteView):
-  pass
+  model = LodReference
+  template_name = 'organization/lod_reference_delete.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 
 class CreateBimSpecification(StaffMixin, CreateView):

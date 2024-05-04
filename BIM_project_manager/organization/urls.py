@@ -16,5 +16,9 @@ urlpatterns = [
     path('create_software/', views.CreateAuthoringSoftware.as_view(), name='create_software'),
     path('update_software/<int:pk>', views.UpdateAuthoringSoftware.as_view(), name='update_software'),
     path('delete_software/<int:pk>', views.DeleteAuthoringSoftware.as_view(), name='delete_software'),
+
+    path('create_reference/', views.CreateLodReference.as_view(), name='create_reference'),
+    path('update_reference/<int:pk>', views.UpdateLodReference.as_view(), name='update_reference'),
+    path('delete_reference/<int:pk>', views.DeleteLodReference.as_view(), name='delete_reference'),
 ]
 

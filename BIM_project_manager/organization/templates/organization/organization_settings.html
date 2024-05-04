@@ -107,14 +107,14 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ lod_reference.name }}</td>
         <td>{{ lod_reference.description }}</td>
-        <td><a href="#" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="#" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td><a href="{% url 'update_reference' pk=lod_reference.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
+        <td><a href="{% url 'delete_reference' pk=lod_reference.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="d-flex gap-2 justify-content-end">
-    <a href="#" class="btn btn-outline-primary btn">+ Aggiungi scheda LOD</a>
+    <a href="{% url 'create_reference' %}" class="btn btn-outline-primary btn">+ Aggiungi scheda LOD</a>
   </div>
   <hr>
   <h4>Specifiche coordinamento/verifica</h4>
