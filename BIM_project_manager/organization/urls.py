@@ -20,5 +20,9 @@ urlpatterns = [
     path('create_reference/', views.CreateLodReference.as_view(), name='create_reference'),
     path('update_reference/<int:pk>', views.UpdateLodReference.as_view(), name='update_reference'),
     path('delete_reference/<int:pk>', views.DeleteLodReference.as_view(), name='delete_reference'),
+    
+    path('create_specification/', views.CreateBimSpecification.as_view(), name='create_specification'),
+    path('update_specification/<int:pk>', views.UpdateBimSpecification.as_view(), name='update_specification'),
+    path('delete_specification/<int:pk>', views.DeleteBimSpecification.as_view(), name='delete_specification'),
 ]
 

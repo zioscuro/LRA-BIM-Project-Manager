@@ -125,13 +125,27 @@ class DeleteLodReference(StaffMixin, DeleteView):
 
 
 class CreateBimSpecification(StaffMixin, CreateView):
-  pass
+  model = BimSpecification
+  fields = ['name', 'description']
+  template_name = 'organization/specification_create.html'
+  
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class UpdateBimSpecification(StaffMixin, UpdateView):
-  pass
+  model = BimSpecification
+  fields = ['name', 'description']
+  template_name = 'organization/specification_update.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class DeleteBimSpecification(StaffMixin, DeleteView):
-  pass
+  model = BimSpecification
+  template_name = 'organization/specification_delete.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 
 class CreateBimExpert(StaffMixin, CreateView):

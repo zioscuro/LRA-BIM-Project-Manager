@@ -134,14 +134,14 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ specification.name }}</td>
         <td>{{ specification.description }}</td>
-        <td><a href="#" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="#" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td><a href="{% url 'update_specification' pk=specification.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
+        <td><a href="{% url 'delete_specification' pk=specification.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="d-flex gap-2 justify-content-end">
-    <a href="#" class="btn btn-outline-primary btn">+ Aggiungi specifica</a>
+    <a href="{% url 'create_specification' %}" class="btn btn-outline-primary btn">+ Aggiungi specifica</a>
   </div>
   <hr>
   <h4>CRM professionisti</h4>
