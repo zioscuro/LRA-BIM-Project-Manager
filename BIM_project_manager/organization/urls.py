@@ -24,5 +24,9 @@ urlpatterns = [
     path('create_specification/', views.CreateBimSpecification.as_view(), name='create_specification'),
     path('update_specification/<int:pk>', views.UpdateBimSpecification.as_view(), name='update_specification'),
     path('delete_specification/<int:pk>', views.DeleteBimSpecification.as_view(), name='delete_specification'),
+
+    path('create_expert/', views.CreateBimExpert.as_view(), name='create_expert'),
+    path('update_expert/<int:pk>', views.UpdateBimExpert.as_view(), name='update_expert'),
+    path('delete_expert/<int:pk>', views.DeleteBimExpert.as_view(), name='delete_expert'),
 ]
 

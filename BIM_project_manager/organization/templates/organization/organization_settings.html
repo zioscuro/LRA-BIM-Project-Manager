@@ -161,14 +161,14 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ bim_expert.name }}</td>
         <td>{{ bim_expert.position }}</td>
-        <td><a href="#" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="#" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td><a href="{% url 'update_expert' pk=bim_expert.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
+        <td><a href="{% url 'delete_expert' pk=bim_expert.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="d-flex gap-2 justify-content-end">
-    <a href="#" class="btn btn-outline-primary btn">+ Aggiungi professionista</a>
+    <a href="{% url 'create_expert' %}" class="btn btn-outline-primary btn">+ Aggiungi professionista</a>
   </div>
   <hr>
 </div>

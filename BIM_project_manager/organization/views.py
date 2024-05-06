@@ -149,10 +149,24 @@ class DeleteBimSpecification(StaffMixin, DeleteView):
 
 
 class CreateBimExpert(StaffMixin, CreateView):
-  pass
+  model = BimExpert
+  fields = ['name', 'position']
+  template_name = 'organization/bim_expert_create.html'
+  
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class UpdateBimExpert(StaffMixin, UpdateView):
-  pass
+  model = BimExpert
+  fields = ['name', 'position']
+  template_name = 'organization/bim_expert_update.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
 
 class DeleteBimExpert(StaffMixin, DeleteView):
-  pass
+  model = BimExpert
+  template_name = 'organization/bim_expert_delete.html'
+
+  def get_success_url(self):
+    return reverse('organization_settings')
