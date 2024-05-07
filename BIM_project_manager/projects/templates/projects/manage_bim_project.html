@@ -22,6 +22,14 @@
     <p>{{bimproject.address}}</p>
     <h6>fase di progetto</h6>
     <p>{{bimproject.phase}}</p>
+    <h6>responsabile di progetto</h6>
+    <p>{{bimproject.default_designer}}</p>
+    <h6>bim manager di progetto</h6>
+    <p>{{bimproject.default_bim_manager}}</p>
+    <h6>bim coordinator di progetto</h6>
+    <p>{{bimproject.default_bim_coordinator}}</p>
+    <h6>bim specialist di progetto</h6>
+    <p>{{bimproject.default_bim_specialist}}</p>
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">

@@ -14,13 +14,13 @@ from .utils import ExcelExporter, set_default_coordination, set_default_validati
 
 class CreateBimProject(StaffMixin, CreateView):
   model = BimProject
-  fields = ['name', 'description', 'customer', 'address', 'phase']
+  fields = '__all__'
   template_name = 'projects/create_bim_project.html'
   success_url = '/'
 
 class UpdateBimProject(StaffMixin, UpdateView):
   model = BimProject
-  fields = ['name', 'description', 'customer', 'address', 'phase']
+  fields = '__all__'
   template_name_suffix = "_update_form"
 
   def get_success_url(self):

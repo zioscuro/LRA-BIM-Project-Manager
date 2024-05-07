@@ -1,30 +1,19 @@
 from django.db import models
 from django.urls import reverse
+from organization.models import ProjectPhase, BimExpert
 
 # Create your models here.
 
 class BimProject(models.Model):
-  """ 
-  a BIM project in the domain model 
-  each BIM project contains several BIM models
-  """
-  name = models.CharField(max_length=80, verbose_name="nome")
+  name = models.CharField(max_length=50, verbose_name="nome")
   description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione")
-  logo_img = models.ImageField(blank=True, null=True, verbose_name="immagine copertina")
-  customer = models.CharField(max_length=150, blank=True, null=True, verbose_name="committente")
-  address = models.CharField(max_length=150, blank=True, null=True, verbose_name="indirizzo")
- 
-  PHASE_CHOICES = {
-    'RI': 'Rilievo',
-    'PF': 'Fattibilità',
-    'PD': 'Definitivo',
-    'PE': 'Esecutivo',
-    'DL': 'Direzione lavori',
-    'CS': 'Costruttivo',
-    'AB': 'As Built'
-  }
-  
-  phase = models.CharField(max_length=2, choices=PHASE_CHOICES, blank=True, null=True, verbose_name="fase progettuale")
+  customer = models.CharField(max_length=50, blank=True, null=True, verbose_name="committente")
+  address = models.CharField(max_length=150, blank=True, null=True, verbose_name="indirizzo")  
+  phase = models.ForeignKey(ProjectPhase, on_delete=models.SET_NULL, blank=True, null=True, related_name='projects', verbose_name="fase progettuale")
+  default_designer = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='designer_role_projects', verbose_name="responsabile progetto")
+  default_bim_manager = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_manager_role_projects', verbose_name="bim manager progetto")
+  default_bim_coordinator = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_coordinator_role_projects', verbose_name="bim coordinator progetto")
+  default_bim_specialist = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_specialist_role_projects', verbose_name="bim specialist progetto")
 
   def __str__(self):
     return self.name
