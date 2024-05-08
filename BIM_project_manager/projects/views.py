@@ -7,7 +7,7 @@ from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from .forms import BimModelCreateForm, BimModelUpdateForm
+from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm
 from core.mixins import StaffMixin
 from .utils import ExcelExporter, set_default_coordination, set_default_validation
 
@@ -116,7 +116,7 @@ class ManageInfoSheet(StaffMixin, DetailView):
 
 class CreateReport(StaffMixin, CreateView):
   model = Report
-  fields = ['name', 'description']
+  form_class = ReportForm
   template_name = 'projects/report_create.html'
 
   def form_valid(self, form):
@@ -129,7 +129,7 @@ class CreateReport(StaffMixin, CreateView):
 
 class UpdateReport(StaffMixin, UpdateView):
   model = Report
-  fields = ['name', 'description']
+  form_class = ReportForm
   template_name = 'projects/report_update.html'
 
   def get_success_url(self):

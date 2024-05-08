@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from organization.models import AuthoringSoftware, Discipline, LodReference, ProjectPhase, BimExpert
+from organization.models import AuthoringSoftware, BimExpert, Discipline, LodReference, ProjectPhase, BimSpecification
 
 # Create your models here.
 
@@ -55,17 +55,11 @@ class BimModel(models.Model):
     verbose_name_plural = 'Modelli'
 
 class InfoSheet(models.Model):
-  """
-  an Info Sheet related to a BIM Model
-  each Info Sheet contains several Reports
-  """
-  
   SHEET_TYPE_CHOICES = {
     'Coordination': 'Coordinamento',
     'Validation': 'Verifica',
   }
-
-  sheet_type = models.CharField(max_length=20, choices=SHEET_TYPE_CHOICES, verbose_name="tipo scheda")
+  sheet_type = models.CharField(max_length=20, choices=SHEET_TYPE_CHOICES, verbose_name="tipo scheda")  
   name = models.CharField(max_length=80, verbose_name="nome")
   description = models.CharField(max_length=150, blank=True, null=True, verbose_name="disciplina")
   bim_model = models.ForeignKey(BimModel, on_delete=models.CASCADE, related_name='info_sheets')
@@ -81,12 +75,10 @@ class InfoSheet(models.Model):
     verbose_name_plural = 'Schede informative'
 
 class Report(models.Model):
-  """
-  a Report related to a Info Sheet
-  each Report contains several Tests
-  """
   name = models.CharField(max_length=80, verbose_name="nome report")
   description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione report")
+  specification = models.ForeignKey(BimSpecification, on_delete=models.SET_NULL, blank=True, null=True, related_name='reports', verbose_name="specifica coordinamento/verifica")
+  
   info_sheet = models.ForeignKey(InfoSheet, on_delete=models.CASCADE, related_name='reports')
 
   def __str__(self):
