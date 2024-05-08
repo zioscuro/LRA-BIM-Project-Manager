@@ -39,8 +39,10 @@
     {% endif %}
     <hr>
     <div class="d-grid gap-2">
+      {% if bimproject.bim_models.all %}
       <a href="{% url 'export_data' pk=bimproject.pk export_type='model_register' %}" class="btn btn-outline-secondary btn-lg">Esporta registro modelli</a>
       <a href="{% url 'export_data' pk=bimproject.pk export_type='project_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta tutte le schede informative</a>
+      {% endif %}
     </div>   
   </div>
   <div class="col-md-9">    

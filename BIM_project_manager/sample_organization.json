@@ -3,49 +3,70 @@
     "model":"organization.ProjectPhase",
     "pk":1,
     "fields":{
+      "name": "-",
+      "description": "-"
+    }
+  },{
+    "model":"organization.ProjectPhase",
+    "pk":2,
+    "fields":{
       "name": "PFTE",
       "description": "Progetto di fattibilità tecnico-economica"
+    }
+  },{
+    "model":"organization.ProjectPhase",
+    "pk":3,
+    "fields":{
+      "name": "Progetto Definitivo",
+      "description": "Progetto Definitivo"
+    }
+  },{
+    "model":"organization.ProjectPhase",
+    "pk":4,
+    "fields":{
+      "name": "Progetto Esecutivo",
+      "description": "Progetto Esecutivo"
     }
   },
   {
     "model":"organization.Discipline",
     "pk":1,
     "fields":{
-      "name": "Architettura",
-      "description": "Progettazione architettonica",
-      "code": "ARC"
+      "name": "-",
+      "description": "-",
+      "code": "-"
     }
   },
   {
     "model":"organization.AuthoringSoftware",
     "pk":1,
     "fields":{
-      "name": "Autodesk Revit",
-      "version": "2024"
+      "name": "-",
+      "version": "-"
     }
   },
   {
     "model":"organization.LodReference",
     "pk":1,
     "fields":{
-      "name": "LOD_ARC",
-      "description": "LOD progetto architettonico"
+      "name": "-",
+      "description": "-"
     }
   },
   {
     "model":"organization.BimSpecification",
     "pk":1,
     "fields":{
-      "name": "Duplicati",
-      "description": "Controllo degli elementi duplicati"
+      "name": "-",
+      "description": "-"
     }
   },
   {
     "model":"organization.BimExpert",
     "pk":1,
     "fields":{
-      "name": "Lorenzo Ranghiasci",
-      "position": "Architetto"
+      "name": "-",
+      "position": "-"
     }
   }
 ]

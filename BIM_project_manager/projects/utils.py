@@ -154,6 +154,7 @@ class ExcelExporter():
           cell.style = Styles.standard_cell
 
   def export_project_info_sheets(self):
+
     self.build_project_info_sheets()
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')  

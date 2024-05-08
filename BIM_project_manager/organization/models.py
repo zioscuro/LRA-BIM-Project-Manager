@@ -30,6 +30,8 @@ class AuthoringSoftware(models.Model):
   version = models.CharField(max_length=150, blank=True, null=True, verbose_name="versione")
 
   def __str__(self):
+    if self.name == '-' and self.version == '-': return '-'
+
     return f'{self.name} - {self.version}'
   
   class Meta:
