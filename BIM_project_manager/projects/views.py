@@ -7,6 +7,7 @@ from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
+from .forms import BimModelCreateForm, BimModelUpdateForm
 from core.mixins import StaffMixin
 from .utils import ExcelExporter, set_default_coordination, set_default_validation
 
@@ -37,20 +38,24 @@ class ManageBimProject(StaffMixin, DetailView):
 
 class CreateBimModel(StaffMixin, CreateView):
   model = BimModel
-  fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
+  form_class = BimModelCreateForm
   template_name = 'projects/create_bim_model.html'
 
   def form_valid(self, form):
     bim_project = get_object_or_404(BimProject, pk=self.kwargs['pk'])
-    form.instance.project = bim_project
+    form.instance.bim_project = bim_project
+    form.instance.designer = bim_project.default_designer
+    form.instance.bim_manager = bim_project.default_bim_manager
+    form.instance.bim_coordinator = bim_project.default_bim_coordinator
+    form.instance.bim_specialist = bim_project.default_bim_specialist
     return super(CreateBimModel, self).form_valid(form)
   
   def get_success_url(self):
-    return reverse('manage_project', kwargs={ 'pk': self.object.project.pk })
+    return reverse('manage_project', kwargs={ 'pk': self.object.bim_project.pk })
 
 class UpdateBimModel(StaffMixin, UpdateView):
   model = BimModel
-  fields = ['name', 'discipline', 'designer', 'authoringSoftware', 'lodReference']
+  form_class = BimModelUpdateForm
   template_name_suffix = "_update_form"
 
   def get_success_url(self):
@@ -60,7 +65,7 @@ class DeleteBimModel(StaffMixin, DeleteView):
   model = BimModel
 
   def get_success_url(self):
-    return reverse('manage_project', kwargs={'pk': self.object.project.pk})
+    return reverse('manage_project', kwargs={'pk': self.object.bim_project.pk})
 
 class ManageBimModel(StaffMixin, DetailView):
   model = BimModel

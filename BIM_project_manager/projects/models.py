@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from organization.models import ProjectPhase, BimExpert
+from organization.models import AuthoringSoftware, Discipline, LodReference, ProjectPhase, BimExpert
 
 # Create your models here.
 
@@ -10,6 +10,7 @@ class BimProject(models.Model):
   customer = models.CharField(max_length=50, blank=True, null=True, verbose_name="committente")
   address = models.CharField(max_length=150, blank=True, null=True, verbose_name="indirizzo")  
   phase = models.ForeignKey(ProjectPhase, on_delete=models.SET_NULL, blank=True, null=True, related_name='projects', verbose_name="fase progettuale")
+  
   default_designer = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='designer_role_projects', verbose_name="responsabile progetto")
   default_bim_manager = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_manager_role_projects', verbose_name="bim manager progetto")
   default_bim_coordinator = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_coordinator_role_projects', verbose_name="bim coordinator progetto")
@@ -26,27 +27,22 @@ class BimProject(models.Model):
     verbose_name_plural = 'Progetti'
 
 class BimModel(models.Model):
-  """
-  a BIM model related to a Project
-  each BIM model contains several Info Sheets
-  """
-  name = models.CharField(max_length=80, verbose_name="nome")
+  name = models.CharField(max_length=50, verbose_name="nome")
+  description = models.CharField(max_length=150, blank=True, null=True, verbose_name="descrizione")
+  
+  discipline = models.ForeignKey(Discipline, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_models', verbose_name="disciplina")
+  authoringSoftware = models.ForeignKey(AuthoringSoftware, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_models', verbose_name="software di authoring")
+  lodReference = models.ForeignKey(LodReference, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_models', verbose_name="scheda LOD")
 
-  DISCIPLINE_CHOICES = {
-    'ARC': 'Architettonico',
-    'STR': 'Strutture',
-    'MEC': 'Impianti meccanici',
-    'ELE': 'Impianti elettrici',
-    'COO': 'Coordinamento',
-  }
-
-  discipline = models.CharField(choices=DISCIPLINE_CHOICES, max_length=50, blank=True, null=True, verbose_name="disciplina")
-  designer =  models.CharField(max_length=50, blank=True, null=True, verbose_name="progettista")
+  designer =  models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='designer_role_models', verbose_name="progettista")
+  bim_manager = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_manager_role_models', verbose_name="bim manager")
+  bim_coordinator = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_coordinator_role_models', verbose_name="bim coordinator")
+  bim_specialist = models.ForeignKey(BimExpert, on_delete=models.SET_NULL, blank=True, null=True, related_name='bim_specialist_role_models', verbose_name="bim specialist")
+  
+  bim_project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models', verbose_name="progetto")
+  
   default_coordination = models.BooleanField(default=False)
   default_validation = models.BooleanField(default=False)
-  authoringSoftware = models.CharField(max_length=50, blank=True, null=True, verbose_name="software di authoring")
-  lodReference = models.CharField(max_length=100, blank=True, null=True, verbose_name="scheda LOD")
-  project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models')
 
   def __str__(self):
     return self.name

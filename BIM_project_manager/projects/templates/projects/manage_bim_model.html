@@ -3,7 +3,7 @@
 {% block head_title %}{{ block.super }} - {{bimmodel.name}}{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bimmodel.project.pk %}">← Torna al progetto</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bimmodel.bim_project.pk %}">← Torna al progetto</a>
 {% endblock navbar %}
 
 {% block content %}
@@ -11,19 +11,27 @@
 <h1 class="mb-5 text-center">{{bimmodel.name}}</h1>
 <div class="row  mx-auto">
   <div class="col-md-3">
-    <h4>Dati modello</h4>    
+    <h4>Dati modello</h4> 
     <h6>nome</h6>
     <p>{{bimmodel.name}}</p>
+    <h6>descrizione</h6>
+    <p>{{bimmodel.description}}</p>
     <h6>disciplina</h6>
     <p>{{bimmodel.discipline}}</p>
-    <h6>progettista</h6>
-    <p>{{bimmodel.designer}}</p>
     <h6>software di authoring</h6>
     <p>{{bimmodel.authoringSoftware}}</p>
     <h6>scheda LOD</h6>
     <p>{{bimmodel.lodReference}}</p>
+    <h6>progettista</h6>
+    <p>{{bimmodel.designer}}</p>
+    <h6>bim manager</h6>
+    <p>{{bimmodel.bim_manager}}</p>
+    <h6>bim coordinator</h6>
+    <p>{{bimmodel.bim_coordinator}}</p>
+    <h6>bim specialist</h6>
+    <p>{{bimmodel.bim_specialist}}</p>
     <h6>progetto</h6>
-    <p>{{bimmodel.project.name}}</p>
+    <p>{{bimmodel.bim_project.name}}</p>
     {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
