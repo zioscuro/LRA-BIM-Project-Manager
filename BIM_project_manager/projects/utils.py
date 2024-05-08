@@ -261,7 +261,7 @@ class ExcelExporter():
           for test in tests:
             ws.append([
               '',
-              test.date.strftime("%m/%d/%Y"), 
+              test.date.strftime("%d/%m/%Y"), 
               test.comments, 
               test.clash_new, 
               test.clash_active, 
@@ -294,7 +294,7 @@ class ExcelExporter():
             cell.style = Styles.standard_cell   
 
           for test in tests:
-            ws.append(['', test.date.strftime("%m/%d/%Y"), test.comments, test.issues])
+            ws.append(['', test.date.strftime("%d/%m/%Y"), test.comments, test.issues])
             for cell in ws[ws.max_row]: 
               cell.style = Styles.standard_cell       
           ws.append([])
