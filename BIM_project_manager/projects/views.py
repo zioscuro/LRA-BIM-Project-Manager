@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
@@ -242,3 +242,8 @@ class BimDataExporter(StaffMixin, View):
       return exporter.export_model_info_sheets()    
 
     return HttpResponseBadRequest("Bad request.")
+
+class ImportModelRegister(StaffMixin, View):
+  def get(self, request, pk):
+    return HttpResponse('<html><body>Importa registro modelli</body></html>')
+    
