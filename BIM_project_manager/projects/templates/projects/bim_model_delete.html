@@ -14,7 +14,7 @@
         {% csrf_token %}
         <div class="d-grid mt-4 gap-2">
           <input type="submit" class="btn btn-danger" value="Conferma">
-          <a href="#" class="btn btn-outline-secondary">Annulla</a>
+          <a href="{% url 'manage_bim_model' pk=bimmodel.bim_project.pk %}" class="btn btn-outline-secondary">Annulla</a>
         </div>
       </form>
     </div>
