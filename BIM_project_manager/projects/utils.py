@@ -1,5 +1,7 @@
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from .models import BimProject, BimModel, InfoSheet, Report
+from organization.models import BimSpecification
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
 
@@ -262,9 +264,8 @@ class ExcelExporter():
 
 
 def set_default_coordination(bim_model):
-  '''
-  create in a specific BIM model a default set of coordination info sheets ad related reports
-  '''
+  default_specification = get_object_or_404(BimSpecification, pk=1)
+
   sheet_LC1 = InfoSheet(
     sheet_type = 'coordination',
     name = 'LC1',
@@ -276,6 +277,7 @@ def set_default_coordination(bim_model):
   duplicates_report = Report(
     name = 'duplicati',
     description = 'default report elementi duplicati',
+    specification = default_specification,
     info_sheet = sheet_LC1,
   )
   duplicates_report.save()
@@ -283,14 +285,14 @@ def set_default_coordination(bim_model):
   intersections_report = Report(
     name = 'intersezioni',
     description = 'default report elementi intersecanti',
+    specification = default_specification,
     info_sheet = sheet_LC1,
   )
   intersections_report.save()
 
 def set_default_validation(bim_model):
-  '''
-  create in a specific BIM model a default set of validation info sheets ad related reports
-  '''
+  default_specification = get_object_or_404(BimSpecification, pk=1)
+
   sheet_LV1 = InfoSheet(
     sheet_type ='validation',
     name = 'LV1',
@@ -302,6 +304,7 @@ def set_default_validation(bim_model):
   file_name_report = Report(
     name = 'nomenclatura file modello',
     description = 'default report nomenclatura file',
+    specification = default_specification,
     info_sheet = sheet_LV1,
   )
   file_name_report.save()
@@ -309,6 +312,7 @@ def set_default_validation(bim_model):
   objects_name_report = Report(
     name = 'nomenclatura oggetti',
     description = 'default report nomenclatura oggetti nel modello',
+    specification = default_specification,
     info_sheet = sheet_LV1,
   )
   objects_name_report.save()

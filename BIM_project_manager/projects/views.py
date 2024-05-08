@@ -7,7 +7,7 @@ from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm
+from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm
 from core.mixins import StaffMixin
 from .utils import ExcelExporter, set_default_coordination, set_default_validation
 
@@ -149,7 +149,7 @@ class ManageReport(StaffMixin, DetailView):
 
 class CreateClashTest(StaffMixin, CreateView):
   model = ClashTest
-  fields = ['comments', 'clash_new', 'clash_active', 'clash_reviewed', 'clash_approved', 'clash_resolved']
+  form_class = ClashTestForm
   template_name = 'projects/clash_test_create.html'
 
   def form_valid(self, form):
@@ -162,7 +162,7 @@ class CreateClashTest(StaffMixin, CreateView):
 
 class UpdateClashTest(StaffMixin, UpdateView):
   model = ClashTest
-  fields = ['comments', 'clash_new', 'clash_active', 'clash_reviewed', 'clash_approved', 'clash_resolved']
+  form_class = ClashTestForm
   template_name = 'projects/clash_test_update.html'
 
   def get_success_url(self):
@@ -178,7 +178,7 @@ class DeleteClashTest(StaffMixin, DeleteView):
 
 class CreateValidationTest(StaffMixin, CreateView):
   model = ValidationTest
-  fields = ['comments', 'specification', 'issues']
+  form_class = ValidationTestForm
   template_name = 'projects/validation_test_create.html'
 
   def form_valid(self, form):
@@ -191,7 +191,7 @@ class CreateValidationTest(StaffMixin, CreateView):
 
 class UpdateValidationTest(StaffMixin, UpdateView):
   model = ValidationTest
-  fields = ['comments', 'specification', 'issues']
+  form_class = ValidationTestForm
   template_name = 'projects/validation_test_update.html'
 
   def get_success_url(self):

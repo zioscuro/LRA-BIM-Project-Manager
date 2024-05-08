@@ -92,9 +92,6 @@ class Report(models.Model):
     verbose_name_plural = 'Reports'
 
 class ClashTest(models.Model):
-  """
-  a Clash Test related to a Report
-  """
   date = models.DateTimeField(auto_now_add=True, verbose_name="data")
   comments = models.CharField(max_length=150, blank=True, null=True, verbose_name="commenti")
   clash_new = models.PositiveIntegerField(verbose_name="interferenze nuove")
@@ -112,12 +109,8 @@ class ClashTest(models.Model):
     verbose_name_plural = 'Tests interferenze'
 
 class ValidationTest(models.Model):
-  """
-  a Validation Test related to a Report
-  """
   date = models.DateTimeField(auto_now_add=True, verbose_name="data")
   comments = models.CharField(max_length=150, blank=True, null=True, verbose_name="commenti")
-  specification = models.CharField(max_length=100, verbose_name="specifica di verifica")
   issues = models.PositiveIntegerField(verbose_name="difformità riscontrate")
   report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='validation_tests')
 
