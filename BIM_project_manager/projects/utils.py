@@ -60,23 +60,46 @@ class ExcelExporter():
     ws.column_dimensions['C'].width = 15
     ws.column_dimensions['D'].width = 15
     ws.column_dimensions['E'].width = 15
-    ws.column_dimensions['F'].width = 15
+    ws.column_dimensions['F'].width = 20
+    ws.column_dimensions['G'].width = 20
+    ws.column_dimensions['H'].width = 20
+    ws.column_dimensions['I'].width = 20
 
     # SETUP TITLE
     ws['A1'] = f'Registro modelli - Progetto: {self.bim_project.name}'
     ws['A1'].style = Styles.title
     ws.row_dimensions[1].height = 20
-    ws.merge_cells('A1:F1')
+    ws.merge_cells('A1:I1')
 
     # SETUP HEADERS
-    ws.append(['n.', 'Nome modello', 'Disciplina', 'Software','Scheda LOD', 'Progettista'])
+    ws.append([
+      'n.', 
+      'Nome modello', 
+      'Disciplina', 
+      'Software',
+      'Scheda LOD', 
+      'Progettista', 
+      'BIM Manager', 
+      'BIM Coordinator', 
+      'BIM Specialist'
+      ])
     ws.row_dimensions[2].height = 20
     for cell in ws[2]:
       cell.style = Styles.header
 
     # SETUP CONTENT
     for count, bim_model in enumerate(self.bim_models):
-      ws.append([count+1, bim_model.name, bim_model.discipline, bim_model.authoringSoftware, bim_model.lodReference, bim_model.designer])
+      ws.append([
+        count+1, 
+        bim_model.name, 
+        bim_model.discipline.name, 
+        bim_model.authoringSoftware.name, 
+        bim_model.lodReference.name, 
+        bim_model.designer.name,
+        bim_model.bim_manager.name,
+        bim_model.bim_coordinator.name,
+        bim_model.bim_specialist.name,
+        ])
       ws.row_dimensions[ws.max_row].height = 20
       for cell in ws[ws.max_row]:
         cell.style = Styles.standard_cell
@@ -108,14 +131,24 @@ class ExcelExporter():
       ws.merge_cells('A1:D1')
 
       # SETUP HEADERS
-      ws.append(['n.', 'Nome Scheda', 'Descrizione Scheda', 'Tipo Scheda'])
+      ws.append([
+        'n.', 
+        'Nome Scheda', 
+        'Descrizione Scheda', 
+        'Tipo Scheda'
+        ])
       ws.row_dimensions[2].height = 20
       for cell in ws[2]:         
         cell.style = Styles.header
 
       # SETUP CONTENT
       for count, sheet in enumerate(info_sheets):
-        ws.append([count+1, sheet.name, sheet.description, sheet.sheet_type])
+        ws.append([
+          count+1, 
+          sheet.name, 
+          sheet.description, 
+          sheet.sheet_type
+          ])
 
         for cell in ws[ws.max_row]: 
           cell.style = Styles.standard_cell
@@ -154,16 +187,16 @@ class ExcelExporter():
       ws['C1'] = self.bim_model.name
 
       ws['B2'] = 'Disciplina'
-      ws['C2'] = self.bim_model.discipline
+      ws['C2'] = self.bim_model.discipline.name
 
       ws['B3'] = 'Progettista'
-      ws['C3'] = self.bim_model.designer
+      ws['C3'] = self.bim_model.designer.name
 
       ws['B4'] = 'Software BIM Authoring'
-      ws['C4'] = self.bim_model.authoringSoftware
+      ws['C4'] = self.bim_model.authoringSoftware.name
 
       ws['B5'] = 'LOD di riferimento'
-      ws['C5'] = self.bim_model.lodReference  
+      ws['C5'] = self.bim_model.lodReference.name
 
       for row in ws.iter_cols(min_col=2, max_col=2, min_row=1, max_row=5):
         for cell in row:
@@ -212,12 +245,30 @@ class ExcelExporter():
             cell.style = Styles.standard_cell
           ws.merge_cells(f'C{ws.max_row}:H{ws.max_row}')
           
-          ws.append(['', 'Data', 'Commenti', 'Nuove', 'Attive', 'Revisionate', 'Approvate', 'Risolte'])
+          ws.append([
+            '', 
+            'Data', 
+            'Commenti', 
+            'Nuove', 
+            'Attive', 
+            'Revisionate', 
+            'Approvate', 
+            'Risolte'
+            ])
           for cell in ws[ws.max_row]: 
             cell.style = Styles.standard_cell          
 
           for test in tests:
-            ws.append(['',test.date.strftime("%m/%d/%Y"), test.comments, test.clash_new, test.clash_active, test.clash_reviewed, test.clash_approved, test.clash_resolved])            
+            ws.append([
+              '',
+              test.date.strftime("%m/%d/%Y"), 
+              test.comments, 
+              test.clash_new, 
+              test.clash_active, 
+              test.clash_reviewed, 
+              test.clash_approved, 
+              test.clash_resolved
+              ])            
             for cell in ws[ws.max_row]: 
               cell.style = Styles.standard_cell          
           ws.append([])         
@@ -229,21 +280,21 @@ class ExcelExporter():
           for cell in ws[ws.max_row]:
             cell.style = Styles.standard_cell
             cell.font = Font(bold=True)
-          ws.merge_cells(f'C{ws.max_row}:F{ws.max_row}')         
+          ws.merge_cells(f'C{ws.max_row}:D{ws.max_row}')         
 
-          ws.append(['', 'Oggetto/Specifica Report', report.description])
+          ws.append(['', 'Descrizione Report', report.description])
           for cell in ws[ws.max_row]:
             cell.style = Styles.standard_cell
-          ws.merge_cells(f'C{ws.max_row}:F{ws.max_row}')
+          ws.merge_cells(f'C{ws.max_row}:D{ws.max_row}')
           for cell in ws[ws.max_row]: 
             cell.style = Styles.standard_cell            
           
-          ws.append(['','Data', 'Commenti', 'Specifica', 'Difformità', 'Allegati'])
+          ws.append(['','Data', 'Commenti', 'Difformità'])
           for cell in ws[ws.max_row]: 
             cell.style = Styles.standard_cell   
 
           for test in tests:
-            ws.append(['', test.date.strftime("%m/%d/%Y"), test.comments, test.specification, test.issues, ''])
+            ws.append(['', test.date.strftime("%m/%d/%Y"), test.comments, test.issues])
             for cell in ws[ws.max_row]: 
               cell.style = Styles.standard_cell       
           ws.append([])
