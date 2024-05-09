@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from .models import BimProject, BimModel, InfoSheet, Report
+from .models import BimProject, BimModel, InfoSheet, Report, ClashTest
 from organization.models import BimSpecification
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
@@ -384,8 +384,23 @@ def handle_model_register_import(register_file, bim_project):
     )
     new_bim_model.save()
 
-def handle_coordination_reports_import():
-  pass
+def handle_coordination_reports_import(clash_file, info_sheet_reports):
+  df = read_excel(clash_file, sheet_name='Clash-Results-Table')
+  
+  for index, row in df.iterrows():
+    if row['Status'] == 'Old':
+      continue
+
+    report = info_sheet_reports.get(name=row['Name'])
+    new_test = ClashTest(
+      clash_new=row['New'],
+      clash_active=row['Active'],
+      clash_reviewed=row['Reviewed'],
+      clash_approved=row['Approved'],
+      clash_resolved=row['Resolved'],
+      report=report
+    )
+    new_test.save()
 
 def handle_validation_reports_import():
   pass

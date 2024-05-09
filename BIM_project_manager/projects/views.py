@@ -9,7 +9,7 @@ from django.urls import reverse
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm
 from core.mixins import StaffMixin
-from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import
+from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import
 
 # Create your views here.
 
@@ -254,7 +254,11 @@ class BimDataImporter(StaffMixin, View):
         return HttpResponseRedirect(bim_project.get_absolute_url())
     
     if import_type == 'coordination_reports':
-      return HttpResponse('carico dati di tutti i report della scheda informativa di coordinamento...')
+      info_sheet = get_object_or_404(InfoSheet, pk=pk)
+      info_sheet_reports=info_sheet.reports.all()
+      if form.is_valid():
+        handle_coordination_reports_import(request.FILES["file"], info_sheet_reports)
+        return HttpResponseRedirect(info_sheet.get_absolute_url())
 
     if import_type == 'validation_reports':
       return HttpResponse('carico dati di tutti i report della scheda informativa di verifica...')
