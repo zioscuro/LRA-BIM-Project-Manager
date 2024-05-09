@@ -7,7 +7,6 @@
 {% endblock navbar %}
 
 {% block content %}
-
 <h1 class="mb-5 text-center">{{bimmodel.name}}</h1>
 <div class="row  mx-auto">
   <div class="col-md-3">
@@ -32,13 +31,11 @@
     <p>{{bimmodel.bim_specialist}}</p>
     <h6>progetto</h6>
     <p>{{bimmodel.bim_project.name}}</p>
-    {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
       <a href="{% url 'update_model' pk=bimmodel.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
       <a href="{% url 'delete_model' pk=bimmodel.pk %}" class="btn btn-danger btn-lg">Cancella modello</a>
     </div>
-    {% endif %}
     <hr>
     <div class="d-grid gap-2">
       <a href="{% url 'export_data' pk=bimmodel.pk export_type='model_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>

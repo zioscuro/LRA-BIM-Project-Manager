@@ -22,13 +22,11 @@
     <p>{{infosheet.bim_model}}</p>
     <h6>progetto</h6>
     <p>{{infosheet.bim_model.bim_project.name}}</p>
-    {% if request.user.is_staff %}
     <hr>
     <div class="d-grid gap-2">
       <a href="{% url 'update_info_sheet' pk=infosheet.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
       <a href="{% url 'delete_info_sheet' pk=infosheet.pk %}" class="btn btn-danger btn-lg">Cancella scheda</a>
-    </div>   
-    {% endif %}
+    </div>
   </div>
   <div class="col-md-9">
     {% if info_sheet.sheet_type == 'coordination' %}
