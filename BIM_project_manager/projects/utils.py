@@ -384,3 +384,15 @@ def handle_model_register_import(register_file, bim_project):
     )
     new_bim_model.save()
 
+def handle_coordination_reports_import():
+  pass
+
+def handle_validation_reports_import():
+  pass
+
+def handle_coordination_test_import():
+  pass
+
+def handle_validation_test_import():
+  pass
+
