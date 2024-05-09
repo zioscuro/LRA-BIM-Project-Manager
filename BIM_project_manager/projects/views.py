@@ -246,14 +246,45 @@ class BimDataExporter(StaffMixin, View):
 class BimDataImporter(StaffMixin, View):
   def post(self, request, pk, import_type):
     form = UploadFileForm(request.POST, request.FILES)
-    bim_project = get_object_or_404(BimProject, pk=pk)
-    if form.is_valid():
-      handle_model_register_import(request.FILES["file"], bim_project)
-      return HttpResponseRedirect(bim_project.get_absolute_url())
+    
+    if import_type == 'model_register':
+      bim_project = get_object_or_404(BimProject, pk=pk)
+      if form.is_valid():
+        handle_model_register_import(request.FILES["file"], bim_project)
+        return HttpResponseRedirect(bim_project.get_absolute_url())
+    
+    if import_type == 'coordination_reports':
+      return HttpResponse('carico dati di tutti i report della scheda informativa di coordinamento...')
+
+    if import_type == 'validation_reports':
+      return HttpResponse('carico dati di tutti i report della scheda informativa di verifica...')
+
+    if import_type == 'coordination_test':
+      return HttpResponse('carico dati di un test di coordinamento...')
+
+    if import_type == 'validation_test':
+      return HttpResponse('carico dati di un test di verifica...')
+    
+    return HttpResponseBadRequest("Bad request.")
   
   def get(self, request, pk, import_type):
     form = UploadFileForm()
-    return render(request, 'projects/upload_model_register.html', {"form": form})
+    if import_type == 'model_register':
+      return render(request, 'projects/upload_model_register.html', {"form": form})
+    
+    if import_type == 'coordination_reports':
+      return render(request, 'projects/upload_coordination_reports.html', {"form": form})
+
+    if import_type == 'validation_reports':
+      return render(request, 'projects/upload_validation_reports.html', {"form": form})
+
+    if import_type == 'coordination_test':
+      return render(request, 'projects/upload_coordination_test.html', {"form": form})
+
+    if import_type == 'validation_test':
+      return render(request, 'projects/upload_validation_test.html', {"form": form})
+  
+    return HttpResponseBadRequest("Bad request.")
   
 
   
