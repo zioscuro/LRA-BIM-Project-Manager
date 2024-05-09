@@ -57,11 +57,6 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      {% if infosheet.sheet_type == 'coordination' %}
-      <a href="{% url 'import_data' pk=infosheet.pk import_type='coordination_reports' %}" class="btn btn-outline-primary btn-lg">+ Importa Dati Report</a>
-      {% elif infosheet.sheet_type == 'validation' %}
-      <a href="{% url 'import_data' pk=infosheet.pk import_type='validation_reports' %}" class="btn btn-outline-primary btn-lg">+ Importa Dati Report</a>
-      {% endif %}
       <a href="{% url 'create_report' pk=infosheet.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi Report</a>
     </div>
   </div>

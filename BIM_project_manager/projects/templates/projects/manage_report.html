@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="col-md-9">
-    {% if report.info_sheet.sheet_type == 'coordination' %}
+    {% if report.info_sheet.sheet_type == 'Coordination' %}
     <h4>Test interferenze</h4>    
     <table class="table">
       <thead>
@@ -67,7 +67,7 @@
       <a href="{% url 'import_data' pk=report.pk import_type='coordination_test' %}" class="btn btn-outline-primary btn-lg">+ Importa test</a>
       <a href="{% url 'create_clash_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>    
     </div>
-    {% elif report.info_sheet.sheet_type == 'validation' %}
+    {% elif report.info_sheet.sheet_type == 'Validation' %}
     <h4>Test di verifica</h4>
     <table class="table">
       <thead>

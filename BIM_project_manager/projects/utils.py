@@ -320,7 +320,7 @@ def set_default_coordination(bim_model):
   default_specification = get_object_or_404(BimSpecification, pk=1)
 
   sheet_LC1 = InfoSheet(
-    sheet_type = 'coordination',
+    sheet_type = 'Coordination',
     name = 'LC1',
     description = 'default coordinamento',
     bim_model = bim_model
@@ -347,7 +347,7 @@ def set_default_validation(bim_model):
   default_specification = get_object_or_404(BimSpecification, pk=1)
 
   sheet_LV1 = InfoSheet(
-    sheet_type ='validation',
+    sheet_type ='Validation',
     name = 'LV1',
     description = 'default verifica',
     bim_model = bim_model
@@ -384,25 +384,34 @@ def handle_model_register_import(register_file, bim_project):
     )
     new_bim_model.save()
 
-def handle_coordination_reports_import(clash_file, info_sheet_reports):
+def handle_coordination_reports_import(clash_file, bim_project):
   df = read_excel(clash_file, sheet_name='Clash-Results-Table')
-  
-  for index, row in df.iterrows():
-    if row['Status'] == 'Old':
-      continue
 
-    report = info_sheet_reports.get(name=row['Name'])
-    new_test = ClashTest(
-      clash_new=row['New'],
-      clash_active=row['Active'],
-      clash_reviewed=row['Reviewed'],
-      clash_approved=row['Approved'],
-      clash_resolved=row['Resolved'],
-      report=report
-    )
-    new_test.save()
+  for bim_model in bim_project.bim_models.all():
+    bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Coordination')
 
-def handle_validation_reports_import():
+    for info_sheet in bim_model_coordination_info_sheets:
+      info_sheet_reports=info_sheet.reports.all()
+
+      for index, row in df.iterrows():        
+        if row['Status'] == 'Old':
+          continue
+
+        for report in info_sheet_reports:
+          if report.name == row['Name']:
+            new_test = ClashTest(
+              clash_new=row['New'],
+              clash_active=row['Active'],
+              clash_reviewed=row['Reviewed'],
+              clash_approved=row['Approved'],
+              clash_resolved=row['Resolved'],
+              report=report
+            )
+            new_test.save()
+
+def handle_validation_reports_import(validation_file, bim_project):
+  # df = read_excel(validation_file, sheet_name='nomenclatura oggetti')
+  # print(df)
   pass
 
 def handle_coordination_test_import():
