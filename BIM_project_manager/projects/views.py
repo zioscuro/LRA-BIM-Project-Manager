@@ -1,5 +1,5 @@
 from typing import Any
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
@@ -7,9 +7,9 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm
+from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm
 from core.mixins import StaffMixin
-from .utils import ExcelExporter, set_default_coordination, set_default_validation
+from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import
 
 # Create your views here.
 
@@ -243,7 +243,19 @@ class BimDataExporter(StaffMixin, View):
 
     return HttpResponseBadRequest("Bad request.")
 
-class ImportModelRegister(StaffMixin, View):
-  def get(self, request, pk):
-    return HttpResponse('<html><body>Importa registro modelli</body></html>')
+class BimDataImporter(StaffMixin, View):
+  def post(self, request, pk, import_type):
+    form = UploadFileForm(request.POST, request.FILES)
+    bim_project = get_object_or_404(BimProject, pk=pk)
+    if form.is_valid():
+      handle_model_register_import(request.FILES["file"], bim_project)
+      return HttpResponseRedirect(bim_project.get_absolute_url())
+  
+  def get(self, request, pk, import_type):
+    form = UploadFileForm()
+    return render(request, 'projects/upload_model_register.html', {"form": form})
+  
+
+  
+
     

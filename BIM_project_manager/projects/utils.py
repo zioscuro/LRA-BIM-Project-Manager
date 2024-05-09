@@ -4,6 +4,7 @@ from .models import BimProject, BimModel, InfoSheet, Report
 from organization.models import BimSpecification
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
+from pandas import read_excel
 
 class Styles():
   thin_line = Side(border_style="thin", color="000000")
@@ -368,3 +369,18 @@ def set_default_validation(bim_model):
     info_sheet = sheet_LV1,
   )
   objects_name_report.save()
+
+def handle_model_register_import(register_file, bim_project):
+  df = read_excel(register_file, sheet_name='model_register')
+
+  for index, row in df.iterrows():    
+    if BimModel.objects.filter(name=row['Nome modello'], bim_project=bim_project).exists():
+      return f'il modello già esiste!'
+    
+    new_bim_model = BimModel(
+      name=row['Nome modello'],
+      description=row['Descrizione'],
+      bim_project=bim_project
+    )
+    new_bim_model.save()
+

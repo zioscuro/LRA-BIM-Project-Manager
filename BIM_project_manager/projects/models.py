@@ -39,7 +39,7 @@ class BimModel(models.Model):
   bim_coordinator = models.ForeignKey(BimExpert, on_delete=models.SET_DEFAULT, related_name='bim_coordinator_role_models', verbose_name="bim coordinator", default=1)
   bim_specialist = models.ForeignKey(BimExpert, on_delete=models.SET_DEFAULT, related_name='bim_specialist_role_models', verbose_name="bim specialist", default=1)
   
-  bim_project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models', verbose_name="progetto", default=1)
+  bim_project = models.ForeignKey(BimProject, on_delete=models.CASCADE, related_name='bim_models', verbose_name="progetto")
   
   default_coordination = models.BooleanField(default=False)
   default_validation = models.BooleanField(default=False)

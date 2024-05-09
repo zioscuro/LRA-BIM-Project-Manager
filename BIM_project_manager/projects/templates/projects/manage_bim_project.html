@@ -72,7 +72,7 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a href="{% url 'import_model_register' pk=bimproject.pk %}" class="btn btn-outline-primary btn-lg">+ Importa registro modelli</a>
+      <a href="{% url 'import_data' pk=bimproject.pk import_type='model_register' %}" class="btn btn-outline-primary btn-lg">+ Importa registro modelli</a>
       <a href="{% url 'create_bim_model' pk=bimproject.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi modello</a>
     </div>
   </div>
