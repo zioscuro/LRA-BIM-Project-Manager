@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from .models import BimProject, BimModel, InfoSheet, Report, ClashTest
+from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from organization.models import BimSpecification
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
@@ -410,9 +410,27 @@ def handle_coordination_reports_import(clash_file, bim_project):
             new_test.save()
 
 def handle_validation_reports_import(validation_file, bim_project):
-  # df = read_excel(validation_file, sheet_name='nomenclatura oggetti')
-  # print(df)
-  pass
+  df_dict = read_excel(validation_file, sheet_name=None)
+
+  for sheet, df in df_dict.items():
+    for bim_model in bim_project.bim_models.all():
+      bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Validation')
+
+      for info_sheet in bim_model_coordination_info_sheets:
+        info_sheet_reports=info_sheet.reports.all()
+
+        for report in info_sheet_reports:
+          report_issues = 0
+          for index, row in df.iterrows():
+            if report.name == row['Report di riferimento']:
+              report_issues += 1
+
+          if not report_issues == 0:
+            new_test = ValidationTest(
+              issues=report_issues,
+              report=report
+            )
+            new_test.save()
 
 def handle_coordination_test_import():
   pass
