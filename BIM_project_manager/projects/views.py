@@ -209,13 +209,13 @@ class DefaultInfoSheet(StaffMixin, View):
   def get(self, request, pk, sheet_type):
     bim_model = get_object_or_404(BimModel, pk=pk)
 
-    if sheet_type == 'coordination':
+    if sheet_type == 'Coordination':
       if bim_model.default_coordination:
         return HttpResponseRedirect(bim_model.get_absolute_url())
       set_default_coordination(bim_model)
       bim_model.default_coordination = True
 
-    if sheet_type == 'validation':
+    if sheet_type == 'Validation':
       if bim_model.default_validation:
         return HttpResponseRedirect(bim_model.get_absolute_url())
       set_default_validation(bim_model)

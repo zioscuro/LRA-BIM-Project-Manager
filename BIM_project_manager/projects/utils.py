@@ -349,6 +349,9 @@ def set_default_coordination(bim_model):
 def set_default_validation(bim_model):
   default_specification = get_object_or_404(BimSpecification, pk=1)
 
+  bim_model.default_validation = True
+  bim_model.save()
+
   sheet_LV1 = InfoSheet(
     sheet_type ='Validation',
     name = 'LV1',
