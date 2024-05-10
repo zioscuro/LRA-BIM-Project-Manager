@@ -319,6 +319,9 @@ class ExcelExporter():
 def set_default_coordination(bim_model):
   default_specification = get_object_or_404(BimSpecification, pk=1)
 
+  bim_model.default_coordination = True
+  bim_model.save()
+
   sheet_LC1 = InfoSheet(
     sheet_type = 'Coordination',
     name = 'LC1',
@@ -345,6 +348,9 @@ def set_default_coordination(bim_model):
 
 def set_default_validation(bim_model):
   default_specification = get_object_or_404(BimSpecification, pk=1)
+    
+  bim_model.default_validation = True
+  bim_model.save()
 
   sheet_LV1 = InfoSheet(
     sheet_type ='Validation',
@@ -383,6 +389,8 @@ def handle_model_register_import(register_file, bim_project):
       bim_project=bim_project
     )
     new_bim_model.save()
+    set_default_coordination(new_bim_model)
+    set_default_validation(new_bim_model)
 
 def handle_coordination_reports_import(clash_file, bim_project):
   df = read_excel(clash_file, sheet_name='Clash-Results-Table')
