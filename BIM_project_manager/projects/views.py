@@ -262,12 +262,6 @@ class BimDataImporter(StaffMixin, View):
       if form.is_valid():
         handle_validation_reports_import(request.FILES["file"], bim_project)
         return HttpResponseRedirect(bim_project.get_absolute_url())
-
-    if import_type == 'coordination_test':
-      return HttpResponse('carico dati di un test di coordinamento...')
-
-    if import_type == 'validation_test':
-      return HttpResponse('carico dati di un test di verifica...')
     
     return HttpResponseBadRequest("Bad request.")
   
@@ -281,13 +275,7 @@ class BimDataImporter(StaffMixin, View):
 
     if import_type == 'validation_reports':
       return render(request, 'projects/upload_validation_reports.html', {"form": form})
-
-    if import_type == 'coordination_test':
-      return render(request, 'projects/upload_coordination_test.html', {"form": form})
-
-    if import_type == 'validation_test':
-      return render(request, 'projects/upload_validation_test.html', {"form": form})
-  
+ 
     return HttpResponseBadRequest("Bad request.")
   
 

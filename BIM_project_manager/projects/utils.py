@@ -437,9 +437,3 @@ def handle_validation_reports_import(validation_file, bim_project):
             )
             new_test.save()
 
-def handle_coordination_test_import():
-  pass
-
-def handle_validation_test_import():
-  pass
-
