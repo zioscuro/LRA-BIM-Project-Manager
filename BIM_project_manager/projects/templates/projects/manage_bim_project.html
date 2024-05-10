@@ -56,9 +56,6 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nome</th>
-          <th scope="col">Disciplina</th>
-          <th scope="col">Progettista</th>
-          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -66,11 +63,13 @@
         {% for model in bimproject.bim_models.all %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><a href="{% url 'manage_bim_model' pk=model.pk%}">{{ model.name }}</a></td>
-          <td>{{ model.discipline }}</td>
-          <td>{{ model.designer }}</td>
-          <td><a href="{% url 'update_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-          <td><a href="{% url 'delete_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+          <td>
+            <a href="{% url 'manage_bim_model' pk=model.pk%}">{{ model.name }}</a>
+          </td>
+          <td class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

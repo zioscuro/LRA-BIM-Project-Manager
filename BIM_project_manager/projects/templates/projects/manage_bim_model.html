@@ -48,8 +48,6 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nome</th>
-          <th scope="col">Descrizione</th>
-          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -57,10 +55,13 @@
         {% for sheet in info_sheets_coordination %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a></td>
-          <td>{{ sheet.description }}</td>
-          <td><a href="{% url 'update_info_sheet' pk=sheet.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-          <td><a href="{% url 'delete_info_sheet' pk=sheet.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+          <td>
+            <a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a>
+          </td>
+          <td class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_info_sheet' pk=sheet.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_info_sheet' pk=sheet.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -83,8 +84,6 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nome</th>
-          <th scope="col">Descrizione</th>
-          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -92,10 +91,13 @@
         {% for sheet in info_sheets_validation %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a></td>
-          <td>{{ sheet.description }}</td>
-          <td><a href="{% url 'update_info_sheet' pk=sheet.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-          <td><a href="{% url 'delete_info_sheet' pk=sheet.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+          <td>
+            <a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a>
+          </td>
+          <td class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_info_sheet' pk=sheet.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_info_sheet' pk=sheet.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

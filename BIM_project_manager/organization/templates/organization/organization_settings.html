@@ -15,7 +15,6 @@
         <th scope="col">Nome</th>
         <th scope="col">Descrizione</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -24,8 +23,10 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ phase.name }}</td>
         <td>{{ phase.description }}</td>
-        <td><a href="{% url 'update_phase' pk=phase.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="{% url 'delete_phase' pk=phase.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_phase' pk=phase.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_phase' pk=phase.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -41,8 +42,6 @@
         <th scope="col">#</th>
         <th scope="col">Nome</th>
         <th scope="col">Descrizione</th>
-        <th scope="col">Codice</th>
-        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -52,9 +51,10 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ discipline.name }}</td>
         <td>{{ discipline.description }}</td>
-        <td>{{ discipline.code }}</td>
-        <td><a href="{% url 'update_discipline' pk=discipline.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="{% url 'delete_discipline' pk=discipline.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_discipline' pk=discipline.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_discipline' pk=discipline.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -71,7 +71,6 @@
         <th scope="col">Nome</th>
         <th scope="col">Versione</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -80,8 +79,10 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ software.name }}</td>
         <td>{{ software.version }}</td>
-        <td><a href="{% url 'update_software' pk=software.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="{% url 'delete_software' pk=software.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_software' pk=software.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_software' pk=software.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -98,7 +99,6 @@
         <th scope="col">Nome</th>
         <th scope="col">Descrizione</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -107,8 +107,10 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ lod_reference.name }}</td>
         <td>{{ lod_reference.description }}</td>
-        <td><a href="{% url 'update_reference' pk=lod_reference.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="{% url 'delete_reference' pk=lod_reference.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_reference' pk=lod_reference.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_reference' pk=lod_reference.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -125,7 +127,6 @@
         <th scope="col">Nome</th>
         <th scope="col">Descrizione</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -134,8 +135,10 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ specification.name }}</td>
         <td>{{ specification.description }}</td>
-        <td><a href="{% url 'update_specification' pk=specification.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="{% url 'delete_specification' pk=specification.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_specification' pk=specification.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_specification' pk=specification.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -152,7 +155,6 @@
         <th scope="col">Nome</th>
         <th scope="col">Ruolo</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -161,8 +163,10 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ bim_expert.name }}</td>
         <td>{{ bim_expert.position }}</td>
-        <td><a href="{% url 'update_expert' pk=bim_expert.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-        <td><a href="{% url 'delete_expert' pk=bim_expert.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_expert' pk=bim_expert.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_expert' pk=bim_expert.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

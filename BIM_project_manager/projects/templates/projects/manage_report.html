@@ -44,7 +44,6 @@
           <th scope="col">Approvate</th>
           <th scope="col">Risolte</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -57,8 +56,10 @@
           <td>{{test.clash_reviewed}}</td>
           <td>{{test.clash_approved}}</td>
           <td>{{test.clash_resolved}}</td>
-          <td><a href="{% url 'update_clash_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-          <td><a href="{% url 'delete_clash_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+          <td class="d-flex gap-2">
+            <a href="{% url 'update_clash_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_clash_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -75,7 +76,6 @@
           <th scope="col">Commenti</th>
           <th scope="col">Difformità</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -84,8 +84,10 @@
           <td>{{test.date|date:"Y/m/d"}}</td>
           <td>{{test.comments}}</td>
           <td>{{test.issues}}</td>
-          <td><a href="{% url 'update_validation_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a></td>
-          <td><a href="{% url 'delete_validation_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a></td>
+          <td class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_validation_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_validation_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
