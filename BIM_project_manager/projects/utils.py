@@ -233,7 +233,7 @@ class ExcelExporter():
 
       # SETUP REPORT CONTENT
       for report in reports:
-        if sheet.sheet_type == 'Coordination':
+        if sheet.sheet_type == 'coordination':
           tests = report.clash_tests.all()
           
           ws.append(['', 'Nome Report', report.name])
@@ -275,7 +275,7 @@ class ExcelExporter():
               cell.style = Styles.standard_cell          
           ws.append([])         
           
-        if sheet.sheet_type == 'Validation':
+        if sheet.sheet_type == 'validation':
           tests = report.validation_tests.all()
 
           ws.append(['', 'Nome Report', report.name])
@@ -348,9 +348,6 @@ def set_default_coordination(bim_model):
 
 def set_default_validation(bim_model):
   default_specification = get_object_or_404(BimSpecification, pk=1)
-    
-  bim_model.default_validation = True
-  bim_model.save()
 
   sheet_LV1 = InfoSheet(
     sheet_type ='Validation',
