@@ -233,7 +233,7 @@ class ExcelExporter():
 
       # SETUP REPORT CONTENT
       for report in reports:
-        if sheet.sheet_type == 'coordination':
+        if sheet.sheet_type == 'Coordination':
           tests = report.clash_tests.all()
           
           ws.append(['', 'Nome Report', report.name])
@@ -275,7 +275,7 @@ class ExcelExporter():
               cell.style = Styles.standard_cell          
           ws.append([])         
           
-        if sheet.sheet_type == 'validation':
+        if sheet.sheet_type == 'Validation':
           tests = report.validation_tests.all()
 
           ws.append(['', 'Nome Report', report.name])
