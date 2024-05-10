@@ -328,7 +328,7 @@ def set_default_coordination(bim_model):
   sheet_LC1.save()
 
   duplicates_report = Report(
-    name = 'duplicati',
+    name = f'{bim_model.name}_duplicati',
     description = 'default report elementi duplicati',
     specification = default_specification,
     info_sheet = sheet_LC1,
@@ -336,7 +336,7 @@ def set_default_coordination(bim_model):
   duplicates_report.save()
 
   intersections_report = Report(
-    name = 'intersezioni',
+    name = f'{bim_model.name}_intersezioni',
     description = 'default report elementi intersecanti',
     specification = default_specification,
     info_sheet = sheet_LC1,
@@ -355,7 +355,7 @@ def set_default_validation(bim_model):
   sheet_LV1.save()
 
   file_name_report = Report(
-    name = 'nomenclatura file modello',
+    name = f'{bim_model.name}_codifica file',
     description = 'default report nomenclatura file',
     specification = default_specification,
     info_sheet = sheet_LV1,
@@ -363,7 +363,7 @@ def set_default_validation(bim_model):
   file_name_report.save()
 
   objects_name_report = Report(
-    name = 'nomenclatura oggetti',
+    name = f'{bim_model.name}_codifica oggetti',
     description = 'default report nomenclatura oggetti nel modello',
     specification = default_specification,
     info_sheet = sheet_LV1,
