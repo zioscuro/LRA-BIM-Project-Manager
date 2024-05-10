@@ -68,14 +68,14 @@
     <div class="d-flex gap-2 justify-content-end">
       <a
         {% if not bimmodel.default_coordination %}
-        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='coordination' %}"
+        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}"
         class="btn btn-outline-primary btn-lg"
         {% else %}
         href="#"
         class="btn btn-outline-primary btn-lg disabled"
         {% endif %}
       >+ Default</a>
-      <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
     <table class="table">
@@ -103,14 +103,14 @@
     <div class="d-flex gap-2 justify-content-end">
       <a
         {% if not bimmodel.default_validation %} 
-        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='validation' %}" 
+        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}" 
         class="btn btn-outline-primary btn-lg"
         {% else %}
         href="#"
         class="btn btn-outline-primary btn-lg disabled"
         {% endif %}
       >+ Default</a>
-      <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+      <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
   </div>
