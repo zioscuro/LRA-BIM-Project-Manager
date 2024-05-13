@@ -27,46 +27,208 @@
       "name": "Progetto Esecutivo",
       "description": "Progetto Esecutivo"
     }
-  },
-  {
+  },{
     "model":"organization.Discipline",
     "pk":1,
     "fields":{
       "name": "-",
-      "description": "-",
-      "code": "-"
+      "description": "-"
     }
-  },
-  {
+  },{
+    "model":"organization.Discipline",
+    "pk":2,
+    "fields":{
+      "name": "ARC",
+      "description": "Architettonico"
+    }
+  },{
+    "model":"organization.Discipline",
+    "pk":3,
+    "fields":{
+      "name": "STR",
+      "description": "Strutturale"
+    }
+  },{
+    "model":"organization.Discipline",
+    "pk":4,
+    "fields":{
+      "name": "MEP",
+      "description": "Impianti"
+    }
+  },{
     "model":"organization.AuthoringSoftware",
     "pk":1,
     "fields":{
       "name": "-",
       "version": "-"
     }
-  },
-  {
+  },{
+    "model":"organization.AuthoringSoftware",
+    "pk":2,
+    "fields":{
+      "name": "Autodesk Revit",
+      "version": "2024"
+    }
+  },{
+    "model":"organization.AuthoringSoftware",
+    "pk":3,
+    "fields":{
+      "name": "Autodesk Civil 3D",
+      "version": "2024"
+    }
+  },{
+    "model":"organization.AuthoringSoftware",
+    "pk":4,
+    "fields":{
+      "name": "Autodesk Autocad",
+      "version": "2024"
+    }
+  },{
     "model":"organization.LodReference",
     "pk":1,
     "fields":{
-      "name": "-",
-      "description": "-"
+      "name": "RIL",
+      "description": "LOD per il rilievo"
     }
-  },
-  {
+  },{
+    "model":"organization.LodReference",
+    "pk":2,
+    "fields":{
+      "name": "CIV",
+      "description": "LOD opere civili"
+    }
+  },{
+    "model":"organization.LodReference",
+    "pk":3,
+    "fields":{
+      "name": "MAR",
+      "description": "LOD opere marittime"
+    }
+  },{
+    "model":"organization.LodReference",
+    "pk":4,
+    "fields":{
+      "name": "ELE",
+      "description": "LOD impianti elettrici"
+    }
+  },{
+    "model":"organization.LodReference",
+    "pk":5,
+    "fields":{
+      "name": "MEC",
+      "description": "LOD impianti meccanici"
+    }
+  },{
     "model":"organization.BimSpecification",
     "pk":1,
     "fields":{
       "name": "-",
       "description": "-"
     }
-  },
-  {
+  },{
+    "model":"organization.BimSpecification",
+    "pk":2,
+    "fields":{
+      "name": "Duplicati",
+      "description": "Coodinamento - Controllo elementi duplicati"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":3,
+    "fields":{
+      "name": "Intersezioni",
+      "description": "Coodinamento - Controllo intersezioni"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":4,
+    "fields":{
+      "name": "Elaborati esterni",
+      "description": "Coodinamento - Controllo elaborati esterni al modello"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":5,
+    "fields":{
+      "name": "Nomenclatura modelli",
+      "description": "Verifica - Controllo nome file dei modelli"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":6,
+    "fields":{
+      "name": "Nomenclatura tavole",
+      "description": "Verifica - Controllo nome file delle tavole"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":7,
+    "fields":{
+      "name": "Nomenclatura tavole",
+      "description": "Verifica - Controllo nome file delle tavole"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":8,
+    "fields":{
+      "name": "Completamento LC1",
+      "description": "Verifica - Controllo completamento processi di coordinamento nei singoli modelli"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":9,
+    "fields":{
+      "name": "Completamento LC2",
+      "description": "Verifica - Controllo completamento processi di coordinamento tra i modelli"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":10,
+    "fields":{
+      "name": "Completamento LC3",
+      "description": "Verifica - Controllo completamento processi di coordinamento tra modelli ed elaborati esterni"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":11,
+    "fields":{
+      "name": "Completamento LV1",
+      "description": "Verifica - Controllo completamento processi di verifica formale"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":11,
+    "fields":{
+      "name": "Raggiungimento LOD",
+      "description": "Verifica - Controllo del raggiungimento del livello di sviluppo informativo"
+    }
+  },{
+    "model":"organization.BimSpecification",
+    "pk":12,
+    "fields":{
+      "name": "Contenuto elaborati grafici",
+      "description": "Verifica - Controllo di conformità del contenuto degli elaborati grafici"
+    }
+  },{
     "model":"organization.BimExpert",
     "pk":1,
     "fields":{
       "name": "-",
       "position": "-"
+    }
+  },{
+    "model":"organization.BimExpert",
+    "pk":2,
+    "fields":{
+      "name": "Le Corbusier",
+      "position": "Architetto"
+    }
+  },{
+    "model":"organization.BimExpert",
+    "pk":3,
+    "fields":{
+      "name": "Pierluigi Nervi",
+      "position": "Ingegnere"
     }
   }
 ]
