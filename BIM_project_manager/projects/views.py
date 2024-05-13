@@ -9,7 +9,7 @@ from django.urls import reverse
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm
 from core.mixins import StaffMixin
-from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import
+from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
 
 # Create your views here.
 
@@ -230,7 +230,7 @@ class BimDataExporter(StaffMixin, View):
       project = get_object_or_404(BimProject, pk=pk)
       exporter = ExcelExporter(project)
       return exporter.export_model_register()
-    
+
     if export_type == 'project_info_sheets':
       project = get_object_or_404(BimProject, pk=pk)
       exporter = ExcelExporter(project)
@@ -252,6 +252,11 @@ class BimDataImporter(StaffMixin, View):
       if form.is_valid():
         handle_model_register_import(request.FILES["file"], bim_project)
         return HttpResponseRedirect(bim_project.get_absolute_url())
+      
+    if import_type == 'report_list':
+      if form.is_valid():
+        handle_report_list_import(request.FILES["file"], bim_project)
+        return HttpResponseRedirect(bim_project.get_absolute_url())
     
     if import_type == 'coordination_reports':
       if form.is_valid():
@@ -269,6 +274,9 @@ class BimDataImporter(StaffMixin, View):
     form = UploadFileForm()
     if import_type == 'model_register':
       return render(request, 'projects/upload_model_register.html', {"form": form})
+    
+    if import_type == 'report_list':
+      return render(request, 'projects/upload_report_list.html', {"form": form})    
     
     if import_type == 'coordination_reports':
       return render(request, 'projects/upload_coordination_reports.html', {"form": form})

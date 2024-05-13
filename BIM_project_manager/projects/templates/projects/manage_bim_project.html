@@ -40,6 +40,7 @@
     <hr>
     <div class="d-grid gap-2">
       <a href="{% url 'import_data' pk=bimproject.pk import_type='model_register' %}" class="btn btn-outline-primary btn-lg">Importa registro modelli</a>
+      <a href="{% url 'import_data' pk=bimproject.pk import_type='report_list' %}" class="btn btn-outline-primary btn-lg">Importa lista report</a>
       <a href="{% url 'import_data' pk=bimproject.pk import_type='coordination_reports' %}" class="btn btn-outline-primary btn-lg">Importa dati coordinamento</a>
       <a href="{% url 'import_data' pk=bimproject.pk import_type='validation_reports' %}" class="btn btn-outline-primary btn-lg">Importa dati verifica</a>
     </div>

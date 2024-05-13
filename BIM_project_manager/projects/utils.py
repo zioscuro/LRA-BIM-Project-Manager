@@ -389,8 +389,14 @@ def handle_model_register_import(register_file, bim_project):
       bim_project=bim_project
     )
     new_bim_model.save()
-    set_default_coordination(new_bim_model)
-    set_default_validation(new_bim_model)
+    # set_default_coordination(new_bim_model)
+    # set_default_validation(new_bim_model)
+
+def handle_report_list_import(report_file, bim_project):
+  df = read_excel(report_file, sheet_name='report_list')
+  print('elaboro lista report...')
+  print(df)
+
 
 def handle_coordination_reports_import(clash_file, bim_project):
   df = read_excel(clash_file, sheet_name='Clash-Results-Table')
