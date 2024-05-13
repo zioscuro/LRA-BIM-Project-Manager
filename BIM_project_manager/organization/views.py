@@ -54,7 +54,7 @@ class DeleteProjectPhase(StaffMixin, DeleteView):
 
 class CreateDiscipline(StaffMixin, CreateView):
   model = Discipline
-  fields = ['name', 'description', 'code']
+  fields = ['name', 'description']
   template_name = 'organization/discipline_create.html'
   
   def get_success_url(self):
