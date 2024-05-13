@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from organization.models import BimSpecification
+from organization.models import AuthoringSoftware, Discipline, BimSpecification, LodReference, BimExpert
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
 from pandas import read_excel
@@ -383,10 +383,25 @@ def handle_model_register_import(register_file, bim_project):
     if BimModel.objects.filter(name=row['Nome modello'], bim_project=bim_project).exists():
       return f'il modello già esiste!'
     
+    new_bim_model_discipline = Discipline.objects.get(name=row['Disciplina'])
+    new_bim_model_software = AuthoringSoftware.objects.get(name=row['Software'])
+    new_bim_model_lod = LodReference.objects.get(name=row['Scheda LOD'])
+    new_bim_model_designer = BimExpert.objects.get(name=row['Progettista'])
+    new_bim_model_bim_manager = BimExpert.objects.get(name=row['Bim Manager'])
+    new_bim_model_bim_coordinator = BimExpert.objects.get(name=row['Bim Coordinator'])
+    new_bim_model_bim_specialist = BimExpert.objects.get(name=row['Bim Specialist'])
+    
     new_bim_model = BimModel(
       name=row['Nome modello'],
       description=row['Descrizione'],
-      bim_project=bim_project
+      bim_project=bim_project,
+      discipline=new_bim_model_discipline,
+      authoringSoftware=new_bim_model_software,
+      lodReference=new_bim_model_lod,
+      designer=new_bim_model_designer,
+      bim_manager=new_bim_model_bim_manager,
+      bim_coordinator=new_bim_model_bim_coordinator,
+      bim_specialist=new_bim_model_bim_specialist
     )
     new_bim_model.save()
     # set_default_coordination(new_bim_model)
