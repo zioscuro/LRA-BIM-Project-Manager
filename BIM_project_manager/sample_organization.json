@@ -87,33 +87,40 @@
     "model":"organization.LodReference",
     "pk":1,
     "fields":{
+      "name": "-",
+      "description": "-"
+    }
+  },{
+    "model":"organization.LodReference",
+    "pk":2,
+    "fields":{
       "name": "RIL",
       "description": "LOD per il rilievo"
     }
   },{
     "model":"organization.LodReference",
-    "pk":2,
+    "pk":3,
     "fields":{
       "name": "CIV",
       "description": "LOD opere civili"
     }
   },{
     "model":"organization.LodReference",
-    "pk":3,
+    "pk":4,
     "fields":{
       "name": "MAR",
       "description": "LOD opere marittime"
     }
   },{
     "model":"organization.LodReference",
-    "pk":4,
+    "pk":5,
     "fields":{
       "name": "ELE",
       "description": "LOD impianti elettrici"
     }
   },{
     "model":"organization.LodReference",
-    "pk":5,
+    "pk":6,
     "fields":{
       "name": "MEC",
       "description": "LOD impianti meccanici"
