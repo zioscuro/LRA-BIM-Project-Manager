@@ -394,9 +394,26 @@ def handle_model_register_import(register_file, bim_project):
 
 def handle_report_list_import(report_file, bim_project):
   df = read_excel(report_file, sheet_name='report_list')
-  print('elaboro lista report...')
-  print(df)
 
+  for index, row in df.iterrows():    
+    if BimModel.objects.filter(name=row['Nome modello'], bim_project=bim_project).exists():
+      bim_model = BimModel.objects.get(name=row['Nome modello'], bim_project=bim_project)
+      bim_model.default_coordination = True
+      bim_model.default_validation = True
+      bim_model.save()
+
+      info_sheet, created = InfoSheet.objects.get_or_create(
+        name=row['Nome scheda'],
+        sheet_type=row['Tipo scheda'],
+        bim_model=bim_model)
+      info_sheet.save()
+
+      new_report = Report(
+        name = row['Nome report'],
+        description = row['Descrizione'],
+        info_sheet = info_sheet,
+      )
+      new_report.save()
 
 def handle_coordination_reports_import(clash_file, bim_project):
   df = read_excel(clash_file, sheet_name='Clash-Results-Table')
