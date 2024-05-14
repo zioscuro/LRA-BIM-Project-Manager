@@ -1,13 +1,13 @@
 from typing import Any
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm
+from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
 from core.mixins import StaffMixin
 from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
 
@@ -264,8 +264,13 @@ class BimDataImporter(StaffMixin, View):
         return HttpResponseRedirect(bim_project.get_absolute_url())
 
     if import_type == 'validation_reports':
+      form = MultipleUploadFileForm(request.POST, request.FILES)
       if form.is_valid():
-        handle_validation_reports_import(request.FILES["file"], bim_project)
+        files = form.cleaned_data['file_field']
+        for f in files:
+          print(f)         
+          handle_validation_reports_import(f, bim_project)
+          
         return HttpResponseRedirect(bim_project.get_absolute_url())
     
     return HttpResponseBadRequest("Bad request.")
@@ -282,11 +287,26 @@ class BimDataImporter(StaffMixin, View):
       return render(request, 'projects/upload_coordination_reports.html', {"form": form})
 
     if import_type == 'validation_reports':
+      form = MultipleUploadFileForm()
       return render(request, 'projects/upload_validation_reports.html', {"form": form})
  
     return HttpResponseBadRequest("Bad request.")
-  
 
+# class ValidationDataForm(FormView):
+#   form_class = MultipleFileFieldForm
+#   template_name = 'projects/upload_validation_reports.html'
+#   success_url = '/'
   
+#   def form_valid(self, form):
+#     files = form.cleaned_data['file_field']
+#     for f in files:
+#       print(f)            
+#     return super().form_valid(form)
+  
+#   def post(self, request, pk):   
+#     super()
+  
+#   def get(self, request, pk):
+#     super()
 
-    
+   
