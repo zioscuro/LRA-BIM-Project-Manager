@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from core.mixins import StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, OrganizationDeleteSuccessUrlMixin, ProjectPhaseObjectMixin, DisciplineObjectMixin, AuthoringSoftwareObjectMixin, LodReferenceObjectMixin, BimSpecificationObjectMixin, BimExpertObjectMixin
+from core.mixins import StaffMixin
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from organization.mixins import OrganizationCreateUpdateSuccessUrlMixin, OrganizationDeleteSuccessUrlMixin, ProjectPhaseObjectMixin, DisciplineObjectMixin, AuthoringSoftwareObjectMixin, LodReferenceObjectMixin, BimSpecificationObjectMixin, BimExpertObjectMixin
 from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
 
 # Create your views here.
@@ -68,17 +70,14 @@ class CreateLodReference(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, Lo
   template_name = 'organization/lod_reference_create.html'
   
 class UpdateLodReference(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, LodReferenceObjectMixin, UpdateView):
-  model = LodReference
   fields = '__all__'
   template_name = 'organization/lod_reference_update.html'
 
 class DeleteLodReference(StaffMixin, OrganizationDeleteSuccessUrlMixin, LodReferenceObjectMixin, DeleteView):
-  model = LodReference
   template_name = 'organization/lod_reference_delete.html'
 
 
 class CreateBimSpecification(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, BimSpecificationObjectMixin, CreateView):
-  model = BimSpecification
   fields = '__all__'
   template_name = 'organization/specification_create.html'
   
