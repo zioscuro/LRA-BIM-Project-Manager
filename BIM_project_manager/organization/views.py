@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from core.mixins import StaffMixin
+from core.mixins import StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, OrganizationDeleteSuccessUrlMixin
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
 from django.urls import reverse
+
 
 # Create your views here.
 
@@ -28,145 +29,97 @@ class OrganizationSettings(StaffMixin, View):
     return render(request, 'organization/organization_settings.html', context)
 
 
-class CreateProjectPhase(StaffMixin, CreateView):
+class CreateProjectPhase(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = ProjectPhase
   fields = '__all__'
   template_name = 'organization/project_phase_create.html'
   
-  def get_success_url(self):
-    return reverse('organization_settings')
+  # def get_success_url(self):
+  #   return reverse('organization_settings')
 
-class UpdateProjectPhase(StaffMixin, UpdateView):
+class UpdateProjectPhase(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = ProjectPhase
   fields = '__all__'
   template_name = 'organization/project_phase_update.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
+  # def get_success_url(self):
+  #   return reverse('organization_settings')
 
-class DeleteProjectPhase(StaffMixin, DeleteView):
+class DeleteProjectPhase(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = ProjectPhase
   template_name = 'organization/project_phase_delete.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
 
-
-class CreateDiscipline(StaffMixin, CreateView):
+class CreateDiscipline(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = Discipline
   fields = '__all__'
   template_name = 'organization/discipline_create.html'
   
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class UpdateDiscipline(StaffMixin, UpdateView):
+class UpdateDiscipline(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = Discipline
   fields = '__all__'
   template_name = 'organization/discipline_update.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class DeleteDiscipline(StaffMixin, DeleteView):
+class DeleteDiscipline(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = Discipline
   template_name = 'organization/discipline_delete.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
 
-
-class CreateAuthoringSoftware(StaffMixin, CreateView):
+class CreateAuthoringSoftware(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = AuthoringSoftware
   fields = '__all__'
   template_name = 'organization/authoring_software_create.html'
   
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class UpdateAuthoringSoftware(StaffMixin, UpdateView):
+class UpdateAuthoringSoftware(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = AuthoringSoftware
   fields = '__all__'
   template_name = 'organization/authoring_software_update.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class DeleteAuthoringSoftware(StaffMixin, DeleteView):
+class DeleteAuthoringSoftware(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = AuthoringSoftware
   template_name = 'organization/authoring_software_delete.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
 
-
-class CreateLodReference(StaffMixin, CreateView):
+class CreateLodReference(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = LodReference
   fields = '__all__'
   template_name = 'organization/lod_reference_create.html'
   
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class UpdateLodReference(StaffMixin, UpdateView):
+class UpdateLodReference(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = LodReference
   fields = '__all__'
   template_name = 'organization/lod_reference_update.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class DeleteLodReference(StaffMixin, DeleteView):
+class DeleteLodReference(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = LodReference
   template_name = 'organization/lod_reference_delete.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
 
-
-class CreateBimSpecification(StaffMixin, CreateView):
+class CreateBimSpecification(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = BimSpecification
   fields = '__all__'
   template_name = 'organization/specification_create.html'
   
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class UpdateBimSpecification(StaffMixin, UpdateView):
+class UpdateBimSpecification(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = BimSpecification
   fields = '__all__'
   template_name = 'organization/specification_update.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class DeleteBimSpecification(StaffMixin, DeleteView):
+class DeleteBimSpecification(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = BimSpecification
   template_name = 'organization/specification_delete.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
 
-
-class CreateBimExpert(StaffMixin, CreateView):
+class CreateBimExpert(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = BimExpert
   fields = '__all__'
   template_name = 'organization/bim_expert_create.html'
-  
-  def get_success_url(self):
-    return reverse('organization_settings')
 
-class UpdateBimExpert(StaffMixin, UpdateView):
+class UpdateBimExpert(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = BimExpert
   fields = '__all__'
   template_name = 'organization/bim_expert_update.html'
 
-  def get_success_url(self):
-    return reverse('organization_settings')
-
-class DeleteBimExpert(StaffMixin, DeleteView):
+class DeleteBimExpert(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = BimExpert
   template_name = 'organization/bim_expert_delete.html'
-
-  def get_success_url(self):
-    return reverse('organization_settings')

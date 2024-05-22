@@ -8,12 +8,12 @@ class HomeView(ListView):
   template_name = 'core/homepage.html'
   context_object_name = 'BimProjects_list'
 
-def user_profile_view(request, username):
-  user = get_object_or_404(User, username=username)
-  context = {'user': user}
-  return render(request, 'core/user_profile.html', context)
-
 class UserList(ListView):
   model = User
   template_name = 'core/users.html'
   context_object_name = 'Users_list' 
+
+def user_profile_view(request, username):
+  user = get_object_or_404(User, username=username)
+  context = {'user': user}
+  return render(request, 'core/user_profile.html', context)
