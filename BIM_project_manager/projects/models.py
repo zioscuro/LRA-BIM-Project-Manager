@@ -120,4 +120,3 @@ class ValidationTest(models.Model):
   class Meta:
     verbose_name = 'Test verifica'
     verbose_name_plural = 'Tests verifica'
-

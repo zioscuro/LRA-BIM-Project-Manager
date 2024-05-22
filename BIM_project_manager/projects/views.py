@@ -291,22 +291,4 @@ class BimDataImporter(StaffMixin, View):
       return render(request, 'projects/upload_validation_reports.html', {"form": form})
  
     return HttpResponseBadRequest("Bad request.")
-
-# class ValidationDataForm(FormView):
-#   form_class = MultipleFileFieldForm
-#   template_name = 'projects/upload_validation_reports.html'
-#   success_url = '/'
-  
-#   def form_valid(self, form):
-#     files = form.cleaned_data['file_field']
-#     for f in files:
-#       print(f)            
-#     return super().form_valid(form)
-  
-#   def post(self, request, pk):   
-#     super()
-  
-#   def get(self, request, pk):
-#     super()
-
    

@@ -32,5 +32,4 @@ urlpatterns = [
   path('export/<int:pk>/<str:export_type>', views.BimDataExporter.as_view(), name='export_data'),
 
   path('import/<int:pk>/<str:import_type>', views.BimDataImporter.as_view(), name='import_data'),
-
 ]
