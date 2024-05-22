@@ -41,20 +41,20 @@ class BimExpertObjectMixin(SingleObjectMixin):
 
 
 # PROJECTS APP
-class BimProjectObjectMixin(SingleObjectMixin):
-  model = BimProject
+# class BimProjectObjectMixin(SingleObjectMixin):
+#   model = BimProject
 
-class BimModelObjectMixin(SingleObjectMixin):
-  model = BimModel
+# class BimModelObjectMixin(SingleObjectMixin):
+#   model = BimModel
 
-class InfoSheetObjectMixin(SingleObjectMixin):
-  model = InfoSheet
+# class InfoSheetObjectMixin(SingleObjectMixin):
+#   model = InfoSheet
 
-class ReportObjectMixin(SingleObjectMixin):
-  model = Report
+# class ReportObjectMixin(SingleObjectMixin):
+#   model = Report
 
-class ClashTestObjectMixin(SingleObjectMixin):
-  model = ClashTest
+# class ClashTestObjectMixin(SingleObjectMixin):
+#   model = ClashTest
 
-class ValidationTestObjectMixin(SingleObjectMixin):
-  model = ValidationTest
+# class ValidationTestObjectMixin(SingleObjectMixin):
+#   model = ValidationTest

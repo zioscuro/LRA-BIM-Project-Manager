@@ -6,34 +6,35 @@ from django.views.generic.detail import DetailView
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
+from core.mixins import StaffMixin
+from .models import BimProject, BimModel, InfoSheet, Report
 from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
-from core.mixins import StaffMixin, BimProjectObjectMixin, BimModelObjectMixin, InfoSheetObjectMixin, ReportObjectMixin, ClashTestObjectMixin, ValidationTestObjectMixin
+from .mixins import BimProjectViewMixin, BimModelViewMixin, InfoSheetViewMixin, ReportViewMixin, ClashTestViewMixin, ValidationViewMixin
 from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
 
 # Create your views here.
 
-class CreateBimProject(StaffMixin, BimProjectObjectMixin, CreateView):
+class CreateBimProject(BimProjectViewMixin, CreateView):
   fields = '__all__'
   template_name = 'projects/bim_project_create.html'
   success_url = '/'
 
-class UpdateBimProject(StaffMixin, BimProjectObjectMixin, UpdateView):
+class UpdateBimProject(BimProjectViewMixin, UpdateView):
   fields = '__all__'
   template_name = 'projects/bim_project_update.html'
 
   def get_success_url(self):
     return reverse('manage_project', kwargs={'pk': self.object.pk})
 
-class DeleteBimProject(StaffMixin, BimProjectObjectMixin, DeleteView):
+class DeleteBimProject(BimProjectViewMixin, DeleteView):
   template_name = 'projects/bim_project_delete.html'
   success_url = '/'
 
-class ManageBimProject(StaffMixin, BimProjectObjectMixin, DetailView):
+class ManageBimProject(BimProjectViewMixin, DetailView):
   template_name = 'projects/manage_bim_project.html'
 
 
-class CreateBimModel(StaffMixin, BimModelObjectMixin, CreateView):
+class CreateBimModel(BimModelViewMixin, CreateView):
   form_class = BimModelCreateForm
   template_name = 'projects/bim_model_create.html'
 
@@ -49,20 +50,20 @@ class CreateBimModel(StaffMixin, BimModelObjectMixin, CreateView):
   def get_success_url(self):
     return reverse('manage_project', kwargs={ 'pk': self.object.bim_project.pk })
 
-class UpdateBimModel(StaffMixin, BimModelObjectMixin, UpdateView):
+class UpdateBimModel(BimModelViewMixin, UpdateView):
   form_class = BimModelUpdateForm
   template_name = 'projects/bim_model_update.html'
 
   def get_success_url(self):
     return reverse('manage_bim_model', kwargs={'pk': self.object.pk})
 
-class DeleteBimModel(StaffMixin, BimModelObjectMixin, DeleteView):
+class DeleteBimModel(BimModelViewMixin, DeleteView):
   template_name = 'projects/bim_model_delete.html'
 
   def get_success_url(self):
     return reverse('manage_project', kwargs={'pk': self.object.bim_project.pk})
 
-class ManageBimModel(StaffMixin, BimModelObjectMixin, DetailView):
+class ManageBimModel(BimModelViewMixin, DetailView):
   template_name = 'projects/manage_bim_model.html'
 
   def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -72,7 +73,7 @@ class ManageBimModel(StaffMixin, BimModelObjectMixin, DetailView):
     return context
 
 
-class CreateInfoSheet(StaffMixin, InfoSheetObjectMixin, CreateView):
+class CreateInfoSheet(InfoSheetViewMixin, CreateView):
   fields = ['name', 'description']
   template_name = 'projects/info_sheet_create.html'
 
@@ -85,24 +86,24 @@ class CreateInfoSheet(StaffMixin, InfoSheetObjectMixin, CreateView):
   def get_success_url(self):
     return reverse('manage_bim_model', kwargs={ 'pk': self.object.bim_model.pk })
 
-class UpdateInfoSheet(StaffMixin, InfoSheetObjectMixin, UpdateView):
+class UpdateInfoSheet(InfoSheetViewMixin, UpdateView):
   fields = ['name', 'description', 'sheet_type']
   template_name = 'projects/info_sheet_update.html'
 
   def get_success_url(self):
     return reverse('manage_info_sheet', kwargs={'pk': self.object.pk})
 
-class DeleteInfoSheet(StaffMixin, InfoSheetObjectMixin, DeleteView):
+class DeleteInfoSheet(InfoSheetViewMixin, DeleteView):
   template_name = 'projects/info_sheet_delete.html'
 
   def get_success_url(self):
     return reverse('manage_bim_model', kwargs={'pk': self.object.bim_model.pk})
 
-class ManageInfoSheet(StaffMixin, InfoSheetObjectMixin, DetailView):
+class ManageInfoSheet(InfoSheetViewMixin, DetailView):
   template_name = 'projects/manage_info_sheet.html'
 
 
-class CreateReport(StaffMixin, ReportObjectMixin, CreateView):
+class CreateReport(ReportViewMixin, CreateView):
   form_class = ReportForm
   template_name = 'projects/report_create.html'
 
@@ -114,24 +115,24 @@ class CreateReport(StaffMixin, ReportObjectMixin, CreateView):
   def get_success_url(self):
     return reverse('manage_info_sheet', kwargs={ 'pk': self.object.info_sheet.pk })
 
-class UpdateReport(StaffMixin, ReportObjectMixin, UpdateView):
+class UpdateReport(ReportViewMixin, UpdateView):
   form_class = ReportForm
   template_name = 'projects/report_update.html'
 
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.pk})
 
-class DeleteReport(StaffMixin, ReportObjectMixin, DeleteView):
+class DeleteReport(ReportViewMixin, DeleteView):
   template_name = 'projects/report_delete.html'
 
   def get_success_url(self):
     return reverse('manage_info_sheet', kwargs={'pk': self.object.info_sheet.pk})
 
-class ManageReport(StaffMixin, ReportObjectMixin, DetailView):
+class ManageReport(ReportViewMixin, DetailView):
   template_name = 'projects/manage_report.html'
 
 
-class CreateClashTest(StaffMixin, ClashTestObjectMixin, CreateView):
+class CreateClashTest(ClashTestViewMixin, CreateView):
   form_class = ClashTestForm
   template_name = 'projects/clash_test_create.html'
 
@@ -143,21 +144,21 @@ class CreateClashTest(StaffMixin, ClashTestObjectMixin, CreateView):
   def get_success_url(self):
     return reverse('manage_report', kwargs={ 'pk': self.object.report.pk })
 
-class UpdateClashTest(StaffMixin, ClashTestObjectMixin, UpdateView):
+class UpdateClashTest(ClashTestViewMixin, UpdateView):
   form_class = ClashTestForm
   template_name = 'projects/clash_test_update.html'
 
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
-class DeleteClashTest(StaffMixin, ClashTestObjectMixin, DeleteView):
+class DeleteClashTest(ClashTestViewMixin, DeleteView):
   template_name = 'projects/clash_test_delete.html'
 
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
 
-class CreateValidationTest(StaffMixin, ValidationTestObjectMixin,CreateView):
+class CreateValidationTest(ValidationViewMixin,CreateView):
   form_class = ValidationTestForm
   template_name = 'projects/validation_test_create.html'
 
@@ -169,14 +170,14 @@ class CreateValidationTest(StaffMixin, ValidationTestObjectMixin,CreateView):
   def get_success_url(self):
     return reverse('manage_report', kwargs={ 'pk': self.object.report.pk })
 
-class UpdateValidationTest(StaffMixin, ValidationTestObjectMixin, UpdateView):
+class UpdateValidationTest(ValidationViewMixin, UpdateView):
   form_class = ValidationTestForm
   template_name = 'projects/validation_test_update.html'
 
   def get_success_url(self):
     return reverse('manage_report', kwargs={'pk': self.object.report.pk})
 
-class DeleteValidationTest(StaffMixin, ValidationTestObjectMixin, DeleteView):
+class DeleteValidationTest(ValidationViewMixin, DeleteView):
   template_name = 'projects/validation_test_delete.html'
 
   def get_success_url(self):
