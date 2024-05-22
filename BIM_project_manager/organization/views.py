@@ -30,7 +30,7 @@ class OrganizationSettings(StaffMixin, View):
 
 class CreateProjectPhase(StaffMixin, CreateView):
   model = ProjectPhase
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/project_phase_create.html'
   
   def get_success_url(self):
@@ -38,7 +38,7 @@ class CreateProjectPhase(StaffMixin, CreateView):
 
 class UpdateProjectPhase(StaffMixin, UpdateView):
   model = ProjectPhase
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/project_phase_update.html'
 
   def get_success_url(self):
@@ -54,7 +54,7 @@ class DeleteProjectPhase(StaffMixin, DeleteView):
 
 class CreateDiscipline(StaffMixin, CreateView):
   model = Discipline
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/discipline_create.html'
   
   def get_success_url(self):
@@ -62,7 +62,7 @@ class CreateDiscipline(StaffMixin, CreateView):
 
 class UpdateDiscipline(StaffMixin, UpdateView):
   model = Discipline
-  fields = ['name', 'description', 'code']
+  fields = '__all__'
   template_name = 'organization/discipline_update.html'
 
   def get_success_url(self):
@@ -78,7 +78,7 @@ class DeleteDiscipline(StaffMixin, DeleteView):
 
 class CreateAuthoringSoftware(StaffMixin, CreateView):
   model = AuthoringSoftware
-  fields = ['name', 'version']
+  fields = '__all__'
   template_name = 'organization/authoring_software_create.html'
   
   def get_success_url(self):
@@ -86,7 +86,7 @@ class CreateAuthoringSoftware(StaffMixin, CreateView):
 
 class UpdateAuthoringSoftware(StaffMixin, UpdateView):
   model = AuthoringSoftware
-  fields = ['name', 'version']
+  fields = '__all__'
   template_name = 'organization/authoring_software_update.html'
 
   def get_success_url(self):
@@ -102,7 +102,7 @@ class DeleteAuthoringSoftware(StaffMixin, DeleteView):
 
 class CreateLodReference(StaffMixin, CreateView):
   model = LodReference
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/lod_reference_create.html'
   
   def get_success_url(self):
@@ -110,7 +110,7 @@ class CreateLodReference(StaffMixin, CreateView):
 
 class UpdateLodReference(StaffMixin, UpdateView):
   model = LodReference
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/lod_reference_update.html'
 
   def get_success_url(self):
@@ -126,7 +126,7 @@ class DeleteLodReference(StaffMixin, DeleteView):
 
 class CreateBimSpecification(StaffMixin, CreateView):
   model = BimSpecification
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/specification_create.html'
   
   def get_success_url(self):
@@ -134,7 +134,7 @@ class CreateBimSpecification(StaffMixin, CreateView):
 
 class UpdateBimSpecification(StaffMixin, UpdateView):
   model = BimSpecification
-  fields = ['name', 'description']
+  fields = '__all__'
   template_name = 'organization/specification_update.html'
 
   def get_success_url(self):
@@ -150,7 +150,7 @@ class DeleteBimSpecification(StaffMixin, DeleteView):
 
 class CreateBimExpert(StaffMixin, CreateView):
   model = BimExpert
-  fields = ['name', 'position']
+  fields = '__all__'
   template_name = 'organization/bim_expert_create.html'
   
   def get_success_url(self):
@@ -158,7 +158,7 @@ class CreateBimExpert(StaffMixin, CreateView):
 
 class UpdateBimExpert(StaffMixin, UpdateView):
   model = BimExpert
-  fields = ['name', 'position']
+  fields = '__all__'
   template_name = 'organization/bim_expert_update.html'
 
   def get_success_url(self):
