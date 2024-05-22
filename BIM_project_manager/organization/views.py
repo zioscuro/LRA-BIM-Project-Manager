@@ -32,18 +32,12 @@ class OrganizationSettings(StaffMixin, View):
 class CreateProjectPhase(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, CreateView):
   model = ProjectPhase
   fields = '__all__'
-  template_name = 'organization/project_phase_create.html'
-  
-  # def get_success_url(self):
-  #   return reverse('organization_settings')
+  template_name = 'organization/project_phase_create.html'  
 
 class UpdateProjectPhase(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, UpdateView):
   model = ProjectPhase
   fields = '__all__'
   template_name = 'organization/project_phase_update.html'
-
-  # def get_success_url(self):
-  #   return reverse('organization_settings')
 
 class DeleteProjectPhase(StaffMixin, OrganizationDeleteSuccessUrlMixin, DeleteView):
   model = ProjectPhase
