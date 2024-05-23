@@ -3,7 +3,7 @@ from core.mixins import StaffMixin
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from organization.mixins import OrganizationCreateUpdateSuccessUrlMixin, OrganizationDeleteSuccessUrlMixin, ProjectPhaseObjectMixin, DisciplineObjectMixin, AuthoringSoftwareObjectMixin, LodReferenceObjectMixin, BimSpecificationObjectMixin, BimExpertObjectMixin
+from organization.mixins import OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, ProjectPhaseViewMixin, DisciplineViewMixin, AuthoringSoftwareViewMixin, LodReferenceViewMixin, BimSpecificationViewMixin, BimExpertViewMixin
 from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
 
 # Create your views here.
@@ -29,73 +29,73 @@ class OrganizationSettings(StaffMixin, View):
     return render(request, 'organization/organization_settings.html', context)
 
 
-class CreateProjectPhase(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, ProjectPhaseObjectMixin, CreateView):
+class CreateProjectPhase(ProjectPhaseViewMixin, OrganizationCreateView):
   fields = '__all__'
   template_name = 'organization/project_phase_create.html'  
 
-class UpdateProjectPhase(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, ProjectPhaseObjectMixin, UpdateView):
+class UpdateProjectPhase(ProjectPhaseViewMixin, OrganizationUpdateView):
   fields = '__all__'
   template_name = 'organization/project_phase_update.html'
 
-class DeleteProjectPhase(StaffMixin, OrganizationDeleteSuccessUrlMixin, ProjectPhaseObjectMixin, DeleteView):
+class DeleteProjectPhase(ProjectPhaseViewMixin, OrganizationDeleteView):
   template_name = 'organization/project_phase_delete.html'
 
 
-class CreateDiscipline(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, DisciplineObjectMixin, CreateView):
+class CreateDiscipline(DisciplineViewMixin, OrganizationCreateView):
   fields = '__all__'
   template_name = 'organization/discipline_create.html'
   
-class UpdateDiscipline(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, DisciplineObjectMixin, UpdateView):
+class UpdateDiscipline(DisciplineViewMixin, OrganizationUpdateView):
   fields = '__all__'
   template_name = 'organization/discipline_update.html'
 
-class DeleteDiscipline(StaffMixin, OrganizationDeleteSuccessUrlMixin, DisciplineObjectMixin, DeleteView):
+class DeleteDiscipline(DisciplineViewMixin, OrganizationDeleteView):
   template_name = 'organization/discipline_delete.html'
 
 
-class CreateAuthoringSoftware(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, AuthoringSoftwareObjectMixin, CreateView):
+class CreateAuthoringSoftware(AuthoringSoftwareViewMixin, OrganizationCreateView):
   fields = '__all__'
   template_name = 'organization/authoring_software_create.html'
   
-class UpdateAuthoringSoftware(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, AuthoringSoftwareObjectMixin, UpdateView):
+class UpdateAuthoringSoftware(AuthoringSoftwareViewMixin, OrganizationUpdateView):
   fields = '__all__'
   template_name = 'organization/authoring_software_update.html'
 
-class DeleteAuthoringSoftware(StaffMixin, OrganizationDeleteSuccessUrlMixin, AuthoringSoftwareObjectMixin, DeleteView):
+class DeleteAuthoringSoftware(AuthoringSoftwareViewMixin, OrganizationDeleteView):
   template_name = 'organization/authoring_software_delete.html'
 
 
-class CreateLodReference(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, LodReferenceObjectMixin, CreateView):
+class CreateLodReference(LodReferenceViewMixin, OrganizationCreateView):
   fields = '__all__'
   template_name = 'organization/lod_reference_create.html'
   
-class UpdateLodReference(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, LodReferenceObjectMixin, UpdateView):
+class UpdateLodReference(LodReferenceViewMixin, OrganizationUpdateView):
   fields = '__all__'
   template_name = 'organization/lod_reference_update.html'
 
-class DeleteLodReference(StaffMixin, OrganizationDeleteSuccessUrlMixin, LodReferenceObjectMixin, DeleteView):
+class DeleteLodReference(LodReferenceViewMixin, OrganizationDeleteView):
   template_name = 'organization/lod_reference_delete.html'
 
 
-class CreateBimSpecification(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, BimSpecificationObjectMixin, CreateView):
+class CreateBimSpecification(BimSpecificationViewMixin, OrganizationCreateView):
   fields = '__all__'
   template_name = 'organization/specification_create.html'
   
-class UpdateBimSpecification(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, BimSpecificationObjectMixin, UpdateView):
+class UpdateBimSpecification(BimSpecificationViewMixin, OrganizationUpdateView):
   fields = '__all__'
   template_name = 'organization/specification_update.html'
 
-class DeleteBimSpecification(StaffMixin, OrganizationDeleteSuccessUrlMixin, BimSpecificationObjectMixin, DeleteView):
+class DeleteBimSpecification(BimSpecificationViewMixin, OrganizationDeleteView):
   template_name = 'organization/specification_delete.html'
 
 
-class CreateBimExpert(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, BimExpertObjectMixin, CreateView):
+class CreateBimExpert(BimExpertViewMixin, OrganizationCreateView):
   fields = '__all__'
   template_name = 'organization/bim_expert_create.html'
 
-class UpdateBimExpert(StaffMixin, OrganizationCreateUpdateSuccessUrlMixin, BimExpertObjectMixin, UpdateView):
+class UpdateBimExpert(BimExpertViewMixin, OrganizationUpdateView):
   fields = '__all__'
   template_name = 'organization/bim_expert_update.html'
 
-class DeleteBimExpert(StaffMixin, OrganizationDeleteSuccessUrlMixin, BimExpertObjectMixin, DeleteView):
+class DeleteBimExpert(BimExpertViewMixin, OrganizationDeleteView):
   template_name = 'organization/bim_expert_delete.html'
