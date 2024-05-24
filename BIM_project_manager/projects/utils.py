@@ -379,17 +379,30 @@ def set_default_validation(bim_model):
 def handle_model_register_import(register_file, bim_project):
   df = read_excel(register_file, sheet_name='model_register')
 
-  for index, row in df.iterrows():    
-    if BimModel.objects.filter(name=row['Nome modello'], bim_project=bim_project).exists():
-      return f'il modello già esiste!'
+  for index, row in df.iterrows():   
+    if BimModel.objects.filter(name=row['Nome modello'], description=row['Descrizione'], bim_project=bim_project).exists():
+      break
     
-    new_bim_model_discipline = Discipline.objects.get(name=row['Disciplina'])
-    new_bim_model_software = AuthoringSoftware.objects.get(name=row['Software'])
-    new_bim_model_lod = LodReference.objects.get(name=row['Scheda LOD'])
-    new_bim_model_designer = BimExpert.objects.get(name=row['Progettista'])
-    new_bim_model_bim_manager = BimExpert.objects.get(name=row['Bim Manager'])
-    new_bim_model_bim_coordinator = BimExpert.objects.get(name=row['Bim Coordinator'])
-    new_bim_model_bim_specialist = BimExpert.objects.get(name=row['Bim Specialist'])
+    new_bim_model_discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
+    new_bim_model_discipline.save()
+    
+    new_bim_model_software, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
+    new_bim_model_software.save()
+    
+    new_bim_model_lod, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
+    new_bim_model_lod.save()
+    
+    new_bim_model_designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
+    new_bim_model_designer.save()
+    
+    new_bim_model_bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
+    new_bim_model_bim_manager.save()
+    
+    new_bim_model_bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
+    new_bim_model_bim_coordinator.save()
+    
+    new_bim_model_bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
+    new_bim_model_bim_coordinator.save()
     
     new_bim_model = BimModel(
       name=row['Nome modello'],
