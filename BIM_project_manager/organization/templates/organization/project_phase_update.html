@@ -3,22 +3,24 @@
 
 {% block head_title %}{{ block.super }} - Modifica fase progetto{% endblock head_title %}
 
+{% block navbar %}
+<a class="btn btn-outline-primary" href="{% url 'organization_settings' %}">← Torna alle impostazioni</a>
+{% endblock navbar %}
+
 {% block content %}
-
-  <div class="row justify-content-center">
-    <div class="col-5">
-      <div class="text-center">
-        <h1>Modifica fase progetto</h1>
-        <p class="fs-5">Inserisci i nuovi dati della fase</p>
-      </div>
-      <form method="POST" novalidate>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-grid mt-4">
-          <input type="submit" class="btn btn-primary" value="Aggiorna">
-        </div>
-      </form>
+<div class="row justify-content-center">
+  <div class="col-5">
+    <div class="text-center">
+      <h1>Modifica fase progetto</h1>
+      <p class="fs-5">Inserisci i nuovi dati della fase</p>
     </div>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="d-grid mt-4">
+        <input type="submit" class="btn btn-primary" value="Aggiorna">
+      </div>
+    </form>
   </div>
-
+</div>
 {% endblock content %}

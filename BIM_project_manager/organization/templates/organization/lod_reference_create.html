@@ -3,8 +3,11 @@
 
 {% block head_title %}{{ block.super }} - Crea Scheda LOD{% endblock head_title %}
 
-{% block content %}
+{% block navbar %}
+<a class="btn btn-outline-primary" href="{% url 'organization_settings' %}">← Torna alle impostazioni</a>
+{% endblock navbar %}
 
+{% block content %}
   <div class="row justify-content-center">
     <div class="col-5">
       <div class="text-center">
@@ -20,5 +23,4 @@
       </form>
     </div>
   </div>
-
 {% endblock content %}

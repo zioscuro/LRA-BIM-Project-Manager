@@ -2,8 +2,11 @@
 
 {% block head_title %}{{ block.super }} - Impostazioni Organizzazione{% endblock head_title %}
 
-{% block content %}
+{% block navbar %}
+<a class="btn btn-outline-primary" href="/">← Torna alla lista progetti</a>
+{% endblock navbar %}
 
+{% block content %}
 <div class="container text-center">
   <h1>Impostazioni Organizzazione</h1>
   <hr>
@@ -176,5 +179,4 @@
   </div>
   <hr>
 </div>
-
 {% endblock content %}

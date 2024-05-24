@@ -3,22 +3,24 @@
 
 {% block head_title %}{{ block.super }} - Crea Software di Authoring{% endblock head_title %}
 
+{% block navbar %}
+<a class="btn btn-outline-primary" href="{% url 'organization_settings' %}">← Torna alle impostazioni</a>
+{% endblock navbar %}
+
 {% block content %}
-
-  <div class="row justify-content-center">
-    <div class="col-5">
-      <div class="text-center">
-        <h1>Nuovo software di authoring</h1>
-        <p class="fs-5">Inserisci i dati del nuovo software</p>
-      </div>
-      <form method="POST" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-grid mt-4">
-          <input type="submit" class="btn btn-primary" value="Aggiungi Software">
-        </div>
-      </form>
+<div class="row justify-content-center">
+  <div class="col-5">
+    <div class="text-center">
+      <h1>Nuovo software di authoring</h1>
+      <p class="fs-5">Inserisci i dati del nuovo software</p>
     </div>
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="d-grid mt-4">
+        <input type="submit" class="btn btn-primary" value="Aggiungi Software">
+      </div>
+    </form>
   </div>
-
+</div>
 {% endblock content %}
