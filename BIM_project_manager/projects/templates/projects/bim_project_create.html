@@ -8,21 +8,19 @@
 {% endblock navbar %}
 
 {% block content %}
-
-  <div class="row justify-content-center">
-    <div class="col-5">
-      <div class="text-center">
-        <h1>Nuovo progetto</h1>
-        <p class="fs-5">Inserisci i dati del nuovo progetto</p>
-      </div>
-      <form method="POST" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-grid mt-4">
-          <input type="submit" class="btn btn-primary" value="Crea Progetto">
-        </div>
-      </form>
+<div class="row justify-content-center">
+  <div class="col-5">
+    <div class="text-center">
+      <h1>Nuovo progetto</h1>
+      <p class="fs-5">Inserisci i dati del nuovo progetto</p>
     </div>
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="d-grid mt-4">
+        <input type="submit" class="btn btn-primary" value="Crea Progetto">
+      </div>
+    </form>
   </div>
-
+</div>
 {% endblock content %}

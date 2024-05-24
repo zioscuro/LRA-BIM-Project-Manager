@@ -47,6 +47,12 @@ class CreateBimModel(BimModelViewMixin, CreateView):
     form.instance.bim_specialist = bim_project.default_bim_specialist
     return super(CreateBimModel, self).form_valid(form)
   
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    bim_project = get_object_or_404(BimProject, pk=self.kwargs['pk'])
+    context["bimproject"] = bim_project
+    return context
+  
   def get_success_url(self):
     return reverse('manage_project', kwargs={ 'pk': self.object.bim_project.pk })
 
@@ -83,6 +89,12 @@ class CreateInfoSheet(InfoSheetViewMixin, CreateView):
     form.instance.sheet_type = self.kwargs['sheet_type']
     return super(CreateInfoSheet, self).form_valid(form)
   
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    bim_model = get_object_or_404(BimModel, pk=self.kwargs['pk'])
+    context["bimmodel"] = bim_model
+    return context
+
   def get_success_url(self):
     return reverse('manage_bim_model', kwargs={ 'pk': self.object.bim_model.pk })
 
@@ -112,6 +124,12 @@ class CreateReport(ReportViewMixin, CreateView):
     form.instance.info_sheet = info_sheet
     return super(CreateReport, self).form_valid(form)
   
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    info_sheet = get_object_or_404(InfoSheet, pk=self.kwargs['pk'])
+    context["infosheet"] = info_sheet
+    return context
+
   def get_success_url(self):
     return reverse('manage_info_sheet', kwargs={ 'pk': self.object.info_sheet.pk })
 
@@ -141,6 +159,12 @@ class CreateClashTest(ClashTestViewMixin, CreateView):
     form.instance.report = report
     return super(CreateClashTest, self).form_valid(form)
   
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    report = get_object_or_404(Report, pk=self.kwargs['pk'])
+    context["report"] = report
+    return context
+  
   def get_success_url(self):
     return reverse('manage_report', kwargs={ 'pk': self.object.report.pk })
 
@@ -166,6 +190,12 @@ class CreateValidationTest(ValidationViewMixin,CreateView):
     report = get_object_or_404(Report, pk=self.kwargs['pk'])
     form.instance.report = report
     return super(CreateValidationTest, self).form_valid(form)
+  
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    report = get_object_or_404(Report, pk=self.kwargs['pk'])
+    context["report"] = report
+    return context
   
   def get_success_url(self):
     return reverse('manage_report', kwargs={ 'pk': self.object.report.pk })
