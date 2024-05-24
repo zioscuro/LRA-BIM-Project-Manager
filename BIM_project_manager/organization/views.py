@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from core.mixins import StaffMixin
 from django.views import View
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from organization.mixins import OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, ProjectPhaseViewMixin, DisciplineViewMixin, AuthoringSoftwareViewMixin, LodReferenceViewMixin, BimSpecificationViewMixin, BimExpertViewMixin
-from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
+from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference, ProjectPhase
 
 # Create your views here.
 

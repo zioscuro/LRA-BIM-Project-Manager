@@ -1,16 +1,16 @@
-from typing import Any
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
 
 from core.mixins import StaffMixin
-from .models import BimProject, BimModel, InfoSheet, Report
-from .forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
-from .mixins import BimProjectViewMixin, BimModelViewMixin, InfoSheetViewMixin, ReportViewMixin, ClashTestViewMixin, ValidationViewMixin
-from .utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
+
+from projects.models import BimProject, BimModel, InfoSheet, Report
+from projects.forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
+from projects.mixins import BimProjectViewMixin, BimModelViewMixin, InfoSheetViewMixin, ReportViewMixin, ClashTestViewMixin, ValidationViewMixin
+from projects.utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
 
 # Create your views here.
 
@@ -72,7 +72,7 @@ class DeleteBimModel(BimModelViewMixin, DeleteView):
 class ManageBimModel(BimModelViewMixin, DetailView):
   template_name = 'projects/manage_bim_model.html'
 
-  def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+  def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context['info_sheets_coordination'] = self.object.info_sheets.filter(sheet_type='Coordination')
     context['info_sheets_validation'] = self.object.info_sheets.filter(sheet_type='Validation')

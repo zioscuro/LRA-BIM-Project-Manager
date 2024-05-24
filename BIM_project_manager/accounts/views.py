@@ -1,9 +1,11 @@
-from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.shortcuts import render, HttpResponseRedirect
+
 from accounts.forms import CreateAccountForm
 
 # Create your views here.
+
 def create_account_view(request):
   if request.method == 'POST':
     form = CreateAccountForm(request.POST)

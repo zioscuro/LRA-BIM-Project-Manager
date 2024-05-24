@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from projects import views
 
 urlpatterns = [
   path('create_project/', views.CreateBimProject.as_view(), name='create_project'),

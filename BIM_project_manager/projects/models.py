@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from organization.models import AuthoringSoftware, BimExpert, Discipline, LodReference, ProjectPhase, BimSpecification
+from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference, ProjectPhase
 
 # Create your models here.
 

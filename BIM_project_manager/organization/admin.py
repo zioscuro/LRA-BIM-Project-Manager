@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
+from .models import  AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference, ProjectPhase
 
 # Register your models here.
 

@@ -1,18 +1,9 @@
-from django.views.generic.edit import ModelFormMixin, DeletionMixin, SingleObjectMixin
 from django.urls import reverse
+from django.views.generic.edit import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from core.mixins import StaffMixin
-from organization.models import ProjectPhase, Discipline, AuthoringSoftware, LodReference, BimSpecification, BimExpert
-
-# class OrganizationCreateUpdateSuccessUrlMixin(ModelFormMixin):
-#   def get_success_url(self):
-#     return reverse('organization_settings')
-  
-# class OrganizationDeleteSuccessUrlMixin(DeletionMixin):
-#   def get_success_url(self):
-#     return reverse('organization_settings')
-
+from organization.models import AuthoringSoftware, BimExpert, BimSpecification,  Discipline, LodReference, ProjectPhase
 
 class ProjectPhaseViewMixin(StaffMixin, SingleObjectMixin):
   model = ProjectPhase

@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from .models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
-from organization.models import AuthoringSoftware, Discipline, BimSpecification, LodReference, BimExpert
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
 from pandas import read_excel
+
+from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference
+from projects.models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
 
 class Styles():
   thin_line = Side(border_style="thin", color="000000")

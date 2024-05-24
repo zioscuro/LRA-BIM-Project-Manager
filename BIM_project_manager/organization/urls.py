@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from organization import views
 
 urlpatterns = [
     path('', views.OrganizationSettings.as_view(), name='organization_settings'),

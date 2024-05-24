@@ -1,4 +1,4 @@
-from django.views.generic.edit import ModelFormMixin, DeletionMixin, SingleObjectMixin
+from django.views.generic.edit import SingleObjectMixin
 
 from core.mixins import StaffMixin
 from projects.models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
