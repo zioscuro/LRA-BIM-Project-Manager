@@ -10,7 +10,7 @@
 
 <h1 class="mb-5 text-center">Scheda {{infosheet.name}}</h1>
 <div class="row  mx-auto">
-  <div class="col-md-3">
+  <div class="col-md-4">
     <h4>Dati scheda</h4>  
     <h6>tipo scheda</h6>
     <p>{{infosheet.sheet_type}}</p>
@@ -23,12 +23,12 @@
     <h6>progetto</h6>
     <p>{{infosheet.bim_model.bim_project.name}}</p>
     <hr>
-    <div class="d-grid gap-2">
-      <a href="{% url 'update_info_sheet' pk=infosheet.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
-      <a href="{% url 'delete_info_sheet' pk=infosheet.pk %}" class="btn btn-danger btn-lg">Cancella scheda</a>
+    <div class="d-flex gap-2">
+      <a href="{% url 'update_info_sheet' pk=infosheet.pk %}" class="flex-fill btn btn-primary btn-lg">Aggiorna dati</a>
+      <a href="{% url 'delete_info_sheet' pk=infosheet.pk %}" class="flex-fill btn btn-danger btn-lg">Cancella scheda</a>
     </div>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-8">
     {% if infosheet.sheet_type == 'coordination' %}
     <h4>Report delle interferenze</h4>
     {% elif infosheet.sheet_type == 'validation' %}

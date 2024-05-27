@@ -9,7 +9,7 @@
 {% block content %}
 <h1 class="mb-5 text-center">{{bimmodel.name}}</h1>
 <div class="row  mx-auto">
-  <div class="col-md-3">
+  <div class="col-md-4">
     <h4>Dati modello</h4> 
     <h6>nome</h6>
     <p>{{bimmodel.name}}</p>
@@ -32,16 +32,16 @@
     <h6>progetto</h6>
     <p>{{bimmodel.bim_project.name}}</p>
     <hr>
-    <div class="d-grid gap-2">
-      <a href="{% url 'update_model' pk=bimmodel.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
-      <a href="{% url 'delete_model' pk=bimmodel.pk %}" class="btn btn-danger btn-lg">Cancella modello</a>
+    <div class="d-flex gap-2">
+      <a href="{% url 'update_model' pk=bimmodel.pk %}" class="flex-fill btn btn-primary btn-lg">Aggiorna dati</a>
+      <a href="{% url 'delete_model' pk=bimmodel.pk %}" class="flex-fill btn btn-danger btn-lg">Cancella modello</a>
     </div>
     <hr>
     <div class="d-grid gap-2">
       <a href="{% url 'export_data' pk=bimmodel.pk export_type='model_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
     </div>
   </div>
-  <div class="col-md-9">    
+  <div class="col-md-8">    
     <h4>Schede informative - Coordinamento</h4>
     <table class="table">
       <thead>
