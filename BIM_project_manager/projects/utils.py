@@ -316,66 +316,66 @@ class ExcelExporter():
     self.wb.save(response)  
     return response
 
+class BimModelConfigurator():
+  def __init__(self, bim_model):
+    self.default_specification = get_object_or_404(BimSpecification, pk=1)
+    self.bim_model = bim_model
 
-def set_default_coordination(bim_model):
-  default_specification = get_object_or_404(BimSpecification, pk=1)
+  def default_coordination(self):
+    self.bim_model.default_coordination = True
+    self.bim_model.save()
 
-  bim_model.default_coordination = True
-  bim_model.save()
+    sheet_LC1 = InfoSheet(
+      sheet_type = 'Coordination',
+      name = 'LC1',
+      description = 'default coordinamento',
+      bim_model = self.bim_model
+    )
+    sheet_LC1.save()
 
-  sheet_LC1 = InfoSheet(
-    sheet_type = 'Coordination',
-    name = 'LC1',
-    description = 'default coordinamento',
-    bim_model = bim_model
-  )
-  sheet_LC1.save()
+    duplicates_report = Report(
+      name = f'{self.bim_model.name}_duplicati',
+      description = 'default report elementi duplicati',
+      specification = self.default_specification,
+      info_sheet = sheet_LC1,
+    )
+    duplicates_report.save()
 
-  duplicates_report = Report(
-    name = f'{bim_model.name}_duplicati',
-    description = 'default report elementi duplicati',
-    specification = default_specification,
-    info_sheet = sheet_LC1,
-  )
-  duplicates_report.save()
+    intersections_report = Report(
+      name = f'{self.bim_model.name}_intersezioni',
+      description = 'default report elementi intersecanti',
+      specification = self.default_specification,
+      info_sheet = sheet_LC1,
+    )
+    intersections_report.save()
 
-  intersections_report = Report(
-    name = f'{bim_model.name}_intersezioni',
-    description = 'default report elementi intersecanti',
-    specification = default_specification,
-    info_sheet = sheet_LC1,
-  )
-  intersections_report.save()
+  def default_validation(self):
+    self.bim_model.default_validation = True
+    self.bim_model.save()
 
-def set_default_validation(bim_model):
-  default_specification = get_object_or_404(BimSpecification, pk=1)
+    sheet_LV1 = InfoSheet(
+      sheet_type ='Validation',
+      name = 'LV1',
+      description = 'default verifica',
+      bim_model = self.bim_model
+    )
+    sheet_LV1.save()
 
-  bim_model.default_validation = True
-  bim_model.save()
+    file_name_report = Report(
+      name = f'{self.bim_model.name}_codifica file',
+      description = 'default report nomenclatura file',
+      specification = self.default_specification,
+      info_sheet = sheet_LV1,
+    )
+    file_name_report.save()
 
-  sheet_LV1 = InfoSheet(
-    sheet_type ='Validation',
-    name = 'LV1',
-    description = 'default verifica',
-    bim_model = bim_model
-  )
-  sheet_LV1.save()
-
-  file_name_report = Report(
-    name = f'{bim_model.name}_codifica file',
-    description = 'default report nomenclatura file',
-    specification = default_specification,
-    info_sheet = sheet_LV1,
-  )
-  file_name_report.save()
-
-  objects_name_report = Report(
-    name = f'{bim_model.name}_codifica oggetti',
-    description = 'default report nomenclatura oggetti nel modello',
-    specification = default_specification,
-    info_sheet = sheet_LV1,
-  )
-  objects_name_report.save()
+    objects_name_report = Report(
+      name = f'{self.bim_model.name}_codifica oggetti',
+      description = 'default report nomenclatura oggetti nel modello',
+      specification = self.default_specification,
+      info_sheet = sheet_LV1,
+    )
+    objects_name_report.save()
 
 def handle_model_register_import(register_file, bim_project):
   df = read_excel(register_file, sheet_name='model_register')

@@ -10,7 +10,7 @@ from core.mixins import StaffMixin
 from projects.models import BimProject, BimModel, InfoSheet, Report
 from projects.forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
 from projects.mixins import BimProjectViewMixin, BimModelViewMixin, InfoSheetViewMixin, ReportViewMixin, ClashTestViewMixin, ValidationViewMixin
-from projects.utils import ExcelExporter, set_default_coordination, set_default_validation, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
+from projects.utils import ExcelExporter, BimModelConfigurator, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
 
 # Create your views here.
 
@@ -217,18 +217,17 @@ class DeleteValidationTest(ValidationViewMixin, DeleteView):
 class DefaultInfoSheet(StaffMixin, View):  
   def get(self, request, pk, sheet_type):
     bim_model = get_object_or_404(BimModel, pk=pk)
+    configurator = BimModelConfigurator(bim_model)
 
     if sheet_type == 'Coordination':
       if bim_model.default_coordination:
         return HttpResponseRedirect(bim_model.get_absolute_url())
-      set_default_coordination(bim_model)
-      bim_model.default_coordination = True
+      configurator.default_coordination()
 
     if sheet_type == 'Validation':
       if bim_model.default_validation:
         return HttpResponseRedirect(bim_model.get_absolute_url())
-      set_default_validation(bim_model)
-      bim_model.default_validation = True
+      configurator.default_validation()
 
     bim_model.save()
     return HttpResponseRedirect(bim_model.get_absolute_url())
