@@ -215,7 +215,7 @@ class DeleteValidationTest(ValidationViewMixin, DeleteView):
 
 
 class DefaultInfoSheet(StaffMixin, View):  
-  def get(self, request, pk, sheet_type):
+  def post(self, request, pk, sheet_type):
     bim_model = get_object_or_404(BimModel, pk=pk)
     configurator = BimModelConfigurator(bim_model)
 

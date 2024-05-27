@@ -67,15 +67,18 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a
-        {% if not bimmodel.default_coordination %}
-        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}"
-        class="btn btn-outline-primary btn-lg"
-        {% else %}
-        href="#"
-        class="btn btn-outline-primary btn-lg disabled"
-        {% endif %}
-      >+ Default</a>
+      <form method="POST" novalidate action="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}">
+        {% csrf_token %}
+        <input 
+          type="submit" 
+          value="+ Default"
+          {% if not bimmodel.default_coordination %}
+          class="btn btn-outline-primary btn-lg"
+          {% else %}
+          class="btn btn-outline-primary btn-lg disabled"
+          {% endif %}
+        >
+      </form>
       <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
     <h4>Schede informative - Verifica</h4>
@@ -103,15 +106,18 @@
       </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-end">
-      <a
-        {% if not bimmodel.default_validation %} 
-        href="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}" 
-        class="btn btn-outline-primary btn-lg"
-        {% else %}
-        href="#"
-        class="btn btn-outline-primary btn-lg disabled"
-        {% endif %}
-      >+ Default</a>
+      <form method="POST" novalidate action="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}">
+        {% csrf_token %}
+        <input 
+          type="submit" 
+          value="+ Default"
+          {% if not bimmodel.default_validation %} 
+          class="btn btn-outline-primary btn-lg"
+          {% else %}
+          class="btn btn-outline-primary btn-lg disabled"
+          {% endif %}
+        >
+      </form>
       <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
     </div>
 
