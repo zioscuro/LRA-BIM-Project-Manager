@@ -377,118 +377,155 @@ class BimModelConfigurator():
     )
     objects_name_report.save()
 
-def handle_model_register_import(register_file, bim_project):
-  df = read_excel(register_file, sheet_name='model_register')
+class ExcelImporter():
+  def __init__(self, excel_file, sheet_name, bim_project):
+    self.df = read_excel(excel_file, sheet_name=sheet_name)
+    self.bim_project = bim_project
 
-  for index, row in df.iterrows():   
-    if BimModel.objects.filter(name=row['Nome modello'], description=row['Descrizione'], bim_project=bim_project).exists():
-      break
-    
-    new_bim_model_discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
-    new_bim_model_discipline.save()
-    
-    new_bim_model_software, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
-    new_bim_model_software.save()
-    
-    new_bim_model_lod, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
-    new_bim_model_lod.save()
-    
-    new_bim_model_designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
-    new_bim_model_designer.save()
-    
-    new_bim_model_bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
-    new_bim_model_bim_manager.save()
-    
-    new_bim_model_bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
-    new_bim_model_bim_coordinator.save()
-    
-    new_bim_model_bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
-    new_bim_model_bim_coordinator.save()
-    
-    new_bim_model = BimModel(
-      name=row['Nome modello'],
-      description=row['Descrizione'],
-      bim_project=bim_project,
-      discipline=new_bim_model_discipline,
-      authoringSoftware=new_bim_model_software,
-      lodReference=new_bim_model_lod,
-      designer=new_bim_model_designer,
-      bim_manager=new_bim_model_bim_manager,
-      bim_coordinator=new_bim_model_bim_coordinator,
-      bim_specialist=new_bim_model_bim_specialist
-    )
-    new_bim_model.save()
-    # set_default_coordination(new_bim_model)
-    # set_default_validation(new_bim_model)
-
-def handle_report_list_import(report_file, bim_project):
-  df = read_excel(report_file, sheet_name='report_list')
-
-  for index, row in df.iterrows():    
-    if BimModel.objects.filter(name=row['Nome modello'], bim_project=bim_project).exists():
-      bim_model = BimModel.objects.get(name=row['Nome modello'], bim_project=bim_project)
-      bim_model.default_coordination = True
-      bim_model.default_validation = True
-      bim_model.save()
-
-      info_sheet, created = InfoSheet.objects.get_or_create(
-        name=row['Nome scheda'],
-        sheet_type=row['Tipo scheda'],
-        bim_model=bim_model)
-      info_sheet.save()
-
-      new_report = Report(
-        name = row['Nome report'],
-        description = row['Descrizione'],
-        info_sheet = info_sheet,
+  def import_model_register(self):
+    for index, row in self.df.iterrows():   
+      if BimModel.objects.filter(name=row['Nome modello'], description=row['Descrizione'], bim_project=self.bim_project).exists():
+        break
+      
+      new_bim_model_discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
+      new_bim_model_discipline.save()      
+      new_bim_model_software, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
+      new_bim_model_software.save()      
+      new_bim_model_lod, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
+      new_bim_model_lod.save()      
+      new_bim_model_designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
+      new_bim_model_designer.save()      
+      new_bim_model_bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
+      new_bim_model_bim_manager.save()      
+      new_bim_model_bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
+      new_bim_model_bim_coordinator.save()      
+      new_bim_model_bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
+      new_bim_model_bim_coordinator.save()
+      
+      new_bim_model = BimModel(
+        name=row['Nome modello'],
+        description=row['Descrizione'],
+        bim_project=self.bim_project,
+        discipline=new_bim_model_discipline,
+        authoringSoftware=new_bim_model_software,
+        lodReference=new_bim_model_lod,
+        designer=new_bim_model_designer,
+        bim_manager=new_bim_model_bim_manager,
+        bim_coordinator=new_bim_model_bim_coordinator,
+        bim_specialist=new_bim_model_bim_specialist
       )
-      new_report.save()
+      new_bim_model.save()
 
-def handle_coordination_reports_import(clash_file, bim_project):
-  df = read_excel(clash_file, sheet_name='Clash-Results-Table')
+  def import_report_list(self):
+    for index, row in self.df.iterrows():    
+      if BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).exists():
+        bim_model = BimModel.objects.get(name=row['Nome modello'], bim_project=self.bim_project)
+        bim_model.default_coordination = True
+        bim_model.default_validation = True
+        bim_model.save()
 
-  for bim_model in bim_project.bim_models.all():
-    bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Coordination')
+        info_sheet, created = InfoSheet.objects.get_or_create(
+          name=row['Nome scheda'],
+          sheet_type=row['Tipo scheda'],
+          bim_model=bim_model)
+        info_sheet.save()
 
-    for info_sheet in bim_model_coordination_info_sheets:
-      info_sheet_reports=info_sheet.reports.all()
+        new_report = Report(
+          name = row['Nome report'],
+          description = row['Descrizione'],
+          info_sheet = info_sheet,
+        )
+        new_report.save()
 
-      for index, row in df.iterrows():        
-        if row['Status'] == 'Old':
-          continue
-
-        for report in info_sheet_reports:
-          if report.name == row['Name']:
-            new_test = ClashTest(
-              clash_new=row['New'],
-              clash_active=row['Active'],
-              clash_reviewed=row['Reviewed'],
-              clash_approved=row['Approved'],
-              clash_resolved=row['Resolved'],
-              report=report
-            )
-            new_test.save()
-
-def handle_validation_reports_import(validation_file, bim_project):
-  df_dict = read_excel(validation_file, sheet_name=None)
-
-  for sheet, df in df_dict.items():
-    for bim_model in bim_project.bim_models.all():
-      bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Validation')
+  def import_coordination_report(self):
+    for bim_model in self.bim_project.bim_models.all():
+      bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Coordination')
 
       for info_sheet in bim_model_coordination_info_sheets:
         info_sheet_reports=info_sheet.reports.all()
 
-        for report in info_sheet_reports:
-          report_issues = 0
-          for index, row in df.iterrows():
-            if report.name == row['Report di riferimento']:
-              report_issues += 1
+        for index, row in self.df.iterrows():        
+          if row['Status'] == 'Old':
+            continue
 
-          if not report_issues == 0:
-            new_test = ValidationTest(
-              issues=report_issues,
-              report=report
-            )
-            new_test.save()
+          for report in info_sheet_reports:
+            if report.name == row['Name']:
+              new_test = ClashTest(
+                clash_new=row['New'],
+                clash_active=row['Active'],
+                clash_reviewed=row['Reviewed'],
+                clash_approved=row['Approved'],
+                clash_resolved=row['Resolved'],
+                report=report
+              )
+              new_test.save()
+
+  def import_validation_report(self):
+    for sheet, df in self.df.items():
+      for bim_model in self.bim_project.bim_models.all():
+        bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Validation')
+
+        for info_sheet in bim_model_coordination_info_sheets:
+          info_sheet_reports=info_sheet.reports.all()
+
+          for report in info_sheet_reports:
+            report_issues = 0
+            for index, row in df.iterrows():
+              if report.name == row['Report di riferimento']:
+                report_issues += 1
+
+            if not report_issues == 0:
+              new_test = ValidationTest(
+                issues=report_issues,
+                report=report
+              )
+              new_test.save()
+
+# def handle_coordination_reports_import(clash_file, bim_project):
+#   df = read_excel(clash_file, sheet_name='Clash-Results-Table')
+
+#   for bim_model in bim_project.bim_models.all():
+#     bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Coordination')
+
+#     for info_sheet in bim_model_coordination_info_sheets:
+#       info_sheet_reports=info_sheet.reports.all()
+
+#       for index, row in df.iterrows():        
+#         if row['Status'] == 'Old':
+#           continue
+
+#         for report in info_sheet_reports:
+#           if report.name == row['Name']:
+#             new_test = ClashTest(
+#               clash_new=row['New'],
+#               clash_active=row['Active'],
+#               clash_reviewed=row['Reviewed'],
+#               clash_approved=row['Approved'],
+#               clash_resolved=row['Resolved'],
+#               report=report
+#             )
+#             new_test.save()
+
+# def handle_validation_reports_import(validation_file, bim_project):
+#   df_dict = read_excel(validation_file, sheet_name=None)
+
+#   for sheet, df in df_dict.items():
+#     for bim_model in bim_project.bim_models.all():
+#       bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Validation')
+
+#       for info_sheet in bim_model_coordination_info_sheets:
+#         info_sheet_reports=info_sheet.reports.all()
+
+#         for report in info_sheet_reports:
+#           report_issues = 0
+#           for index, row in df.iterrows():
+#             if report.name == row['Report di riferimento']:
+#               report_issues += 1
+
+#           if not report_issues == 0:
+#             new_test = ValidationTest(
+#               issues=report_issues,
+#               report=report
+#             )
+#             new_test.save()
 

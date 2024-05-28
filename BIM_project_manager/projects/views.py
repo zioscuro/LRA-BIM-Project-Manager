@@ -10,7 +10,7 @@ from core.mixins import StaffMixin
 from projects.models import BimProject, BimModel, InfoSheet, Report
 from projects.forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
 from projects.mixins import BimProjectViewMixin, BimModelViewMixin, InfoSheetViewMixin, ReportViewMixin, ClashTestViewMixin, ValidationViewMixin
-from projects.utils import ExcelExporter, BimModelConfigurator, handle_model_register_import, handle_coordination_reports_import, handle_validation_reports_import, handle_report_list_import
+from projects.utils import ExcelExporter, ExcelImporter, BimModelConfigurator
 
 # Create your views here.
 
@@ -236,18 +236,18 @@ class BimDataExporter(StaffMixin, View):
   def get(self, request, pk, export_type):
     if export_type == 'model_register':
       project = get_object_or_404(BimProject, pk=pk)
-      exporter = ExcelExporter(project)
-      return exporter.export_model_register()
+      handler = ExcelExporter(project)
+      return handler.export_model_register()
 
     if export_type == 'project_info_sheets':
       project = get_object_or_404(BimProject, pk=pk)
-      exporter = ExcelExporter(project)
-      return exporter.export_project_info_sheets()
+      handler = ExcelExporter(project)
+      return handler.export_project_info_sheets()
     
     if export_type == 'model_info_sheets':
       bim_model = get_object_or_404(BimModel, pk=pk)
-      exporter = ExcelExporter(bim_model)
-      return exporter.export_model_info_sheets()    
+      handler = ExcelExporter(bim_model)
+      return handler.export_model_info_sheets()    
 
     return HttpResponseBadRequest("Bad request.")
 
@@ -258,17 +258,20 @@ class BimDataImporter(StaffMixin, View):
     
     if import_type == 'model_register':
       if form.is_valid():
-        handle_model_register_import(request.FILES["file"], bim_project)
+        handler = ExcelImporter(request.FILES["file"], 'model_register', bim_project)
+        handler.import_model_register()
         return HttpResponseRedirect(bim_project.get_absolute_url())
       
     if import_type == 'report_list':
       if form.is_valid():
-        handle_report_list_import(request.FILES["file"], bim_project)
+        handler = ExcelImporter(request.FILES["file"], 'report_list', bim_project)
+        handler.import_report_list()
         return HttpResponseRedirect(bim_project.get_absolute_url())
     
     if import_type == 'coordination_reports':
       if form.is_valid():
-        handle_coordination_reports_import(request.FILES["file"], bim_project)
+        handler = ExcelImporter(request.FILES["file"], 'Clash-Results-Table', bim_project)
+        handler.import_coordination_report()
         return HttpResponseRedirect(bim_project.get_absolute_url())
 
     if import_type == 'validation_reports':
@@ -276,8 +279,8 @@ class BimDataImporter(StaffMixin, View):
       if form.is_valid():
         files = form.cleaned_data['file_field']
         for f in files:
-          print(f)         
-          handle_validation_reports_import(f, bim_project)
+          handler = ExcelImporter(f, None, bim_project)
+          handler.import_validation_report()
           
         return HttpResponseRedirect(bim_project.get_absolute_url())
     
