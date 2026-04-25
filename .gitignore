@@ -1,4 +1,6 @@
 django_env
+env
+
 media_serve
 
 __pycache__/
