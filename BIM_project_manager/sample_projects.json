@@ -7,7 +7,7 @@
       "description":"progetto di prova",
       "customer":"Zio Paperone",
       "address":"Paperopoli",
-      "phase":"PD"
+      "phase":1
     }
   },
   {
@@ -18,7 +18,7 @@
       "description":"progetto di prova",
       "customer":"Sauron",
       "address":"Mordor",
-      "phase":"RI"
+      "phase":1
     }
   },
   {
@@ -26,10 +26,10 @@
     "pk":1,
     "fields":{
       "name": "Deposito_ARC",
-      "discipline":"ARC",
-      "designer":"Paperino",
-      "authoringSoftware":"Revit 2024",
-      "project":1
+      "discipline":2,
+      "designer":1,
+      "authoringSoftware":1,
+      "bim_project":1
     }
   },
   {
@@ -37,10 +37,10 @@
     "pk":2,
     "fields":{
       "name": "Deposito_STR",
-      "discipline":"STR",
-      "designer":"Paperoga",
-      "authoringSoftware":"Revit 2024",
-      "project":1
+      "discipline":3,
+      "designer":1,
+      "authoringSoftware":1,
+      "bim_project":1
     }
   },
   {
@@ -48,10 +48,10 @@
     "pk":3,
     "fields":{
       "name": "Deposito_MEP",
-      "discipline":"MEC",
-      "designer":"Topolino",
-      "authoringSoftware":"Revit 2024",
-      "project":1
+      "discipline":4,
+      "designer":1,
+      "authoringSoftware":1,
+      "bim_project":1
     }
   },
   {
@@ -59,10 +59,10 @@
     "pk":4,
     "fields":{
       "name": "Torre_ARC",
-      "discipline":"ARC",
-      "designer":"Sauron",
-      "authoringSoftware":"Revit 2024",
-      "project":2
+      "discipline":2,
+      "designer":1,
+      "authoringSoftware":1,
+      "bim_project":2
     }
   },
   {
@@ -70,10 +70,10 @@
     "pk":5,
     "fields":{
       "name": "Torre_STR",
-      "discipline":"STR",
-      "designer":"Sauron",
-      "authoringSoftware":"Tekla Structures",
-      "project":2
+      "discipline":3,
+      "designer":1,
+      "authoringSoftware":1,
+      "bim_project":2
     }
   }
 ]
