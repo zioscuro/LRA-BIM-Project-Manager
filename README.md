@@ -1,6 +1,5 @@
 # LRA-BIM-Project-Manager
-A simple app for manage clash and validation processes in a BIM Project
-A simple app designed to keep track of information flows in the design/costruction process of a BIM project
+A simple app designed to keep track of BIM clash and validation processes in the design/costruction phase of a BIM project
 
 ### Core features
 - Manage projects 

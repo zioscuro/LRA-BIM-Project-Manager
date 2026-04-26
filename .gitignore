@@ -1,5 +1,4 @@
-django_env
-env
+venv
 
 media_serve
 
