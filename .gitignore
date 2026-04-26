@@ -5,4 +5,4 @@ media_serve
 __pycache__/
 *.py[cod]
 
-db.sqlite3
+*.sqlite3
