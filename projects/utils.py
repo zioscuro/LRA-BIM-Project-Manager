@@ -57,7 +57,7 @@ class ExcelExporter():
     ws = self.wb.create_sheet(title='model_register')
 
     # SETUP COLUMN DIMENSIONS
-    ws.column_dimensions['A'].width = 5
+    ws.column_dimensions['A'].width = 20
     ws.column_dimensions['B'].width = 20
     ws.column_dimensions['C'].width = 15
     ws.column_dimensions['D'].width = 15
@@ -68,32 +68,32 @@ class ExcelExporter():
     ws.column_dimensions['I'].width = 20
 
     # SETUP TITLE
-    ws['A1'] = f'Registro modelli - Progetto: {self.bim_project.name}'
-    ws['A1'].style = Styles.title
-    ws.row_dimensions[1].height = 20
-    ws.merge_cells('A1:I1')
+    # ws['A1'] = f'Registro modelli - Progetto: {self.bim_project.name}'
+    # ws['A1'].style = Styles.title
+    # ws.row_dimensions[1].height = 20
+    # ws.merge_cells('A1:I1')
 
     # SETUP HEADERS
-    ws.append([
-      'n.', 
-      'Nome modello', 
+    ws.append([       
+      'Nome modello',
+      'Descrizione', 
       'Disciplina', 
       'Software',
       'Scheda LOD', 
       'Progettista', 
-      'BIM Manager', 
-      'BIM Coordinator', 
-      'BIM Specialist'
+      'Bim Manager', 
+      'Bim Coordinator', 
+      'Bim Specialist'
       ])
-    ws.row_dimensions[2].height = 20
-    for cell in ws[2]:
+    ws.row_dimensions[1].height = 20
+    for cell in ws[1]:
       cell.style = Styles.header
 
     # SETUP CONTENT
     for count, bim_model in enumerate(self.bim_models):
-      ws.append([
-        count+1, 
-        bim_model.name, 
+      ws.append([         
+        bim_model.name,
+        bim_model.description, 
         bim_model.discipline.name, 
         bim_model.authoringSoftware.name, 
         bim_model.lodReference.name, 
@@ -384,8 +384,12 @@ class ExcelImporter():
 
   def import_model_register(self):
     for index, row in self.df.iterrows():   
-      if BimModel.objects.filter(name=row['Nome modello'], description=row['Descrizione'], bim_project=self.bim_project).exists():
-        break
+      if BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).exists():
+        existing_bim_model = BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).first()
+
+        existing_bim_model.description = row['Descrizione']
+        existing_bim_model.save()
+        continue
       
       new_bim_model_discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
       new_bim_model_discipline.save()      
@@ -480,52 +484,4 @@ class ExcelImporter():
                 report=report
               )
               new_test.save()
-
-# def handle_coordination_reports_import(clash_file, bim_project):
-#   df = read_excel(clash_file, sheet_name='Clash-Results-Table')
-
-#   for bim_model in bim_project.bim_models.all():
-#     bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Coordination')
-
-#     for info_sheet in bim_model_coordination_info_sheets:
-#       info_sheet_reports=info_sheet.reports.all()
-
-#       for index, row in df.iterrows():        
-#         if row['Status'] == 'Old':
-#           continue
-
-#         for report in info_sheet_reports:
-#           if report.name == row['Name']:
-#             new_test = ClashTest(
-#               clash_new=row['New'],
-#               clash_active=row['Active'],
-#               clash_reviewed=row['Reviewed'],
-#               clash_approved=row['Approved'],
-#               clash_resolved=row['Resolved'],
-#               report=report
-#             )
-#             new_test.save()
-
-# def handle_validation_reports_import(validation_file, bim_project):
-#   df_dict = read_excel(validation_file, sheet_name=None)
-
-#   for sheet, df in df_dict.items():
-#     for bim_model in bim_project.bim_models.all():
-#       bim_model_coordination_info_sheets=bim_model.info_sheets.filter(sheet_type='Validation')
-
-#       for info_sheet in bim_model_coordination_info_sheets:
-#         info_sheet_reports=info_sheet.reports.all()
-
-#         for report in info_sheet_reports:
-#           report_issues = 0
-#           for index, row in df.iterrows():
-#             if report.name == row['Report di riferimento']:
-#               report_issues += 1
-
-#           if not report_issues == 0:
-#             new_test = ValidationTest(
-#               issues=report_issues,
-#               report=report
-#             )
-#             new_test.save()
 
