@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
 from pandas import read_excel
+from math import isnan
 
 from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference
 from projects.models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
@@ -387,7 +388,16 @@ class ExcelImporter():
       if BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).exists():
         existing_bim_model = BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).first()
 
-        existing_bim_model.description = row['Descrizione']
+        new_description = row['Descrizione']
+        existing_bim_model.description = new_description if not isnan(new_description) else "-"
+
+        existing_bim_model.discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
+        existing_bim_model.authoringSoftware, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
+        existing_bim_model.lodReference, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
+        existing_bim_model.designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
+        existing_bim_model.bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
+        existing_bim_model.bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
+        existing_bim_model.bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
         existing_bim_model.save()
         continue
       
@@ -404,11 +414,11 @@ class ExcelImporter():
       new_bim_model_bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
       new_bim_model_bim_coordinator.save()      
       new_bim_model_bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
-      new_bim_model_bim_coordinator.save()
+      new_bim_model_bim_specialist.save()
       
       new_bim_model = BimModel(
         name=row['Nome modello'],
-        description=row['Descrizione'],
+        description=row['Descrizione'] if not isnan(row['Descrizione']) else "-",
         bim_project=self.bim_project,
         discipline=new_bim_model_discipline,
         authoringSoftware=new_bim_model_software,
