@@ -389,7 +389,7 @@ class ExcelImporter():
         existing_bim_model = BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).first()
 
         new_description = row['Descrizione']
-        existing_bim_model.description = new_description if not isnan(new_description) else "-"
+        existing_bim_model.description = new_description if isinstance(new_description, str) else "-"
 
         existing_bim_model.discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
         existing_bim_model.authoringSoftware, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
@@ -418,7 +418,7 @@ class ExcelImporter():
       
       new_bim_model = BimModel(
         name=row['Nome modello'],
-        description=row['Descrizione'] if not isnan(row['Descrizione']) else "-",
+        description=row['Descrizione'] if isinstance(row['Descrizione'], str) else "-",
         bim_project=self.bim_project,
         discipline=new_bim_model_discipline,
         authoringSoftware=new_bim_model_software,
