@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404
 from openpyxl import Workbook
 from openpyxl.styles import NamedStyle, Font, Border, Side, Alignment, PatternFill
 from pandas import read_excel
-from math import isnan
 
 from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference
 from projects.models import BimProject, BimModel, InfoSheet, Report, ClashTest, ValidationTest
@@ -67,12 +66,6 @@ class ExcelExporter():
     ws.column_dimensions['G'].width = 20
     ws.column_dimensions['H'].width = 20
     ws.column_dimensions['I'].width = 20
-
-    # SETUP TITLE
-    # ws['A1'] = f'Registro modelli - Progetto: {self.bim_project.name}'
-    # ws['A1'].style = Styles.title
-    # ws.row_dimensions[1].height = 20
-    # ws.merge_cells('A1:I1')
 
     # SETUP HEADERS
     ws.append([       
@@ -384,51 +377,37 @@ class ExcelImporter():
     self.bim_project = bim_project
 
   def import_model_register(self):
-    for index, row in self.df.iterrows():   
-      if BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).exists():
-        existing_bim_model = BimModel.objects.filter(name=row['Nome modello'], bim_project=self.bim_project).first()
+    for index, row in self.df.iterrows():
+      # SELECT BIM MODEL DATA IN EXCEL ROW
+      bim_model_name = row['Nome modello']
+      bim_model_description = row['Descrizione'] if isinstance(row['Descrizione'], str) else "-"
+      bim_model_discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
+      bim_model_authoringSoftware, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
+      bim_model_lodReference, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
+      bim_model_designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
+      bim_model_bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
+      bim_model_bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
+      bim_model_bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
 
-        new_description = row['Descrizione']
-        existing_bim_model.description = new_description if isinstance(new_description, str) else "-"
-
-        existing_bim_model.discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
-        existing_bim_model.authoringSoftware, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
-        existing_bim_model.lodReference, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
-        existing_bim_model.designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
-        existing_bim_model.bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
-        existing_bim_model.bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
-        existing_bim_model.bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
-        existing_bim_model.save()
-        continue
+      # CREATE NEW BIM MODEL IF DON'T EXISTS IN PROJECT
+      bim_model = BimModel.objects.filter(name=bim_model_name, bim_project=self.bim_project)
+      if not bim_model:
+        BimModel.objects.create(
+          name=bim_model_name,          
+          bim_project=self.bim_project
+        )      
       
-      new_bim_model_discipline, created = Discipline.objects.get_or_create(name=row['Disciplina'])
-      new_bim_model_discipline.save()      
-      new_bim_model_software, created = AuthoringSoftware.objects.get_or_create(name=row['Software'])
-      new_bim_model_software.save()      
-      new_bim_model_lod, created = LodReference.objects.get_or_create(name=row['Scheda LOD'])
-      new_bim_model_lod.save()      
-      new_bim_model_designer, created = BimExpert.objects.get_or_create(name=row['Progettista'])
-      new_bim_model_designer.save()      
-      new_bim_model_bim_manager, created = BimExpert.objects.get_or_create(name=row['Bim Manager'])
-      new_bim_model_bim_manager.save()      
-      new_bim_model_bim_coordinator, created = BimExpert.objects.get_or_create(name=row['Bim Coordinator'])
-      new_bim_model_bim_coordinator.save()      
-      new_bim_model_bim_specialist, created = BimExpert.objects.get_or_create(name=row['Bim Specialist'])
-      new_bim_model_bim_specialist.save()
-      
-      new_bim_model = BimModel(
-        name=row['Nome modello'],
-        description=row['Descrizione'] if isinstance(row['Descrizione'], str) else "-",
-        bim_project=self.bim_project,
-        discipline=new_bim_model_discipline,
-        authoringSoftware=new_bim_model_software,
-        lodReference=new_bim_model_lod,
-        designer=new_bim_model_designer,
-        bim_manager=new_bim_model_bim_manager,
-        bim_coordinator=new_bim_model_bim_coordinator,
-        bim_specialist=new_bim_model_bim_specialist
+      # UPDATE BIM MODEL DATA
+      bim_model.update(  
+        description=bim_model_description,
+        discipline=bim_model_discipline,
+        authoringSoftware=bim_model_authoringSoftware,
+        lodReference=bim_model_lodReference,
+        designer=bim_model_designer,
+        bim_manager=bim_model_bim_manager,
+        bim_coordinator=bim_model_bim_coordinator,
+        bim_specialist=bim_model_bim_specialist
       )
-      new_bim_model.save()
 
   def import_report_list(self):
     for index, row in self.df.iterrows():    
@@ -494,4 +473,6 @@ class ExcelImporter():
                 report=report
               )
               new_test.save()
+
+
 
