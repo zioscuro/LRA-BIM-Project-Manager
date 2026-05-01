@@ -3,10 +3,17 @@ from django.urls import reverse
 from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference, ProjectPhase
 
 # Create your models here.
-
-class BimProject(models.Model):
+class BimEntity(models.Model):
   name = models.CharField(max_length=50, verbose_name="nome")
   description = models.CharField(max_length=150, verbose_name="descrizione", default='-')
+
+  def __str__(self):
+    return self.name
+
+  class Meta:
+    abstract = True
+
+class BimProject(BimEntity):
   customer = models.CharField(max_length=50, verbose_name="committente", default='-')
   address = models.CharField(max_length=150, verbose_name="indirizzo", default='-')  
   phase = models.ForeignKey(ProjectPhase, on_delete=models.SET_DEFAULT,  related_name='projects', verbose_name="fase progettuale", default=1)
@@ -15,9 +22,6 @@ class BimProject(models.Model):
   default_bim_manager = models.ForeignKey(BimExpert, on_delete=models.SET_DEFAULT, related_name='bim_manager_role_projects', verbose_name="bim manager progetto", default=1)
   default_bim_coordinator = models.ForeignKey(BimExpert, on_delete=models.SET_DEFAULT, related_name='bim_coordinator_role_projects', verbose_name="bim coordinator progetto", default=1)
   default_bim_specialist = models.ForeignKey(BimExpert, on_delete=models.SET_DEFAULT, related_name='bim_specialist_role_projects', verbose_name="bim specialist progetto", default=1)
-
-  def __str__(self):
-    return self.name
   
   def get_absolute_url(self):
     return reverse('manage_project', kwargs={'pk': self.pk})
@@ -26,10 +30,7 @@ class BimProject(models.Model):
     verbose_name = 'Progetto'
     verbose_name_plural = 'Progetti'
 
-class BimModel(models.Model):
-  name = models.CharField(max_length=50, verbose_name="nome")
-  description = models.CharField(max_length=150, verbose_name="descrizione")
-  
+class BimModel(BimEntity):
   discipline = models.ForeignKey(Discipline, on_delete=models.SET_DEFAULT, related_name='bim_models', verbose_name="disciplina", default=1)
   authoringSoftware = models.ForeignKey(AuthoringSoftware, on_delete=models.SET_DEFAULT, related_name='bim_models', verbose_name="software di authoring", default=1)
   lodReference = models.ForeignKey(LodReference, on_delete=models.SET_DEFAULT, related_name='bim_models', verbose_name="scheda LOD", default=1)
@@ -43,9 +44,6 @@ class BimModel(models.Model):
   
   default_coordination = models.BooleanField(default=False)
   default_validation = models.BooleanField(default=False)
-
-  def __str__(self):
-    return self.name
   
   def get_absolute_url(self):
     return reverse('manage_bim_model', kwargs={'pk': self.pk})
@@ -54,18 +52,13 @@ class BimModel(models.Model):
     verbose_name = 'Modello'
     verbose_name_plural = 'Modelli'
 
-class InfoSheet(models.Model):
+class InfoSheet(BimEntity):
   SHEET_TYPE_CHOICES = {
     'Coordination': 'Coordinamento',
     'Validation': 'Verifica',
   }
   sheet_type = models.CharField(max_length=20, choices=SHEET_TYPE_CHOICES, verbose_name="tipo scheda")  
-  name = models.CharField(max_length=80, verbose_name="nome")
-  description = models.CharField(max_length=150, verbose_name="disciplina", default='-')
   bim_model = models.ForeignKey(BimModel, on_delete=models.CASCADE, related_name='info_sheets')
-
-  def __str__(self):
-    return self.name
   
   def get_absolute_url(self):
     return reverse('manage_info_sheet', kwargs={'pk': self.pk})
@@ -74,15 +67,10 @@ class InfoSheet(models.Model):
     verbose_name = 'Scheda informativa'
     verbose_name_plural = 'Schede informative'
 
-class Report(models.Model):
-  name = models.CharField(max_length=80, verbose_name="nome report")
-  description = models.CharField(max_length=150, verbose_name="descrizione report", default='-')
+class Report(BimEntity):
   specification = models.ForeignKey(BimSpecification, on_delete=models.SET_DEFAULT, related_name='reports', verbose_name="specifica coordinamento/verifica", default=1)
   
   info_sheet = models.ForeignKey(InfoSheet, on_delete=models.CASCADE, related_name='reports')
-
-  def __str__(self):
-    return self.name
   
   def get_absolute_url(self):
     return reverse('manage_report', kwargs={'pk': self.pk})
