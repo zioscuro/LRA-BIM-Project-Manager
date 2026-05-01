@@ -60,28 +60,28 @@
     "pk":1,
     "fields":{
       "name": "-",
-      "version": "-"
+      "description": "-"
     }
   },{
     "model":"organization.AuthoringSoftware",
     "pk":2,
     "fields":{
       "name": "Autodesk Revit",
-      "version": "2024"
+      "description": "2024"
     }
   },{
     "model":"organization.AuthoringSoftware",
     "pk":3,
     "fields":{
       "name": "Autodesk Civil 3D",
-      "version": "2024"
+      "description": "2024"
     }
   },{
     "model":"organization.AuthoringSoftware",
     "pk":4,
     "fields":{
       "name": "Autodesk Autocad",
-      "version": "2024"
+      "description": "2024"
     }
   },{
     "model":"organization.LodReference",
@@ -221,21 +221,21 @@
     "pk":1,
     "fields":{
       "name": "-",
-      "position": "-"
+      "description": "-"
     }
   },{
     "model":"organization.BimExpert",
     "pk":2,
     "fields":{
       "name": "Le Corbusier",
-      "position": "Architetto"
+      "description": "Architetto"
     }
   },{
     "model":"organization.BimExpert",
     "pk":3,
     "fields":{
       "name": "Pierluigi Nervi",
-      "position": "Ingegnere"
+      "description": "Ingegnere"
     }
   }
 ]
