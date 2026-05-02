@@ -98,3 +98,14 @@ class UpdateBimExpert(BimExpertViewMixin, OrganizationUpdateView):
 
 class DeleteBimExpert(BimExpertViewMixin, OrganizationDeleteView):
   template_name = 'organization/bim_expert_delete.html'
+
+class OrganizationDataExporter(StaffMixin, View):
+  def get(self, request):
+    pass
+
+class OrganizationDataImporter(StaffMixin, View):
+  def post(self, request):
+    pass
+  
+  def get(self, request):
+    pass

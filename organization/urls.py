@@ -28,5 +28,8 @@ urlpatterns = [
     path('create_expert/', views.CreateBimExpert.as_view(), name='create_expert'),
     path('update_expert/<int:pk>', views.UpdateBimExpert.as_view(), name='update_expert'),
     path('delete_expert/<int:pk>', views.DeleteBimExpert.as_view(), name='delete_expert'),
+
+    path('export_organization_data/<int:pk>/<str:export_type>', views.OrganizationDataExporter.as_view(), name='export_organization_data'),
+    path('import_organization_data/<int:pk>/<str:import_type>', views.OrganizationDataImporter.as_view(), name='import_organization_data'),
 ]
 

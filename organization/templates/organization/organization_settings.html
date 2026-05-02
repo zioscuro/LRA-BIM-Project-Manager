@@ -10,6 +10,9 @@
 <div class="container text-center">
   <h1>Impostazioni Organizzazione</h1>
   <hr>
+  <a href=# class="btn btn-outline-primary btn-sm">Importa dati organizzazione</a>
+  <a href=# class="btn btn-outline-secondary btn-sm">Esporta dati organizzazione</a>
+  <hr>
   <h4>Fasi di progetto</h4>
   <table class="table">
     <thead>
@@ -27,8 +30,8 @@
         <td>{{ phase.name }}</td>
         <td>{{ phase.description }}</td>
         <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_phase' pk=phase.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_phase' pk=phase.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          <a href="{% url 'update_phase' pk=phase.pk %}" class="btn btn-outline-primary btn">Modifica</a>
+          <a href="{% url 'delete_phase' pk=phase.pk %}" class="btn btn-outline-danger btn">Cancella</a>
         </td>
       </tr>
       {% endfor %}

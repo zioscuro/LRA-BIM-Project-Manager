@@ -29,7 +29,6 @@ urlpatterns = [
   path('reports/<int:id>/update_validation_test/<int:pk>', views.UpdateValidationTest.as_view(), name='update_validation_test'),
   path('reports/<int:id>/delete_validation_test/<int:pk>', views.DeleteValidationTest.as_view(), name='delete_validation_test'), 
   
-  path('export/<int:pk>/<str:export_type>', views.BimDataExporter.as_view(), name='export_data'),
-
-  path('import/<int:pk>/<str:import_type>', views.BimDataImporter.as_view(), name='import_data'),
+  path('export_bim_data/<int:pk>/<str:export_type>', views.BimDataExporter.as_view(), name='export_bim_data'),
+  path('import_bim_data/<int:pk>/<str:import_type>', views.BimDataImporter.as_view(), name='import_bim_data'),
 ]
