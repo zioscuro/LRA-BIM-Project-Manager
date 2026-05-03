@@ -1,0 +1,34 @@
+<section id="discipline">
+  <h4>Discipline di progetto</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrizione</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for discipline in disciplines.all %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{ discipline.name }}</td>
+        <td>{{ discipline.description }}</td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_discipline' pk=discipline.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_discipline' pk=discipline.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-muted">Nessuna disciplina presente.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex gap-2 justify-content-end">
+    <a href="{% url 'create_discipline' %}" class="btn btn-outline-primary btn">+ Aggiungi disciplina</a>
+  </div>
+  <hr>
+</section>

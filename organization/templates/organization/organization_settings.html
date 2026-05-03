@@ -7,179 +7,24 @@
 {% endblock navbar %}
 
 {% block content %}
-<div class="container text-center">
+<div class="container text-center">  
   <h1>Impostazioni Organizzazione</h1>
   <hr>
   <a href=# class="btn btn-outline-primary btn-sm">Importa dati organizzazione</a>
   <a href=# class="btn btn-outline-secondary btn-sm">Esporta dati organizzazione</a>
   <hr>
-  <h4>Fasi di progetto</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Descrizione</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for phase in project_phases.all %}
-      <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ phase.name }}</td>
-        <td>{{ phase.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_phase' pk=phase.pk %}" class="btn btn-outline-primary btn">Modifica</a>
-          <a href="{% url 'delete_phase' pk=phase.pk %}" class="btn btn-outline-danger btn">Cancella</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="d-flex gap-2 justify-content-end">
-    <a href="{% url 'create_phase' %}" class="btn btn-outline-primary btn">+ Aggiungi fase</a>
-  </div>
-  <hr>
-  <h4>Discipline di progetto</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Descrizione</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for discipline in disciplines.all %}
-      <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ discipline.name }}</td>
-        <td>{{ discipline.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_discipline' pk=discipline.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_discipline' pk=discipline.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="d-flex gap-2 justify-content-end">
-    <a href="{% url 'create_discipline' %}" class="btn btn-outline-primary btn">+ Aggiungi disciplina</a>
-  </div>
-  <hr>
-  <h4>Software di Authoring</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Versione</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for software in software_list.all %}
-      <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ software.name }}</td>
-        <td>{{ software.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_software' pk=software.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_software' pk=software.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="d-flex gap-2 justify-content-end">
-    <a href="{% url 'create_software' %}" class="btn btn-outline-primary btn">+ Aggiungi software</a>
-  </div>
-  <hr>
-  <h4>Schede LOD</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Descrizione</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for lod_reference in lod_list.all %}
-      <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ lod_reference.name }}</td>
-        <td>{{ lod_reference.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_reference' pk=lod_reference.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_reference' pk=lod_reference.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="d-flex gap-2 justify-content-end">
-    <a href="{% url 'create_reference' %}" class="btn btn-outline-primary btn">+ Aggiungi scheda LOD</a>
-  </div>
-  <hr>
-  <h4>Specifiche coordinamento/verifica</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Descrizione</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for specification in specifications_list.all %}
-      <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ specification.name }}</td>
-        <td>{{ specification.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_specification' pk=specification.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_specification' pk=specification.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="d-flex gap-2 justify-content-end">
-    <a href="{% url 'create_specification' %}" class="btn btn-outline-primary btn">+ Aggiungi specifica</a>
-  </div>
-  <hr>
-  <h4>CRM professionisti</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Ruolo</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for bim_expert in expert_list.all %}
-      <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ bim_expert.name }}</td>
-        <td>{{ bim_expert.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_expert' pk=bim_expert.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_expert' pk=bim_expert.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="d-flex gap-2 justify-content-end">
-    <a href="{% url 'create_expert' %}" class="btn btn-outline-primary btn">+ Aggiungi professionista</a>
-  </div>
-  <hr>
+
+  {% include "organization/partials/_project_phases.html" %}
+  
+  {% include "organization/partials/_disciplines.html" %}
+
+  {% include "organization/partials/_software.html" %}
+
+  {% include "organization/partials/_lod_references.html" %}
+
+  {% include "organization/partials/_specifications.html" %}
+
+  {% include "organization/partials/_experts.html" %}
+
 </div>
 {% endblock content %}

@@ -1,0 +1,40 @@
+<section id="fasi-progetto">
+  <h4>Fasi di progetto</h4>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrizione</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for phase in project_phases.all %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ phase.name }}</td>
+        <td>{{ phase.description }}</td>
+        <td class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'update_phase' pk=phase.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+          <a href="{% url 'delete_phase' pk=phase.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-muted">Nessuna fase presente.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="d-flex gap-2 justify-content-end">
+    <a href="{% url 'create_phase' %}" class="btn btn-outline-primary btn">
+      + Aggiungi fase
+    </a>
+  </div>
+
+  <hr>
+</section>
