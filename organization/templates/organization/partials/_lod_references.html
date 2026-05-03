@@ -15,9 +15,11 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{ lod_reference.name }}</td>
         <td>{{ lod_reference.description }}</td>
-        <td class="d-flex gap-2 justify-content-end">
-          <a href="{% url 'update_reference' pk=lod_reference.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-          <a href="{% url 'delete_reference' pk=lod_reference.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+        <td>
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_reference' pk=lod_reference.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_reference' pk=lod_reference.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </div>
         </td>
       </tr>
       {% empty %}
