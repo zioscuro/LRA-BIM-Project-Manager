@@ -69,9 +69,11 @@
             <a href="{% url 'manage_bim_model' pk=model.pk%}">{{ model.name }}</a>
           </td>
           <td>{{ model.description }}</td>
-          <td class="d-flex gap-2 justify-content-end">
-            <a href="{% url 'update_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-            <a href="{% url 'delete_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          <td>
+            <div class="d-flex gap-2 justify-content-end">
+              <a href="{% url 'update_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+              <a href="{% url 'delete_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+            </div>
           </td>
         </tr>
         {% endfor %}

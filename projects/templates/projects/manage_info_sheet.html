@@ -49,9 +49,11 @@
           <td>
             <a href="{% url 'manage_report' pk=report.pk %}">{{ report.name }}</a>
           </td>
-          <td class="d-flex gap-2 justify-content-end">
-            <a href="{% url 'update_report' pk=report.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-            <a href="{% url 'delete_report' pk=report.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          <td>
+            <div class="d-flex gap-2 justify-content-end">
+              <a href="{% url 'update_report' pk=report.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+              <a href="{% url 'delete_report' pk=report.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+            </div>
           </td>
         </tr>
         {% endfor %}        

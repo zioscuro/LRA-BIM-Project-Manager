@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   </head>
   <body>
+    
     <nav class="navbar bg-body-tertiary mb-5">
       <div class="container">
         <a href="{% url 'homepage' %}" class="navbar-brand">BIM Project Manager</a>
@@ -43,16 +44,19 @@
 
     <div class="container">
       {% block content %} {% endblock content %}
+    </div>
+
+    <div class="container">
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
           <span class="mb-3 mb-md-0 text-muted">Design and code by <a href="https://github.com/zioscuro">Lorenzo Ranghiasci</a></span>
-        </div>
-    
+        </div>    
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
           <li class="ms-3"><a class="text-muted text-decoration-none" href="https://github.com/zioscuro/LRA-BIM-Project-Manager">github</a></li>
         </ul>
       </footer>
     </div>
+    
 
     <script src="{% static 'js/app.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
