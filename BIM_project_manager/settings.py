@@ -64,8 +64,7 @@ ROOT_URLCONF = 'BIM_project_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates',
-                 BASE_DIR / 'accounts/templates',
+        'DIRS': [BASE_DIR / 'accounts/templates',
                  BASE_DIR / 'core/templates',
                  BASE_DIR / 'projects/templates',],
         'APP_DIRS': True,
