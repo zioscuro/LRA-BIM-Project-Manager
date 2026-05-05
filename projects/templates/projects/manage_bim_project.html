@@ -10,79 +10,11 @@
 
 <h1 class="mb-5 text-center">{{bimproject.name}}</h1>
 <div class="row  mx-auto">
-  <div class="col-md-3">
-    <h4>Dati progetto</h4>    
-    <h6>nome</h6>
-    <p>{{bimproject.name}}</p>    
-    <h6>descrizione</h6>
-    <p>{{bimproject.description}}</p>
-    <h6>committente</h6>
-    <p>{{bimproject.customer}}</p>
-    <h6>indirizzo</h6>
-    <p>{{bimproject.address}}</p>
-    <h6>fase di progetto</h6>
-    <p>{{bimproject.phase}}</p>
-    <h6>responsabile di progetto</h6>
-    <p>{{bimproject.default_designer}}</p>
-    <h6>bim manager di progetto</h6>
-    <p>{{bimproject.default_bim_manager}}</p>
-    <h6>bim coordinator di progetto</h6>
-    <p>{{bimproject.default_bim_coordinator}}</p>
-    <h6>bim specialist di progetto</h6>
-    <p>{{bimproject.default_bim_specialist}}</p>
-    {% if request.user.is_staff %}
-    <hr>
-    <div class="d-grid gap-2">
-      <a href="{% url 'update_project' pk=bimproject.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
-      <a href="{% url 'delete_project' pk=bimproject.pk %}" class="btn btn-danger btn-lg">Cancella Progetto</a>
-    </div>   
-    {% endif %}
-    <hr>
-    <div class="d-grid gap-2">
-      <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='model_register' %}" class="btn btn-outline-primary btn-lg">Importa registro modelli</a>
-      <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='report_list' %}" class="btn btn-outline-primary btn-lg">Importa lista report</a>
-      <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='coordination_reports' %}" class="btn btn-outline-primary btn-lg">Importa dati coordinamento</a>
-      <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='validation_reports' %}" class="btn btn-outline-primary btn-lg">Importa dati verifica</a>
-    </div>
-    <hr>
-    <div class="d-grid gap-2">
-      <a href="{% url 'export_bim_data' pk=bimproject.pk export_type='model_register' %}" class="btn btn-outline-secondary btn-lg">Esporta registro modelli</a>
-      <a href="{% url 'export_bim_data' pk=bimproject.pk export_type='project_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta riepilogo schede informative</a>
-    </div>   
-  </div>
-  <div class="col-md-9">    
-    <h4>Modelli di progetto</h4>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Descrizione</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for model in bimproject.bim_models.all %}
-        <tr>
-          <th scope="row">{{forloop.counter}}</th>
-          <td>
-            <a href="{% url 'manage_bim_model' pk=model.pk%}">{{ model.name }}</a>
-          </td>
-          <td>{{ model.description }}</td>
-          <td>
-            <div class="d-flex gap-2 justify-content-end">
-              <a href="{% url 'update_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-              <a href="{% url 'delete_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
-            </div>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div class="d-flex gap-2 justify-content-end">      
-      <a href="{% url 'create_bim_model' pk=bimproject.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi modello</a>
-    </div>
-  </div>
+
+  {% include 'projects/manage_bim_project_partials/_project_data.html' %}
+
+  {% include 'projects/manage_bim_project_partials/_models_list.html' %}
+
 </div>
 
 {% endblock content %}

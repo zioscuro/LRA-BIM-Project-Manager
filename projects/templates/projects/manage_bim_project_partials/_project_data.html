@@ -1,0 +1,40 @@
+<div class="col-md-3">
+  <h4>Dati progetto</h4>    
+  <h6>nome</h6>
+  <p>{{bimproject.name}}</p>    
+  <h6>descrizione</h6>
+  <p>{{bimproject.description}}</p>
+  <h6>committente</h6>
+  <p>{{bimproject.customer}}</p>
+  <h6>indirizzo</h6>
+  <p>{{bimproject.address}}</p>
+  <h6>fase di progetto</h6>
+  <p>{{bimproject.phase}}</p>
+  <h6>responsabile di progetto</h6>
+  <p>{{bimproject.default_designer}}</p>
+  <h6>bim manager di progetto</h6>
+  <p>{{bimproject.default_bim_manager}}</p>
+  <h6>bim coordinator di progetto</h6>
+  <p>{{bimproject.default_bim_coordinator}}</p>
+  <h6>bim specialist di progetto</h6>
+  <p>{{bimproject.default_bim_specialist}}</p>
+  {% if request.user.is_staff %}
+  <hr>
+  <div class="d-grid gap-2">
+    <a href="{% url 'update_project' pk=bimproject.pk %}" class="btn btn-primary btn-lg mb-2">Aggiorna dati</a>
+    <a href="{% url 'delete_project' pk=bimproject.pk %}" class="btn btn-danger btn-lg">Cancella Progetto</a>
+  </div>   
+  {% endif %}
+  <hr>
+  <div class="d-grid gap-2">
+    <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='model_register' %}" class="btn btn-outline-primary btn-lg">Importa registro modelli</a>
+    <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='report_list' %}" class="btn btn-outline-primary btn-lg">Importa lista report</a>
+    <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='coordination_reports' %}" class="btn btn-outline-primary btn-lg">Importa dati coordinamento</a>
+    <a href="{% url 'import_bim_data' pk=bimproject.pk import_type='validation_reports' %}" class="btn btn-outline-primary btn-lg">Importa dati verifica</a>
+  </div>
+  <hr>
+  <div class="d-grid gap-2">
+    <a href="{% url 'export_bim_data' pk=bimproject.pk export_type='model_register' %}" class="btn btn-outline-secondary btn-lg">Esporta registro modelli</a>
+    <a href="{% url 'export_bim_data' pk=bimproject.pk export_type='project_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta riepilogo schede informative</a>
+  </div>   
+</div>

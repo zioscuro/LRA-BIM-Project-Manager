@@ -1,0 +1,32 @@
+<div class="col-md-4">
+  <h4>Dati modello</h4> 
+  <h6>nome</h6>
+  <p>{{bimmodel.name}}</p>
+  <h6>descrizione</h6>
+  <p>{{bimmodel.description}}</p>
+  <h6>disciplina</h6>
+  <p>{{bimmodel.discipline}}</p>
+  <h6>software di authoring</h6>
+  <p>{{bimmodel.authoringSoftware}}</p>
+  <h6>scheda LOD</h6>
+  <p>{{bimmodel.lodReference}}</p>
+  <h6>progettista</h6>
+  <p>{{bimmodel.designer}}</p>
+  <h6>bim manager</h6>
+  <p>{{bimmodel.bim_manager}}</p>
+  <h6>bim coordinator</h6>
+  <p>{{bimmodel.bim_coordinator}}</p>
+  <h6>bim specialist</h6>
+  <p>{{bimmodel.bim_specialist}}</p>
+  <h6>progetto</h6>
+  <p>{{bimmodel.bim_project.name}}</p>
+  <hr>
+  <div class="d-flex gap-2">
+    <a href="{% url 'update_model' pk=bimmodel.pk %}" class="flex-fill btn btn-primary btn-lg">Aggiorna dati</a>
+    <a href="{% url 'delete_model' pk=bimmodel.pk %}" class="flex-fill btn btn-danger btn-lg">Cancella modello</a>
+  </div>
+  <hr>
+  <div class="d-grid gap-2">
+    <a href="{% url 'export_bim_data' pk=bimmodel.pk export_type='model_info_sheets' %}" class="btn btn-outline-secondary btn-lg">Esporta schede informative</a>
+  </div>
+</div>

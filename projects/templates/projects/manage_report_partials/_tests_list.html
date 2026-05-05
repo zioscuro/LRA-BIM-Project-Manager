@@ -1,0 +1,71 @@
+<div class="col-md-8">
+  {% if report.info_sheet.sheet_type == 'Coordination' %}
+  <h4>Test interferenze</h4>    
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Commenti</th>
+        <th scope="col">Nuove</th>
+        <th scope="col">Attive</th>
+        <th scope="col">Revisionate</th>
+        <th scope="col">Approvate</th>
+        <th scope="col">Risolte</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for test in report.clash_tests.all %}
+      <tr>
+        <td>{{test.date|date:"Y/m/d"}}</td>
+        <td>{{test.comments}}</td>
+        <td>{{test.clash_new}}</td>
+        <td>{{test.clash_active}}</td>
+        <td>{{test.clash_reviewed}}</td>
+        <td>{{test.clash_approved}}</td>
+        <td>{{test.clash_resolved}}</td>
+        <td>
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_clash_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_clash_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex gap-2 justify-content-end">
+    <a href="{% url 'create_clash_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>    
+  </div>
+  {% elif report.info_sheet.sheet_type == 'Validation' %}
+  <h4>Test di verifica</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Commenti</th>
+        <th scope="col">Difformità</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for test in report.validation_tests.all %}
+      <tr>
+        <td>{{test.date|date:"Y/m/d"}}</td>
+        <td>{{test.comments}}</td>
+        <td>{{test.issues}}</td>
+        <td class="d-flex gap-2 justify-content-end">
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_validation_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_validation_test' id=test.report.pk pk=test.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex gap-2 justify-content-end">
+    <a href="{% url 'create_validation_test' pk=report.pk %}" class="btn btn-outline-primary btn-lg">+ Nuovo test</a>
+  </div>
+  {% endif %}
+</div>

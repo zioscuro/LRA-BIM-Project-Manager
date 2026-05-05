@@ -1,0 +1,84 @@
+<div class="col-md-8">    
+  <h4>Schede informative - Coordinamento</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sheet in info_sheets_coordination %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>
+          <a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a>
+        </td>
+        <td>
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_info_sheet' pk=sheet.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_info_sheet' pk=sheet.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex gap-2 justify-content-end">
+    <form method="POST" novalidate action="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}">
+      {% csrf_token %}
+      <input 
+        type="submit" 
+        value="+ Default"
+        {% if not bimmodel.default_coordination %}
+        class="btn btn-outline-primary btn-lg"
+        {% else %}
+        class="btn btn-outline-primary btn-lg disabled"
+        {% endif %}
+      >
+    </form>
+    <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='Coordination' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+  </div>
+  <h4>Schede informative - Verifica</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sheet in info_sheets_validation %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>
+          <a href="{% url 'manage_info_sheet' pk=sheet.pk %}">{{ sheet.name }}</a>
+        </td>
+        <td>
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_info_sheet' pk=sheet.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_info_sheet' pk=sheet.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex gap-2 justify-content-end">
+    <form method="POST" novalidate action="{% url 'default_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}">
+      {% csrf_token %}
+      <input 
+        type="submit" 
+        value="+ Default"
+        {% if not bimmodel.default_validation %} 
+        class="btn btn-outline-primary btn-lg"
+        {% else %}
+        class="btn btn-outline-primary btn-lg disabled"
+        {% endif %}
+      >
+    </form>
+    <a href="{% url 'create_info_sheet' pk=bimmodel.pk sheet_type='Validation' %}" class="btn btn-outline-primary btn-lg">+ Aggiungi scheda</a>
+  </div>
+</div>

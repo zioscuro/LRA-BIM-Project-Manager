@@ -1,0 +1,18 @@
+<div class="col-md-4">
+  <h4>Dati scheda</h4>  
+  <h6>tipo scheda</h6>
+  <p>{{infosheet.sheet_type}}</p>
+  <h6>nome</h6>
+  <p>{{infosheet.name}}</p>    
+  <h6>descrizione</h6>
+  <p>{{infosheet.description}}</p>
+  <h6>modello BIM</h6>
+  <p>{{infosheet.bim_model}}</p>
+  <h6>progetto</h6>
+  <p>{{infosheet.bim_model.bim_project.name}}</p>
+  <hr>
+  <div class="d-flex gap-2">
+    <a href="{% url 'update_info_sheet' pk=infosheet.pk %}" class="flex-fill btn btn-primary btn-lg">Aggiorna dati</a>
+    <a href="{% url 'delete_info_sheet' pk=infosheet.pk %}" class="flex-fill btn btn-danger btn-lg">Cancella scheda</a>
+  </div>
+</div>

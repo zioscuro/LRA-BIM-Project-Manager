@@ -1,0 +1,35 @@
+<div class="col-md-8">
+  {% if infosheet.sheet_type == 'coordination' %}
+  <h4>Report delle interferenze</h4>
+  {% elif infosheet.sheet_type == 'validation' %}
+  <h4>Report di verifica</h4>
+  {% endif %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in infosheet.reports.all %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>
+          <a href="{% url 'manage_report' pk=report.pk %}">{{ report.name }}</a>
+        </td>
+        <td>
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'update_report' pk=report.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_report' pk=report.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}        
+    </tbody>
+  </table>
+  <div class="d-flex gap-2 justify-content-end">
+    <a href="{% url 'create_report' pk=infosheet.pk %}" class="btn btn-outline-primary btn-lg">+ Aggiungi Report</a>
+  </div>
+</div>
