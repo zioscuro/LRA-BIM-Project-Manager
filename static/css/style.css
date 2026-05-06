@@ -1,1 +1,5 @@
 /* custom css */
+
+.btn-outline-primary.disabled {
+  color: darkgrey;
+}
