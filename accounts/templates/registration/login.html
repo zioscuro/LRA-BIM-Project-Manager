@@ -9,7 +9,7 @@
     <div class="col-5">
       <div class="text-center">
         <h1>Benvenuto!</h1>
-        <p class="fs-5">Non hai un account? <a href="{% url 'create_account_view' %}">Registrati!</a></p>
+        <p class="fs-5">Non hai un account? <a href="{% url 'create_account' %}">Registrati!</a></p>
       </div>
       <form action="{% url 'login' %}" method="POST" novalidate>
         {% csrf_token %}

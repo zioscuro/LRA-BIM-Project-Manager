@@ -3,7 +3,7 @@
 {% block head_title %}{{ block.super }} - Cancella Progetto{% endblock head_title %}
 
 {% block navbar %}
-<a class="btn btn-outline-primary" href="{% url 'manage_project' pk=bimproject.pk %}">← Torna al progetto</a>
+<a class="btn btn-outline-primary" href="{% url 'manage_bim_project' pk=bimproject.pk %}">← Torna al progetto</a>
 {% endblock navbar %}
 
 {% block content %}
@@ -17,7 +17,7 @@
       {% csrf_token %}
       <div class="d-grid mt-4 gap-2">
         <input type="submit" class="btn btn-danger" value="Conferma">
-        <a href="{% url 'manage_project' pk=bimproject.pk %}" class="btn btn-outline-secondary">Annulla</a>
+        <a href="{% url 'manage_bim_project' pk=bimproject.pk %}" class="btn btn-outline-secondary">Annulla</a>
       </div>
     </form>
   </div>

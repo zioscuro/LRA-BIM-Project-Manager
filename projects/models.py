@@ -24,7 +24,7 @@ class BimProject(BimEntity):
   default_bim_specialist = models.ForeignKey(BimExpert, on_delete=models.SET_DEFAULT, related_name='bim_specialist_role_projects', verbose_name="bim specialist progetto", default=1)
   
   def get_absolute_url(self):
-    return reverse('manage_project', kwargs={'pk': self.pk})
+    return reverse('manage_bim_project', kwargs={'pk': self.pk})
   
   class Meta:
     verbose_name = 'Progetto'
@@ -58,10 +58,7 @@ class InfoSheet(BimEntity):
   }
   sheet_type = models.CharField(max_length=20, choices=SHEET_TYPE_CHOICES, verbose_name="tipo scheda")  
   bim_model = models.ForeignKey(BimModel, on_delete=models.CASCADE, related_name='info_sheets')
-  
-  # def get_absolute_url(self):
-  #   return reverse('manage_info_sheet', kwargs={'pk': self.pk})
-  
+    
   class Meta:
     verbose_name = 'Scheda informativa'
     verbose_name_plural = 'Schede informative'
@@ -69,9 +66,6 @@ class InfoSheet(BimEntity):
 class Report(BimEntity):
   specification = models.ForeignKey(BimSpecification, on_delete=models.SET_DEFAULT, related_name='reports', verbose_name="specifica coordinamento/verifica", default=1)  
   info_sheet = models.ForeignKey(InfoSheet, on_delete=models.CASCADE, related_name='reports')
-  
-  # def get_absolute_url(self):
-  #   return reverse('manage_report', kwargs={'pk': self.pk})
   
   class Meta:
     verbose_name = 'Report'

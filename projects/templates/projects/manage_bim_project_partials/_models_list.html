@@ -19,8 +19,8 @@
         <td>{{ model.description }}</td>
         <td>
           <div class="d-flex gap-2 justify-content-end">
-            <a href="{% url 'update_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
-            <a href="{% url 'delete_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
+            <a href="{% url 'update_bim_model' pk=model.pk %}" class="btn btn-outline-primary btn-sm">Modifica</a>
+            <a href="{% url 'delete_bim_model' pk=model.pk %}" class="btn btn-outline-danger btn-sm">Cancella</a>
           </div>
         </td>
       </tr>

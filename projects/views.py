@@ -24,7 +24,7 @@ class UpdateBimProject(BimProjectViewMixin, UpdateView):
   template_name = 'projects/bim_project_update.html'
 
   def get_success_url(self):
-    return reverse('manage_project', kwargs={'pk': self.object.pk})
+    return reverse('manage_bim_project', kwargs={'pk': self.object.pk})
 
 class DeleteBimProject(BimProjectViewMixin, DeleteView):
   template_name = 'projects/bim_project_delete.html'
@@ -54,7 +54,7 @@ class CreateBimModel(BimModelViewMixin, CreateView):
     return context
   
   def get_success_url(self):
-    return reverse('manage_project', kwargs={ 'pk': self.object.bim_project.pk })
+    return reverse('manage_bim_project', kwargs={ 'pk': self.object.bim_project.pk })
 
 class UpdateBimModel(BimModelViewMixin, UpdateView):
   form_class = BimModelUpdateForm
@@ -67,7 +67,7 @@ class DeleteBimModel(BimModelViewMixin, DeleteView):
   template_name = 'projects/bim_model_delete.html'
 
   def get_success_url(self):
-    return reverse('manage_project', kwargs={'pk': self.object.bim_project.pk})
+    return reverse('manage_bim_project', kwargs={'pk': self.object.bim_project.pk})
 
 class ManageBimModel(BimModelViewMixin, DetailView):
   template_name = 'projects/manage_bim_model.html'

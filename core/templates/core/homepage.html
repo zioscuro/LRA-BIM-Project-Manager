@@ -11,7 +11,7 @@
     <p>Progetti attivi: {{ BimProjects_list.count }}</p>
     {% if request.user.is_staff %}
     <div class="d-grid mt-4 gap-2">
-      <a href="{% url 'create_project' %}" class="btn btn-primary btn-lg">Crea Progetto</a>
+      <a href="{% url 'create_bim_project' %}" class="btn btn-primary btn-lg">Crea Progetto</a>
       <a href="{% url 'organization_settings' %}" class="btn btn-outline-primary btn-lg">Impostazioni</a>
     </div>   
     {% endif %}

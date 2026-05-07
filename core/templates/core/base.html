@@ -14,7 +14,7 @@
    
     <nav class="navbar bg-body-tertiary mb-5">
       <div class="container">
-        <a href="{% url 'homepage' %}" class="navbar-brand">BIM Project Manager</a>
+        <a href="{% url '' %}" class="navbar-brand">BIM Project Manager</a>
         <div class="d-flex gap-2">
           {% if request.user.is_authenticated %}
           {% block navbar %} {% endblock navbar %} 
@@ -36,7 +36,7 @@
           </div>
           {% else %}
           <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
-          <a class="btn btn-primary" href="{% url 'create_account_view' %}">Crea account</a>
+          <a class="btn btn-primary" href="{% url 'create_account' %}">Crea account</a>
           {% endif %}
         </div> 
       </div>
