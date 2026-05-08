@@ -10,7 +10,7 @@ from core.mixins import StaffMixin
 from projects.models import BimProject, BimModel, InfoSheet, Report
 from projects.forms import BimModelCreateForm, BimModelUpdateForm, ReportForm, ClashTestForm, ValidationTestForm, UploadFileForm, MultipleUploadFileForm
 from projects.mixins import BimProjectViewMixin, BimModelViewMixin, InfoSheetViewMixin, ReportViewMixin, ClashTestViewMixin, ValidationViewMixin
-from projects.utils import ExcelExporter, ExcelImporter, BimModelConfigurator
+from projects.utils import ExcelProjectExporter, ExcelImporter, BimModelConfigurator
 
 # Create your views here.
 
@@ -236,17 +236,17 @@ class BimDataExporter(StaffMixin, View):
   def get(self, request, pk, export_type):
     if export_type == 'model_register':
       project = get_object_or_404(BimProject, pk=pk)
-      handler = ExcelExporter(project)
+      handler = ExcelProjectExporter(project)
       return handler.export_model_register()
 
     if export_type == 'project_info_sheets':
       project = get_object_or_404(BimProject, pk=pk)
-      handler = ExcelExporter(project)
+      handler = ExcelProjectExporter(project)
       return handler.export_project_info_sheets()
     
     if export_type == 'model_info_sheets':
       bim_model = get_object_or_404(BimModel, pk=pk)
-      handler = ExcelExporter(bim_model)
+      handler = ExcelProjectExporter(bim_model)
       return handler.export_model_info_sheets()    
 
     return HttpResponseBadRequest("Bad request.")

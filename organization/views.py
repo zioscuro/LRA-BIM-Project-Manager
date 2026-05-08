@@ -4,6 +4,7 @@ from django.views import View
 
 from organization.mixins import OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, ProjectPhaseViewMixin, DisciplineViewMixin, AuthoringSoftwareViewMixin, LodReferenceViewMixin, BimSpecificationViewMixin, BimExpertViewMixin
 from organization.models import AuthoringSoftware, BimExpert, BimSpecification, Discipline, LodReference, ProjectPhase
+from organization.utils import ExcelOrganizationExporter
 
 # Create your views here.
 
@@ -99,9 +100,12 @@ class UpdateBimExpert(BimExpertViewMixin, OrganizationUpdateView):
 class DeleteBimExpert(BimExpertViewMixin, OrganizationDeleteView):
   template_name = 'organization/bim_expert_delete.html'
 
+
 class OrganizationDataExporter(StaffMixin, View):
   def get(self, request):
-    pass
+    handler = ExcelOrganizationExporter()
+    return handler.export_organization_data()
+
 
 class OrganizationDataImporter(StaffMixin, View):
   def post(self, request):

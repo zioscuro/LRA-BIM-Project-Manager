@@ -10,8 +10,8 @@
 <div class="container text-center">  
   <h1>Impostazioni Organizzazione</h1>
   <hr>
-  <a href=# class="btn btn-outline-primary btn-sm">Importa dati organizzazione</a>
-  <a href=# class="btn btn-outline-secondary btn-sm">Esporta dati organizzazione</a>
+  <a href="{% url '' %}" class="btn btn-outline-primary btn-sm">Importa dati organizzazione</a>
+  <a href="{% url 'export_organization_data' %}" class="btn btn-outline-secondary btn-sm">Esporta dati organizzazione</a>
   <hr>
 
   {% include "organization/organization_settings_partials/_project_phases.html" %}
